@@ -1,7 +1,7 @@
 baseURL: 'http://www.danieltperry.me/'
 languageCode: 'en'
 title: 'DanielTPerry.me'
-theme: 'Papermod'
+theme: 'PaperMod'
 
 params:
   profileMode:
