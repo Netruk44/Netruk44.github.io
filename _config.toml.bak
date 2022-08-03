@@ -1,0 +1,18 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Daniel T Perry'
+theme = 'Papermod'
+
+[[params.homeInfoParams]]
+    Title = "Daniel Tyler Perry"
+    content = "Some content."
+
+# Menu Links
+[[menu.main]]
+  name = "Blog"
+  weight = 1
+  url  = "posts/"
+[[menu.main]]
+  name = "Projects"
+  weight = 2
+  url  = "projects/"

@@ -1,0 +1,45 @@
+baseURL: 'http://www.danieltperry.me/'
+languageCode: 'en'
+title: 'DanielTPerry.me'
+theme: 'Papermod'
+
+params:
+  profileMode:
+    enabled: true
+    title: "Daniel Tyler Perry"
+    buttons:
+      - name: Blog Posts
+        url: posts
+      - name: Projects
+        url: projects
+      - name: Tags
+        url: tags
+  
+  #homeInfoParams:
+  #  Title: "Daniel Tyler Perry"
+  #  Content: >
+  #      Welcome to my personal site.
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/netruk44"
+    - name: cv
+      title: "Resume"
+      url: "resume.pdf"
+    - name: email
+      url: "mailto:contact@danieltperry.me"
+    - name: Rss
+      url: "index.xml"
+
+menu:
+  main:
+    - name: Blog
+      weight: 1
+      url: 'posts/'
+    - name: Projects
+      weight: 2
+      url: 'projects/'
+    - name: Old Site
+      weight: 999
+      url: 'https://old.danieltperry.me/'
+  
