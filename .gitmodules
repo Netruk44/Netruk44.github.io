@@ -2,5 +2,5 @@
 	path = themes/hugo-coder
 	url = https://github.com/luizdepra/hugo-coder.git
 [submodule "themes/PaperMod"]
-	path = themes/PaperMod
+	path = themes/Papermod
 	url =https://github.com/Netruk44/hugo-PaperMod
