@@ -39,7 +39,7 @@ menu:
     - name: Projects
       weight: 2
       url: 'projects/'
-    - name: Old Site
-      weight: 999
-      url: 'https://old.danieltperry.me/'
+    #- name: Old Site
+    #  weight: 999
+    #  url: 'https://old.danieltperry.me/'
   
