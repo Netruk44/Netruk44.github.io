@@ -46,7 +46,8 @@ jobs:
       - name: Build with Hugo
         run: |
           hugo \
-            --minify
+            --minify \
+            --baseURL 'http://www.danieltperry.me/'
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
