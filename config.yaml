@@ -7,6 +7,7 @@ params:
   profileMode:
     enabled: true
     title: "Daniel Tyler Perry"
+    subtitle: "[Website is still a work in progress]"
     buttons:
       - name: Blog Posts
         url: posts
