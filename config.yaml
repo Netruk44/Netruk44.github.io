@@ -7,7 +7,7 @@ params:
   profileMode:
     enabled: true
     title: "Daniel Tyler Perry"
-    subtitle: "[Website is still a work in progress]"
+    #subtitle: "[Website is still a work in progress]"
     buttons:
       - name: Blog Posts
         url: posts
@@ -24,9 +24,9 @@ params:
   socialIcons:
     - name: github
       url: "https://github.com/netruk44"
-    - name: cv
-      title: "Resume"
-      url: "resume.pdf"
+    #- name: cv
+    #  title: "Resume"
+    #  url: "resume.pdf"
     - name: email
       url: "mailto:contact@danieltperry.me"
     - name: Rss
