@@ -25,7 +25,7 @@ params:
   #  Title: "Daniel Tyler Perry"
   #  Content: >
   #      Welcome to my personal site.
-
+  hideFooter: true
   socialIcons:
     - name: github
       url: "https://github.com/netruk44"
