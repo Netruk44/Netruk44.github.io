@@ -1,6 +1,6 @@
 ---
 title: "Walking App (Name TBD)"
-linktitle: "Waking App"
+linktitle: "Walking App"
 date: 2022-10-03T21:40:06-04:00
 draft: false
 tags: ["Godot", "GDScript", "OpenStreetMaps", "Azure"]
