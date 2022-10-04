@@ -1,5 +1,6 @@
 ---
 title: "Walking App (Name TBD)"
+linktitle: "Waking App"
 date: 2022-10-03T21:40:06-04:00
 draft: false
 tags: ["Godot", "GDScript", "OpenStreetMaps", "Azure"]
@@ -8,6 +9,8 @@ tags: ["Godot", "GDScript", "OpenStreetMaps", "Azure"]
 An application intended to help you thoroughly explore an area of the map. Pick an area of the world map with roads or paths that you'd like to explore every part of. Then, import GPX files tracking previous excursions through that area, and try to 'fill out' the entire map by visiting every point.
 
 As a stretch goal, the program will encourage re-exploration of an area by gradually fading away explored areas as time goes on. This way, you can re-explore the same areas multiple times, possibly revisiting the same routes from different angles.
+
+{{< contact-me box="walkingapp" is-mid-article=true >}}
 
 # Info
 ![](./app_icon.png#center)
@@ -85,3 +88,5 @@ I took inspiration from how the map works in open world driving video games like
 * OSM Overpass API implementation (using Godot builtin [Http Request](https://docs.godotengine.org/en/3.6/tutorials/networking/http_request_class.html))
 
 ![](./2022-10-03-21-26-29.png)
+
+{{< contact-me box="walkingapp" >}}
