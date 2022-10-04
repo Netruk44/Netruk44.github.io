@@ -4,7 +4,7 @@
 {{ end }}
 <hr />
 
-<div style="text-align:center;"><em>To send me a message, comment or suggestion about this {{ .Page.Type }}, send an e-mail to: <a href="mailto:{{ .Get "box" }}@danieltperry.me?subject=Comment on {{ or (.Get "subject") (.Page.LinkTitle) }}">{{ .Get "box" }}@danieltperry.me</a></em></div>
+<div style="text-align:center;"><em>To send me a comment about this {{ .Page.Type }}, send an e-mail to: <a href="mailto:{{ .Get "box" }}@danieltperry.me?subject=Comment on {{ or (.Get "subject") (.Page.LinkTitle) }}">{{ .Get "box" }}@danieltperry.me</a></em></div>
 
 {{ if .Get "is-mid-article" }}
 <hr />

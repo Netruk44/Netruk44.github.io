@@ -10,9 +10,9 @@ params:
     #subtitle: "[Website is still a work in progress]"
     buttons:
       - name: Blog Posts
-        url: posts
+        url: post
       - name: Projects
-        url: projects
+        url: project
       - name: Tags
         url: tags
   
@@ -36,10 +36,10 @@ menu:
   main:
     - name: Blog
       weight: 1
-      url: 'posts/'
+      url: 'post/'
     - name: Projects
       weight: 2
-      url: 'projects/'
+      url: 'project/'
     #- name: Old Site
     #  weight: 999
     #  url: 'https://old.danieltperry.me/'
