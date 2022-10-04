@@ -50,7 +50,7 @@ I took inspiration from how the map works in open world driving video games like
     * I'd like to have an bigger project I contribute to while working on my own personal project(s).
     * Maybe the app could be used to help fill out the OSM database in some way?
 
-# Development Progress
+# Development Journal
 
 ## Early versions
 
