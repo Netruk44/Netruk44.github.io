@@ -4,6 +4,11 @@ title: 'DanielTPerry.me'
 theme: 'PaperMod'
 
 params:
+  assets:
+    favicon: ico/favicon.ico
+    favicon16x16: ico/favicon-16x16.png
+    favicon32x32: ico/favicon-32x32.png
+    apple_touch_icon: ico/apple_touch_icon.png
   profileMode:
     enabled: true
     title: "Daniel Tyler Perry"
