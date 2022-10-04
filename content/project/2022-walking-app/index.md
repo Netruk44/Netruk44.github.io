@@ -55,7 +55,7 @@ I took inspiration from how the map works in open world driving video games like
 
 # Development Journal
 
-## Early versions
+{{< collapse summary="**Early Versions**" >}}
 
 #### v0.6
 *10/02/22*
@@ -88,5 +88,7 @@ I took inspiration from how the map works in open world driving video games like
 * OSM Overpass API implementation (using Godot builtin [Http Request](https://docs.godotengine.org/en/3.6/tutorials/networking/http_request_class.html))
 
 ![](./2022-10-03-21-26-29.png)
+
+{{< /collapse >}}
 
 {{< contact-me box="walkingapp" >}}
