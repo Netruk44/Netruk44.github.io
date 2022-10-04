@@ -5,6 +5,11 @@ draft: false
 tags: ["Godot", "GDScript", "OpenStreetMaps", "Azure"]
 ---
 
+An application intended to help you thoroughly explore an area of the map. Pick an area of the world map with roads or paths that you'd like to explore every part of. Then, import GPX files tracking previous excursions through that area, and try to 'fill out' the entire map by visiting every point.
+
+As a stretch goal, the program will encourage re-exploration of an area by gradually fading away explored areas as time goes on. This way, you can re-explore the same areas multiple times, possibly revisiting the same routes from different angles.
+
+# Info
 ![](./app_icon.png#center)
 {{% img-subtitle %}}
 **Icon**
@@ -15,16 +20,10 @@ tags: ["Godot", "GDScript", "OpenStreetMaps", "Azure"]
 **Screenshot**
 {{% /img-subtitle %}}
 
-# Info
 * **Status**: In Development
 * **Download/Source**: *Pending*
 * **Technologies & Languages**: Godot, GDScript
 * **APIs & Resources**: OSM Overpass, Azure [Virtual Machine for self-hosted Overpass server]
-
-# Summary
-An application intended to help you thoroughly explore an area of the map. Pick an area of the world map with roads or paths that you'd like to explore every part of. Then, import GPX files tracking previous excursions through that area, and try to 'fill out' the entire map by visiting every point.
-
-As a stretch goal, the program would encourage re-exploration of an area by gradually fading away explored areas as time goes on. This way, you can re-explore the same areas multiple times, possibly revisiting the same routes from different angles.
 
 # Why
 An app I wanted to make for myself. I've wanted a tool to track my progress in exploring certain areas of the globe, such as making sure I go down every path in a park or nature area. Usually, my outings to places like these are sporadic, and it might be a long time between visits of any individual place.
