@@ -44,3 +44,7 @@ menu:
     #  weight: 999
     #  url: 'https://old.danieltperry.me/'
   
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
