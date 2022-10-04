@@ -12,7 +12,8 @@ As a stretch goal, the program will encourage re-exploration of an area by gradu
 # Info
 ![](./app_icon.png#center)
 {{% img-subtitle %}}
-**Icon**
+**Icon**  
+*Generated with [Stable Diffusion](https://github.com/CompVis/stable-diffusion) using [InvokeAI](https://github.com/invoke-ai/InvokeAI)*'s web UI.
 {{% /img-subtitle %}}
 
 ![](./2022-10-03-22-19-55.png#center)
