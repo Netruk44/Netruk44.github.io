@@ -193,21 +193,25 @@ Using Alpine Linux as the base for the Docker image, I would have Nix then layer
 
 I primarily wanted to go this route to build my experience with Nix. And I did make a script that generated this Docker image, however I quickly ran into problems with getting Apache to run. Configuration files weren't where I expected them to be, so I didn't know how to set up a `VirtualHost` for the OSM executables.
 
-From what I can see in online discussion boards, the Nix community doesn't like Apache much, and instead prefers to use Nginx. This doesn't help me, a person who's unfamiliar with both of them. I have experience with running OSM under Apache, so that's what I'd prefer to stick with.
+<!-- From what I can see in online discussion boards, the Nix community doesn't like Apache much, and instead prefers to use Nginx. This doesn't help me, a person who's unfamiliar with both of them. I have experience with running OSM under Apache, so that's what I'd prefer to stick with. -->
 
 In the end, I wasn't able to find much help with getting Apache to run from Nix. Most of the discussion that I *could* find about Apache was specific to NixOS and not Nix in general.
 
 > As a side note, googling anything about Nix is tough, Google wants to autocorrect it to "Unix". My technique has been to google for "NixOS" even when I'm looking for Nix-specific things, to help Google understand I'm not just constantly missing the letter 'U'.
+>
+> It's possible that *this* is the reason why I couldn't find anything Nix-specific, however searching for `nix apache modules` didn't turn anything up, either.
 
-Theoretically, instead of Alpine Linux I could base the Docker image off NixOS, somehow (Apparently the `nixos/nix` image *isn't* NixOS). However that approach doesn't seem to be recommended (NixOS is recommended to be used in a VM, not under Docker), and I also didn't want to dive into the specifics of configuring Apache under NixOS. Instead, I went with plan B.
+Theoretically, instead of Alpine Linux I could base the Docker image off NixOS, somehow (Apparently the `nixos/nix` Docker image *isn't* NixOS). However NixOS doesn't seem to be recommended for use under Docker, and also I didn't want to dive into the specifics of configuring Apache under NixOS.
 
-### Approach 2: Nix only for OSM
+Instead, I went with plan B.
+
+### Approach 2: Nix only for Overpass
 
 Plan B is to base the docker image off of the Apache [httpd](https://hub.docker.com/_/httpd) Docker image, and just layer OSM Overpass + dependencies on top of that.
 
 To make up for not going 'Full Nix', I decided to do some extra credit work to make Nix also produce a Docker image that could run on my ARM-based M1 MacBook Pro.
 
-In the end, this is the approach I went with to make a functional OSM Overpass Docker image. To start out, [this is the script](https://github.com/Netruk44/nix-scripts/blob/main/openstreetmaps_overpass/docker/osm_static.nix) for a static, not self-updating Overpass Docker image (self-updating will come at some later date):
+In the end, this approach was successful, and I wound up with a Nix script for a static (as in, not self-updating) Overpass server. [Here it is](https://github.com/Netruk44/nix-scripts/blob/main/openstreetmaps_overpass/docker/osm_static.nix):
 
 ```nix
 { pkgs ? import <nixpkgs> { pkgs = pkgs; }
@@ -286,7 +290,7 @@ Which is just the script I created above. And the second is:
   ];
 ```
 
-The `./image_root` is a folder alongside the Nix script. The script should work as-is when cloned from [my Git repository](https://github.com/Netruk44/nix-scripts/tree/main/openstreetmaps_overpass/docker).
+The `./image_root` is a folder alongside the Nix script. The script should work as-is when cloned from the link.
 
 Again, if you'd like to read the development process of this script, you can find that in this section below.
 
@@ -544,8 +548,8 @@ And that's it for now. I took a break from working on these scripts to write up 
 
 The self-updating server shouldn't be too difficult to make a Docker container for. All that's involved is starting two more executables in addition to the OSM dispatcher. One executable downloads incoming updates, and the other script applies them to the server.
 
-In my experience, the self-updating part of hosting an Overpass server is very compute-heavy. When I tried setting this up on my Azure server, I needed to drop down from minutely updates to hourly updates so that I could run the Overpass server on a cheap enough class of VM for my Azure credits.
+In my experience, the self-updating part of hosting an Overpass server is very compute-heavy. When I tried setting this up on my Azure server, I needed to drop down from minutely updates to hourly updates so that I could run the Overpass server on a cheap enough class of VM for my Azure credits. In practice, that means my server maps are lagging from anywhere between 30m to 1h30m.
 
-In the meantime, if you ever need to make an OSM Overpass Docker image for a static OSM database, I've got you covered 😊.
+If you're interested in hosting your own Overpass server, the static server is perfectly fine if you don't need your maps with live updates from OpenStreetMap. The only reason I want updates is because I make updates to OSM in areas I walk in, and I want my app updated with those changes I make 😊.
 
 {{< contact-me box="nix" >}}
