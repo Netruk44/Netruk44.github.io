@@ -171,7 +171,7 @@ user    0m0.139s
 sys     0m0.025s
 ```
 
-Great! We now have a reproducible build of the Overpass server binaries. The only final thing remaining is the Overpass wiki suggests compiling with `CXXFLAGS=O2`. A quick search on Nix documentation suggests that this flag might be supplied to g++ by default, however you can also explicitly supply it by simply adding `CXXFLAGS=02` into the attribute set you pass to `mkDerivation`.
+Great! We now have a reproducible build of the Overpass server binaries. The only final thing remaining is the Overpass wiki suggests compiling with `CXXFLAGS=O2`. A quick search on Nix documentation suggests that this flag might be supplied to g++ by default, however you can also explicitly supply it by simply adding `CXXFLAGS = "02"` into the attribute set you pass to `mkDerivation`.
 
 You can view the current version of that script on my GitHub [here](https://github.com/Netruk44/nix-scripts/blob/main/openstreetmaps_overpass/osm-3s.nix). I may eventually merge this into the nixpkgs repository, though I have some personal legal issues that might prevent me from doing so. So, if someone happens to steal my nix script wholesale and puts it into the nixpkgs repository, I probably wouldn't be upset about it.
 
@@ -427,7 +427,9 @@ And that's about it for OSM startup. Now let's come back around to the idea of s
 
 #### Database Bootstrapping
 
-The Overpass Wiki provides a script you can run to clone the database files from a server: `bin/download_clone.sh --db-dir=/mnt/osm/db --source=http://dev.overpass-api.de/api_drolbr/ --meta=no`. If we stick `osm` in the contents of the docker image, `download_clone.sh` will exist at `/bin/download_clone.sh`.
+The Overpass Wiki provides a script you can run to clone the database files from a server: `bin/download_clone.sh --db-dir=/mnt/osm/db --source=http://dev.overpass-api.de/api_drolbr/ --meta=no`.
+
+If we add `osm` to the `contents = [` of the nix script, then the mentioned script `download_clone.sh` will exist in the docker image under the root bin folder, under `/bin/download_clone.sh`.
 
 So, let's run that script in our docker container:
 
@@ -527,11 +529,11 @@ The Overpass Wiki provides a virtual host file:
 </VirtualHost>
 ```
 
-For our usage, `[YOUR_EXEC_DIR]` can be removed completely, as the overpass binaries get installed into the root `/bin` and `/cgi-bin` folders. And `[YOUR_HTML_ROOT_DIR]` can be just the docker default html directory `"/usr/local/apache2/htdocs"` (or whatever you want, as Overpass doesn't use it).
+For our usage, `[YOUR_EXEC_DIR]` can be removed completely, as the overpass binaries get installed into the root `/bin` and `/cgi-bin` folders. And `[YOUR_HTML_ROOT_DIR]` can be just the httpd docker image default: `"/usr/local/apache2/htdocs"` (or whatever you like, as Overpass doesn't use it).
 
 I also changed the `ErrorLog` and `CustomLog` to point to `/mnt/log` instead.
 
-Save that under the path `image_root/usr/local/apache2/conf/extra/httpd-vhosts.conf`. Next, we need to change the `httpd.conf`, uncomment the line:
+Save that under the path `image_root/usr/local/apache2/conf/extra/httpd-vhosts.conf`. Next, we need to change the `httpd.conf` to read the vhosts file we made. Uncomment the line:
 
 ```
 # Virtual hosts
