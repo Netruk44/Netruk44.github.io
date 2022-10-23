@@ -181,7 +181,7 @@ With the nix script in hand, we can now set about the process of making a nix sc
 
 ## Creating the Docker image script
 
-At this point in time, I had been running my own Overpass server for a while, so I already had some expectations about how the Docker image would work. One of the first problems I knew I was going to need to solve was how to get Apache running in the Docker image to serve the `cgi-bin` executables produced by the build.
+At this point in time, I had been running my own Overpass server for a while, so I already had some expectations about how the Docker image would work. One of the first problems I knew I was going to need to solve was how to get Apache running in the Docker image to serve the output of the `cgi-bin` executables produced by the build.
 
 <!-- I personally have very little experience with Docker. My only history with it was for a personal ML project, I deployed a Flask application using Docker to an Azure VM as a learning project. So while I have *some* experince with Docker, it certainly wasn't a lot. At the time of me writing this post, I still don't have much experience with Docker. Don't take this as a Docker tutorial, because I barely know how to make a container 😊. In fact, I barely know how Apache, or really any of this stuff works. I said this was like a journal more than a tutorial, right? -->
 
