@@ -40,7 +40,7 @@ I initially dove in head first with a full-blown NixOS VM, but I'm not sure I wo
 
 The guide has a page called "Our First Derivation", however the end result isn't what you should be using for real "production" work. The guide essentially shows you how the build scripts work by writing parts of them yourself. So what you wind up with is your own handwritten version of the builtin build scripts. For "real" work, you should just use those instead.
 
-In the end, my best learning resource was the [nixpkgs repository](https://github.com/NixOS/nixpkgs) itself. After enough monkey-see-monkey-do, I managed to [produce a script](https://github.com/Netruk44/nix-scripts/blob/fb7d1408f145f9eb71528922b62ad840a1f275a3/openstreetmaps_overpass/osm-3s.nix) that Nix would run:
+In the end, my best learning resource was the [nixpkgs repository](https://github.com/NixOS/nixpkgs) itself. After enough monkey-see-monkey-do, I managed to [produce a script](https://github.com/Netruk44/nix-scripts/blob/main/openstreetmaps_overpass/osm-3s.nix) that Nix would run:
 
 ```nix
 { pkgs ? import <nixpkgs> {}
@@ -48,13 +48,14 @@ In the end, my best learning resource was the [nixpkgs repository](https://githu
 
 pkgs.stdenv.mkDerivation rec {
   pname = "osm-3s";
-  version = "0.7.58.5";
+  version = "0.7.59";
   buildInputs = [pkgs.expat pkgs.zlib];
   enableParallelBuilding = true;
   src = pkgs.fetchurl {
     url = "http://dev.overpass-api.de/releases/osm-3s_v${version}.tar.gz";
-    sha256 = "1ipig0w3327nhl7dldcgkcm3fyhrib6h82n030rkb32bj9zr0g92";
+    sha256 = "02jk3rqhfwdhfnwxjwzr1fghr3hf998a3mhhk4gil3afkmcxd40l";
   };
+  CXXFLAGS = "-O2";
   meta = {
     description = "OpenStreetMaps Overpass API Server";
     longDescription = ''
