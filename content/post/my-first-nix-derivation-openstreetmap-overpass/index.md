@@ -19,7 +19,7 @@ I've been working on an [app](/project/2022-walking-app), intended mainly for my
 
 One of the things this app needs is a source of map information, and I've found that [OpenStreetMap's Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) to be exactly the thing I need. So I did some research and came up with a basic Overpass query that'll return me the roads within any given GPS coordinates. I select some coordinates in an area I've walked on before and where I know I'll already have walking data for. I stick it into my app and it works well!
 
-Well, it works well *most of the time*, anyway. The public Overpass servers can get periodically overloaded. It's a free public resource for anybody to use, so you sometimes have to deal with congestion.
+Well, it works well *most of the time*, anyway. The public Overpass servers can get periodically overloaded. It's a free public resource for anybody to use, so you sometimes have to deal with congestion. Sometimes you'll request a part of the map and get ignored due to the load. Or it'll take over 15 seconds to get a response from the server.
 
 The wiki provides instructions to [set up your own server](https://wiki.openstreetmap.org/wiki/Overpass_API/Installation) if you have the hardware to run it. I found the instructions to be pretty straightforward, so I decided to put some of my Azure credits to use and spun up a small VM and set up an Overpass server. It was straightforward enough that I chose to extend the project a bit, and make some Nix scripts that would both:
 
@@ -548,7 +548,7 @@ And that's it for now. I took a break from working on these scripts to write up 
 
 The self-updating server shouldn't be too difficult to make a Docker container for. All that's involved is starting two more executables in addition to the OSM dispatcher. One executable downloads incoming updates, and the other script applies them to the server.
 
-In my experience, the self-updating part of hosting an Overpass server is very compute-heavy. When I tried setting this up on my Azure server, I needed to drop down from minutely updates to hourly updates so that I could run the Overpass server on a cheap enough class of VM for my Azure credits. In practice, that means my server maps are lagging from anywhere between 30m to 1h30m.
+In my experience, the self-updating part of hosting an Overpass server is very compute-heavy. When I tried setting this up on my Azure server, I needed to drop down from minutely updates to hourly updates so that I could run the Overpass server on a cheap enough class of VM for my Azure credits (Burstable class, which means I can't use the CPU all the time or else I get majorly throttled). In practice, that means my server maps are lagging from anywhere between 30m to 1h30m.
 
 If you're interested in hosting your own Overpass server, the static server is perfectly fine if you don't need your maps with live updates from OpenStreetMap. The only reason I want updates is because I make updates to OSM in areas I walk in, and I want my app updated with those changes I make 😊.
 
