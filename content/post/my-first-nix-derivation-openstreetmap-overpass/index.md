@@ -133,7 +133,7 @@ error: builder for '/nix/store/v1bxx04iix74x6xqx75sb8s195ipdy1m-osm-3s-0.7.59.dr
        >       |          ^~~~~~~~
 ```
 
-(as a side note, I'm recreating most of these errors long after the fact, Nix's reproducibility has been a boon here to help simulate the experience 😊)
+> **Side Note**: I'm recreating most of these errors long after the fact, Nix's reproducibility has been a boon here to help simulate the experience 😊
 
 These errors aren't unexpected. After all, the Overpass Installation wiki page clearly lists the dependencies needed to build, and we haven't done that yet:
 
