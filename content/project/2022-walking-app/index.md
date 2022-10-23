@@ -3,7 +3,7 @@ title: "Walking App (Name TBD)"
 linktitle: "Walking App"
 date: 2022-10-03T21:40:06-04:00
 draft: false
-tags: ["Godot", "GDScript", "OpenStreetMaps", "Azure"]
+tags: ["Godot", "GDScript", "OpenStreetMap", "Azure"]
 ---
 
 An application intended to help you thoroughly explore an area of the map. Pick an area of the world map with roads or paths that you'd like to explore every part of. Then, import GPX files tracking previous excursions through that area, and try to 'fill out' the entire map by visiting every point.
