@@ -152,7 +152,7 @@ We complete that, and it turns out that's all we needed! We have a building deri
 ```bash
 $ time nix-build ./osm-3s.nix
 ...
-/nix/store/f1rc4jqjxjrhv3i3bnbl2d55hsa1ba7g-osm-3s-0.7.58
+/nix/store/sbj1c6cjjbh97gn9zrhz2g2b4hns0v2i-osm-3s-0.7.58
 
 real    8m29.319s
 user    0m0.135s
