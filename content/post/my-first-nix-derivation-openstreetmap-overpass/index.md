@@ -431,10 +431,10 @@ The Overpass Wiki provides a script you can run to clone the database files from
 
 If we add `osm` to the `contents = [` of the nix script, then the mentioned script `download_clone.sh` will exist in the docker image under the root bin folder, under `/bin/download_clone.sh`.
 
-So, let's run that script in our docker container:
+Let's run that script in our docker image:
 
 ```
-$ docker run --rm -v ...
+$ docker run --rm -v /mnt/ext/osm_db/:/mnt/osm osm-3s-static:latest /bin/download_clone.sh --db-dir=/mnt/osm/db/ --source=...
 /bin/download_clone.sh: line 82: wget: command not found
 /bin/download_clone.sh: line 82: wget: command not found
 ```
