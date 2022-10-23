@@ -15,24 +15,24 @@ This post is pretty rambly, and not really edited for concise teaching. This pos
 
 ## Background
 
-I've been working on an [app](/project/2022-walking-app), intended mainly for my own usage (currently, anyway). It acts as kind of a repository of GPX traces I take while I'm out on walks. The app reads the GPX traces and plots them onto a map, which I use to have an overview of which roads I've walked on and which I haven't.
+I've been working on an [app](/project/2022-walking-app), intended mainly for my own usage (currently, anyway). It acts as kind of a repository of GPX traces I take while I'm out on walks. The app reads the GPS positions from the traces, then cross references my traversed points with roads on a map. The app highlights which roads I've never walked on before, and I use that to vaguely direct my daily walking exercises.
 
-One of the things this app needs is a source of map information, and I've found that [OpenStreetMap's Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) to be exactly the thing I need. So I did some research and came up with a basic Overpass query that'll return me the roads within an area with roads I've walked on before. I stick it into my app and it works good!
+One of the things this app needs is a source of map information, and I've found that [OpenStreetMap's Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) to be exactly the thing I need. So I did some research and came up with a basic Overpass query that'll return me the roads within any given GPS coordinates. I select some coordinates in an area I've walked on before and where I know I'll already have walking data for. I stick it into my app and it works well!
 
-Well, it works good *most of the time*, anyway. The public Overpass servers can get overloaded at times during the day. It's a free public resource for anybody to use, so you sometimes have to deal with congestion.
+Well, it works well *most of the time*, anyway. The public Overpass servers can get periodically overloaded. It's a free public resource for anybody to use, so you sometimes have to deal with congestion.
 
 The wiki provides instructions to [set up your own server](https://wiki.openstreetmap.org/wiki/Overpass_API/Installation) if you have the hardware to run it. I found the instructions to be pretty straightforward, so I decided to put some of my Azure credits to use and spun up a small VM and set up an Overpass server. It was straightforward enough that I chose to extend the project a bit, and make some Nix scripts that would both:
 
   > 1. Build the server binaries for Overpass
   > 2. Create a Docker image that would run the server.
 
-It seemed like a pretty lofty goal to accomplish for someone who had never even read a single line of Nix script, however I was equipped with the knowledge that [most of the work was done for me already](https://grahamc.com/blog/nix-and-layered-docker-images). Nix already has the ability to generate specially-layered Docker images where each layer is a separate binary dependency. Read the linked blog post if that sounds interesting, I didn't find it too hard to understand. So I didn't even need to do much to get a Docker image built!
+It seemed like a pretty lofty goal to accomplish for someone who had never even read a single line of Nix script, however I was equipped with the knowledge that [most of the work was done for me already](https://grahamc.com/blog/nix-and-layered-docker-images). Nix already has the ability to generate intelligently-layered Docker images where each layer is a completely self-contained binary dependency. This leads to much smaller `docker push` runs, as you can *actually* share a significant amount of layers between vastly different containers. Read the linked blog post if that sounds interesting, I didn't find it too hard to understand.
 
-The hard part of my plan, it seemed, would be learning Nix enough to make my first derivation.
+So, I didn't even need to do much to get a Docker image built! The hard part of my plan, it seemed, would be learning Nix enough to make my first derivation.
 
 ## Creating the osm-3s derivation
 
-First things first, in order to learn you need something to learn from. So I googled for a Nix "getting started" guide, and eventually got to the [NixOs Website's "Nix Pills" series](https://nixos.org/guides/nix-pills/). 
+First things first, in order to learn you need something to learn from. So I googled for a Nix "getting started" guide, and eventually got to the [NixOS Website's "Nix Pills" series](https://nixos.org/guides/nix-pills/). 
 
 <!-- 
 I initially dove in head first with a full-blown NixOS VM, but I'm not sure I would recommend that path for a beginner. It's a lot to learn a new linux distro on top of Nix itself. If you're just starting out with Nix, I would recommend installing Nix on top of a Linux distribution you're already familiar with. That way you can learn Nix in isolation, and once you're ready for more you can take the next step to NixOS.
