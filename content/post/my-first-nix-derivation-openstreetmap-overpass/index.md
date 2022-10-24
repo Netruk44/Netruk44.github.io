@@ -215,7 +215,7 @@ To make up for not going 'Full Nix', I decided to do some extra credit work to m
 In the end, this approach was successful, and I wound up with a Nix script for a static (as in, not self-updating) Overpass server. [Here it is](https://github.com/Netruk44/nix-scripts/blob/main/openstreetmaps_overpass/docker/osm_static.nix):
 
 ```nix
-{ pkgs ? import <nixpkgs> { pkgs = pkgs; }
+{ pkgs ? import <nixpkgs> { }
 }:
 
 let
