@@ -1,7 +1,7 @@
 ---
 title: "Azure CDN for GitHub Pages with Custom Domain"
 date: 2022-11-03T11:37:58-04:00
-draft: true
+draft: false
 tags: ["Azure", "GitHub Pages"]
 ---
 
@@ -48,21 +48,24 @@ Now that you have the CDN, you'll need to change some configuration in the endpo
 
 If you don't change the configuration, what will happen once you've set up your DNS to point to your CDN endpoint is you'll get stuck in an infinite redirect loop to your domain, as GitHub can't tell that's where the request is actually coming from.
 
-To fix this, you'll need to set the `Origin Host Header` property on your origin group.
+> **Important Note**: If the infinite redirect issue happens to you, remember that the Azure CDN **will cache redirect responses**. This can be confusing to deal with, as you might have fixed the issue with your GitHub Pages, but the CDN will continue to respond with a redirect.
+>
+> To resolve the infinite redirect loop after it's occurred, you'll need to purge the CDN's cache in the Azure Portal. You can do that here:
+> ![](purge_cache.jpg)
+
+To prevent the infinite redirect loop, you'll need to set the `Origin Host Header` property on your origin group.
 
 1. Open your `Front Door and CDN Profile` you made
-2. Select `Front Door manager` from the menu on the left, or select your endpoint in the middle.
-  ![](endpoint_navigation_2.jpg)
-3. Select the `default-origin-group`, or whatever origin group references your Github Pages site.
-  ![](endpoint_navigation_3.jpg)
-4. *All the way* on the right, click the "..." for your origin group and select `Configure origin group`
+2. Select `Origin groups` from the menu on the left.
+  ![](endpoint_navigation_2a.jpg)
+3. *All the way* on the right, click the "..." for the `default-origin-group`, or whatever origin group references your Github Pages site, and select `Configure origin group`
   ![](endpoint_navigation_4.jpg)
-5. In the `Update origin group` right-hand menu that pops up, select the "..." for your origin host, and select `Edit`
+4. In the `Update origin group` right-hand menu that pops up, select the "..." for your origin host, and select `Edit`
   ![](endpoint_navigation_5.jpg)
-6. Update the `Origin host header` to your custom domain.
+5. Update the `Origin host header` to your custom domain.
   ![](endpoint_navigation_6.jpg)
 
-Now, when the CDN requests your site from GitHub Pages, it'll appear as if the request was sent from your domain.
+Now, when the CDN requests your site from GitHub Pages, it'll appear as if the request came from your domain.
 
 ### Certificate Setup
 
@@ -70,17 +73,15 @@ To get HTTPS for your CDN-backed site, you need your own certificate. If you don
 
 > **Note**: Azure Front Door/CDN can automatically create and manage a certificate for you. However, it will not do this for apex domains (i.e. `yourdomain.com`, with nothing in front), and personally I was unable to get it to generate a certificate for a `www.` subdomain either. However, if you want your site hosted on a different subdomain (like `blog.yourdomain.com`), this option may work for you.
 >
-> If this is the route you'd like to go, skip this certificate step, and in your custom domain setup (the next step), select `AFD managed` for the HTTPS section. I can't provide much guidance here, as I haven't tried it.
+> If this is the route you'd like to go, skip this certificate step, and in your custom domain setup (the next step), select `AFD managed` for the HTTPS section. I can't provide much guidance there, as I haven't tried it.
 
-Once you have a certificate, you'll need to create an Azure Key Vault to store it in. Once your certificate is in a Key Vault, go to the `Secrets` section of your CDN and click "Add certificate". Locate your certificate in the right-hand side menu that pops up and click "Add".
+Once you have a certificate, you'll need to put it into an Azure Key Vault, you can either make a new one or use an existing one. Once your certificate is in a Key Vault, go to the `Secrets` section of your CDN and click "Add certificate". Locate your certificate in the right-hand side menu that pops up and click "Add".
 
 ![](certificate_1.jpg)
 
 ### Custom Domain Setup
 
-Now that everything is in place, you can set up a custom domain for your CDN.
-
-If you're not using Azure DNS, you'll have to perform CDN verification manually. This involves creating a `CNAME` record for `cdnverify.subdomain.yourdomain.com` that points to the CDN. However, since I'm using Azure DNS, this step will be performed for me automatically.
+This is the step where you configure the CDN to allow requests for your domain.
 
 Click `Domains` on the left, then `Add` at the top to get started.
 
@@ -89,18 +90,18 @@ Click `Domains` on the left, then `Add` at the top to get started.
 Fill in the information on the right-hand menu that pops up:
 1. I haven't pre-validated my domain, so I selected `Non-Azure validated domain`
 2. If your domain's DNS is managed by Azure, select `Azure managed DNS`, otherwise select `All other DNS services`.
-3. Fill in your DNS information in the box provided.
-4. Under HTTPS, for Secret, select `Bring Your Own Certificate` and select the certificate you added above.
+3. Fill in your domain information in the box provided.
+4. Under HTTPS, select `Bring Your Own Certificate` and select the certificate you added above (or select `AFD managed` if you'd like to give that a try for a non-apex domain).
 
 ![](domain_2.jpg)
 
-Click "Add" to add the domain. Then, configure the `Endpoint association` by selecting the endpoint that points to your GitHub Pages.
+Click "Add" to add the domain. Then, configure the `Endpoint association` by selecting the endpoint and route that points to your GitHub Pages site.
 
-Once the endpoint is configured, update your domain's DNS records to point at the CDN by following the instructions under the `DNS state` link. If you're using Azure DNS, this can be performed for you automatically by clicking a button. Otherwise, you'll need to create a `CNAME` record that points to your CDN endpoint.
+Once the endpoint is configured, update your domain's DNS records to point at the CDN by following the instructions under the `DNS state` link. If you're using Azure DNS, this can be performed for you automatically by clicking a button. Otherwise, you'll need to manually create a `CNAME` record for your domain's DNS that points to your CDN endpoint.
 
 ![](domain_3.jpg)
 
-> **Note**: Both items highlighted should have the red ⛔️ icon by default. However, in this screenshot I have already configured the endpoint association.
+> **Note**: Both items highlighted should have the red ⛔️ icon by default. However, in this screenshot I have already configured the endpoint association, which can't be changed it once it's set up.
 
 Once you've configured the endpoint and updated your DNS, then click on the `🔄 Pending` link under `Validation State`, and fix up any remaining items (you'll need to prove you own the domain by creating a `TXT` record in your DNS).
 
@@ -123,13 +124,7 @@ This entire process feels way more complicated than it needs to be for this use-
 
 Hopefully you've managed to get your site working with CDN, because as I mentioned up front, I actually set this site up with Azure CDN Classic and not "Azure Front Door and CDN". I've actually never used any of this stuff I've just written about above for this site yet. All the steps I've written about above are mostly theoretical, with me applying my Classic CDN knowledge to this new UI.
 
-Remember what I wrote earler?
-
-> **Note**: Azure moves things around *all the time*.
-
-Well, apparently in the past few months they've decided to completely change the entire CDN and Front Door creation workflow in the Azure Portal, and I had to quickly learn where everything was so I could write this post.
-
-I *believe* this all should result in a working CDN for your GitHub Pages site. I've tested what I've written here and it appears to all be working fine for the subdomain I tested it on (frontdoortest.danieltperry.me, which may or may not still exist by the time you're reading this).
+I *believe* this all should result in a working CDN for your GitHub Pages site. I've tested what I've written here and it appears to all be working fine for the subdomain I tested it on (`frontdoortest.danieltperry.me`, which may or may not still exist by the time you're reading this).
 
 However, I've hit edge cases in unexpected places many times before (such as the infinite redirect I mentioned above). There's always the chance I've neglected to mention something important, or there's some hidden edge case I haven't seen that you might hit.
 
