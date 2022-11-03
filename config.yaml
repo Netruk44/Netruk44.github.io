@@ -15,11 +15,11 @@ params:
     #subtitle: "[Website is still a work in progress]"
     buttons:
       - name: Blog Posts
-        url: post
+        url: post/
       - name: Projects
-        url: project
+        url: project/
       - name: Tags
-        url: tags
+        url: tags/
   
   #homeInfoParams:
   #  Title: "Daniel Tyler Perry"
