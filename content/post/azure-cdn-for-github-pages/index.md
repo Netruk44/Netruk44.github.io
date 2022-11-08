@@ -5,7 +5,7 @@ draft: false
 tags: ["Azure", "GitHub Pages"]
 ---
 
-I was looking for some resources on the internet about how to set up an Azure CDN configuration for GitHub Pages while using a custom domain, and I couldn't find anything. I eventually managed to get everything working, so here's how I set everything up. Hopefully it manages to help somebody 😊.
+I was looking for some resources on the internet about how to set up an Azure CDN configuration for GitHub Pages while using a custom domain, and I couldn't find anything. I eventually managed to get everything working, so I decided to write it down in the hopes that maybe *someone* will find this interesting. To be completely honest, you're probably far better off using Cloudflare's CDN for free instead of paying for Azure's CDN. However, I have free monthly credits through an MSDN subscription, so I'm not directly paying for it anyway 😊.
 
 > **Disclaimer**: I'm not a web dev. I barely know how the internet works. This shouldn't be construed as the "correct" way to set up a CDN. This is just what I've found through lots of stumbling around the Azure Portal. There's probably better advice somewhere out there, but I couldn't find anything.
 >
