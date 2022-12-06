@@ -11,6 +11,11 @@ I was looking for some resources on the internet about how to set up an Azure CD
 >
 > Also, this site is using Azure CDN Classic, not "Azure Front Door & CDN", which is apparently something new they've rolled out in the past year or so. I've tried to make sure everything works with this new flow, but if there's one thing I know about this kind of web development it's that nothing ever works like how you think it does. So take all of this with the **HUGE DISCLAIMER** that I am not actually using any of this 'in production', so I cannot claim that this definitely works. However, it should bring you at least 90% of the way there.
 
+> **Edited on 12/6/22 to add**: I wanted to a message here to underline the fact that you definitely should not do this if cost is a concern for you. After running this setup described below for a month, the average daily cost was $1.15. That's About $420 per year to run the CDN for your site. The CDN Classic version of this same setup runs for less than a penny *a month*.
+>
+> I might someday rewrite this to be about CDN Classic instead, just because the cost savings is so dramatic, but I worry that anything written about a "classic" service is doomed to irrelevancy as Azure will inevitably shuts down the classic version in favor of whatever the current version is. I would wholeheartedly recommend reading through this entire post, and attempting to apply it to the CDN Classic instead of Azure's current offering, assuming it's still available by the time you're reading this.
+
+
 {{< contact-me box="cdn" is-mid-article=true >}}
 
 ## CDN Configuration
