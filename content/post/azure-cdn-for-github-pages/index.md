@@ -13,7 +13,7 @@ I was looking for some resources on the internet about how to set up an Azure CD
 
 > **Edited on 12/6/22 to add**: I wanted to a message here to underline the fact that you definitely should not do this if cost is a concern for you. After running this setup described below for a month, the average daily cost was $1.15. That's About $420 per year to run the CDN for your site. The CDN Classic version of this same setup runs for less than a penny *a month*.
 >
-> I might someday rewrite this to be about CDN Classic instead, just because the cost savings is so dramatic, but I worry that anything written about a "classic" service is doomed to irrelevancy as Azure will inevitably shuts down the classic version in favor of whatever the current version is. I would wholeheartedly recommend reading through this entire post, and attempting to apply it to the CDN Classic instead of Azure's current offering, assuming it's still available by the time you're reading this.
+> I might someday rewrite this to be about CDN Classic instead, just because the cost savings is so dramatic, but I worry that anything written about a "classic" service is doomed to irrelevancy as Azure will inevitably shut down the classic version in favor of the non-classic CDN. I would wholeheartedly recommend reading through this entire post, and attempting to apply it to the CDN Classic instead of Azure's current offering, assuming it's still available by the time you're reading this.
 
 
 {{< contact-me box="cdn" is-mid-article=true >}}
