@@ -24,8 +24,8 @@ As a stretch goal, the program will encourage re-exploration of an area by gradu
 **Screenshot**
 {{% /img-subtitle %}}
 
-* **Status**: In Development
-* **Download/Source**: *Pending*
+* **Status**: Abandoned
+* **Source**: https://github.com/Netruk44/walking-app-proto-v2
 * **Technologies & Languages**: Godot, GDScript
 * **APIs & Resources**: OSM Overpass, Azure [Virtual Machine for self-hosted Overpass server]
 
