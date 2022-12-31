@@ -29,7 +29,7 @@ I began using Borg this year (2022) to manage my machine archives. Currently, my
 
 I did some searching, but couldn't find anything that fit the bill. The recent trend when I started this project was to have [ChatGPT](https://chat.openai.com/chat) design and implement entire websites and applications for you. So I thought I would give that a shot on my own, and ask it for guidance how to make a cross-platform GUI application.
 
-GPTChat recommended some GUI frameworks like QT and wxWidgets, as well as Electron. Electron seemed like the easiest fit for GPTChat to help me with, so I decided to embark on making a GUI app in Electron with the assistance of GPTChat.
+ChatGPT recommended some GUI frameworks like QT and wxWidgets, as well as Electron. Electron seemed like the easiest fit for ChatGPT to help me with, so I decided to embark on making a GUI app in Electron with the assistance of ChatGPT.
 
 Eventually, I got tired of trying to form my code queries in the form of a chat message, so I decided to use [Copilot](https://github.com/features/copilot) instead.
 
