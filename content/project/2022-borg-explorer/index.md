@@ -5,7 +5,9 @@ draft: false
 tags: ["Electron", "Javascript", "Borg", "CSS", "HTML"]
 ---
 
-A simple GUI for looking through [Borg Backup](https://borgbackup.readthedocs.io/en/stable/) repositories in a file-browser-like manner, without needing to mount them, instead parsing the output from `borg list`.
+**Borg Explorer** is a cross-platform application for Linux and Mac that allows you to browse through your [Borg](https://borgbackup.readthedocs.io/en/stable/) repositories without needing to mount them. It is intended to be a simple alternative to the `borg mount` subcommand for cases where FUSE mounts are not available.
+
+{{< contact-me box="borg-explorer" is-mid-article=true >}}
 
 # Info
 ![](./icon.png#center)
