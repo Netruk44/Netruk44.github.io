@@ -27,7 +27,7 @@ tags: ["Electron", "Javascript", "Borg", "CSS", "HTML"]
 # Why
 I began using Borg this year (2022) to manage my machine archives. Currently, my 'main' machine is my M1 MacBook Pro. MacOS doesn't natively support FUSE mounts, which is how one usually browses Borg archives after creation (through use of `borg mount`). Therefore, I was in need of a GUI for Borg that didn't rely on the `mount` subcommand.
 
-I did some searching, but couldn't find anything that fit the bill. The recent trend when I started this project was to have [GPTChat](https://chat.openai.com/chat) design and implement entire websites and applications for you. So I thought I would give that a shot on my own, and ask it for guidance how to make a cross-platform GUI application.
+I did some searching, but couldn't find anything that fit the bill. The recent trend when I started this project was to have [ChatGPT](https://chat.openai.com/chat) design and implement entire websites and applications for you. So I thought I would give that a shot on my own, and ask it for guidance how to make a cross-platform GUI application.
 
 GPTChat recommended some GUI frameworks like QT and wxWidgets, as well as Electron. Electron seemed like the easiest fit for GPTChat to help me with, so I decided to embark on making a GUI app in Electron with the assistance of GPTChat.
 
