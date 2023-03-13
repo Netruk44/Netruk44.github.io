@@ -5,7 +5,7 @@ draft: false
 tags: ["Nix", "OpenMW", "Mac"]
 ---
 
-I have [a little](../my-first-nix-derivation-openstreetmap-overpass/) experience with Nix, but not a whole lot. Recently a post popped up on Hacker News about *[Zero to Nix](https://zero-to-nix.com/)*, which I decided to run through on my M2 MacBook Pro.
+I have [a little](../my-first-nix-derivation-openstreetmap-overpass/) experience with Nix, but not a whole lot. Recently a post popped up on Hacker News about *[Zero to Nix](https://zero-to-nix.com/)*, which I decided to run through on my MacBook Pro.
 
 After [fixing](https://github.com/DeterminateSystems/nix-installer/issues/254#event-8735447050) a minor Mac-specific bug (specific to the *Zero to Nix* installer), I had a Nix installation ready to go! All I needed was something to do with it.
 
