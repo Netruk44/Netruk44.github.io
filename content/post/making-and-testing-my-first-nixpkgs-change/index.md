@@ -18,7 +18,7 @@ I have some projects in mind I'd like to make involving [OpenMW](https://openmw.
 
 > **Note**: Looking at the head version of OpenMW, it looks like a Lua modding API is in the works! Interesting!
 > 
-> However that won't work for what I want to use it for. What I need goes beyond the scope of an-engine Lua script.
+> However that won't work for what I want to use it for. What I need goes beyond the scope of an in-engine Lua script.
 
 In preparation for the projects, I've gotten OpenMW building on my MacBook. Their [instructions](https://wiki.openmw.org/index.php?title=Development_Environment_Setup) were very helpful in getting my build up and running!
 
