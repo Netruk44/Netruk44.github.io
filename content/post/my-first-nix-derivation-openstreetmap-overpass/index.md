@@ -173,7 +173,7 @@ sys     0m0.025s
 
 Great! We now have a reproducible build of the Overpass server binaries. The only final thing remaining is the Overpass wiki suggests compiling with `CXXFLAGS=O2`. A quick search on Nix documentation suggests that this flag might be supplied to g++ by default, however you can also explicitly supply it by simply adding `CXXFLAGS = "02"` into the attribute set you pass to `mkDerivation`.
 
-You can view the current version of that script on my GitHub [here](https://github.com/Netruk44/nix-scripts/blob/main/openstreetmaps_overpass/osm-3s.nix). I may eventually merge this into the nixpkgs repository, though I have some personal legal issues that might prevent me from doing so. So, if someone happens to steal my nix script wholesale and puts it into the nixpkgs repository, I probably wouldn't be upset about it.
+You can view the current version of that script on my GitHub [here](https://github.com/Netruk44/nix-scripts/blob/main/openstreetmaps_overpass/osm-3s.nix).
 
 {{</collapse>}}
 
