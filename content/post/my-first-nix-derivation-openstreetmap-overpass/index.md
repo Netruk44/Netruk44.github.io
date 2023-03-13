@@ -547,7 +547,7 @@ Save, build and deploy. And that's about it, a fully functional Overpass server!
 
 ## Next Steps
 
-And that's it for now. I took a break from working on these scripts to write up this post, since I thought it would be worth sharing with others. The next step for this project is to make a self-updating Docker image. It's possible that I've already done that, and it's available [in my Git repository](https://github.com/Netruk44/nix-scripts/tree/main/openstreetmaps_overpass).
+And that's it for now. I took a break from working on these scripts to write up this post, since I thought it would be worth sharing with others. The next step for this project is to make a self-updating Docker image.
 
 The self-updating server shouldn't be too difficult to make a Docker container for. All that's involved is starting two more executables in addition to the OSM dispatcher. One executable downloads incoming updates, and the other script applies them to the server.
 
