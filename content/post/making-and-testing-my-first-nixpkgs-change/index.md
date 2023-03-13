@@ -147,10 +147,12 @@ Now we're making progress!
 At this point, it's just a matter of peeling the error-onion one layer at a time. Maybe I'll write about the full process of making the entire fix later. But if you're curious, as I mentioned before, you can take a look at my [pull request](https://github.com/NixOS/nixpkgs/pull/220750) for the change. I wrote pretty detailed commit descriptions of the issues I encountered along the way.
 
 Looking back while writing this, it feels so obvious in retrospect that `nix build .#openmw` should have worked. Obvious enough that I feel it doesn't even warrant a post, but also that I probably won't forget how to build my local repository ever again.
-    
+
+Which is the real point of writing this blog post, anyway 😊.
+
 But even though it feels obvious to me *now*, I also remember how I felt before I figured out the answer. The feeling of being overwhelmed with so much information you're not even sure is relevant to what you're trying to do.
 
-In the end though, I managed to peel back the onion of the Mac-specific build errors of OpenMW in nixpkgs, and made my first contribution. Hopefully my rambling on how I struggled past the first step can be helpful to somebody 😊.
+In the end though, I managed to peel back the onion of the Mac-specific build errors of OpenMW in nixpkgs, and made my first contribution. Maybe my rambling on how I struggled past the first step can be helpful to somebody.
 
 
 {{< contact-me box="nix" >}}
