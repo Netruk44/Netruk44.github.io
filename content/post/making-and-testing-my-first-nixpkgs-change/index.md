@@ -5,7 +5,7 @@ draft: false
 tags: ["Nix", "OpenMW", "Mac"]
 ---
 
-I have [a little](../my-first-nix-derivation-openstreetmap-overpass/) experience with Nix, but not a whole lot. Recently a post popped up on Hacker News about *[Zero to Nix](https://zero-to-nix.com/)*, which I decided to run through on my MacBook Pro.
+I have [a little](../my-first-nix-derivation-openstreetmap-overpass/) experience with Nix, but not a whole lot. Recently a post popped up on Hacker News about *[Zero to Nix](https://zero-to-nix.com/)*, which I decided to run through on my MacBook.
 
 After [fixing](https://github.com/DeterminateSystems/nix-installer/issues/254#event-8735447050) a minor Mac-specific bug (specific to the *Zero to Nix* installer), I had a Nix installation ready to go! All I needed was something to do with it.
 
@@ -22,7 +22,7 @@ I have some projects in mind I'd like to make involving [OpenMW](https://openmw.
 
 In preparation for the projects, I've gotten OpenMW building on my MacBook. Their [instructions](https://wiki.openmw.org/index.php?title=Development_Environment_Setup) were very helpful in getting my build up and running!
 
-However, the process does include some manual steps to install dependencies. Mac even has a separate repository to build them! It would be nice for future-me if I didn't have to go through the process of re-learining how to build OpenMW from scratch. Having OpenMW on Mac in Nix would get me exactly that. In addition, it would be massively easier for me to redistribute my projects if I can just tell people to use Nix to build and install it.
+However, the process does include some manual steps to install dependencies. Mac even has a separate repository to build them! It would be nice for future-me if I didn't have to go through the process of re-learning how to build OpenMW from scratch. Having OpenMW on Mac in Nix would get me exactly that. In addition, it would be massively easier for me to redistribute my projects if I can just tell people to use Nix to build and install it.
 
 Luckily, OpenMW is [already in nixpkgs](https://github.com/NixOS/nixpkgs/blob/master/pkgs/games/openmw/default.nix)! But the version of OpenMW in nixpkgs only has Linux support. Here's the relevant section of the derivation:
 
