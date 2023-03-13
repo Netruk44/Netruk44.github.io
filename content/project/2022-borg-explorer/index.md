@@ -72,3 +72,5 @@ Eventually, I got tired of trying to form my code queries in the form of a chat 
 {{% img-subtitle %}}
 *Extract dialogue.*
 {{% /img-subtitle %}}
+
+{{</collapse>}}
