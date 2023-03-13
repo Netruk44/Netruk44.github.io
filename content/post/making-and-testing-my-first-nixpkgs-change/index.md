@@ -22,7 +22,7 @@ I have some projects in mind I'd like to make involving [OpenMW](https://openmw.
 
 In preparation for the projects, I've gotten OpenMW building on my MacBook. Their [instructions](https://wiki.openmw.org/index.php?title=Development_Environment_Setup) were very helpful in getting my build up and running!
 
-However, the process does include some manual steps to install dependencies. Mac even has a separate repository to build them! It would be nice for future-me if I didn't have to go through the process of re-learning how to build OpenMW from scratch. Having OpenMW on Mac in Nix would get me exactly that. In addition, it would be massively easier for me to redistribute my projects if I can just tell people to use Nix to build and install it.
+However, the process does include some manual steps to install dependencies. Mac even has a separate repository to build them! It would be nice for future-me if I didn't have to go through the process of re-learning how to build OpenMW from scratch. Having OpenMW on Mac in Nix would get me exactly that. In addition, using Nix would give me a pretty easy way to 'redistribute' my projects by having users use Nix to build it themselves.
 
 Luckily, OpenMW is [already in nixpkgs](https://github.com/NixOS/nixpkgs/blob/master/pkgs/games/openmw/default.nix)! But the version of OpenMW in nixpkgs only has Linux support. Here's the relevant section of the derivation:
 
