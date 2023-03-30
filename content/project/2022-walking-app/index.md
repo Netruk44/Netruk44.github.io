@@ -6,7 +6,7 @@ draft: false
 tags: ["Godot", "GDScript", "OpenStreetMap", "Azure"]
 ---
 
-An application intended to help you thoroughly explore an area of the map. Pick an area of the world map with roads or paths that you'd like to explore every part of. Then, import GPX files tracking previous excursions through that area, and try to 'fill out' the entire map by visiting every point.
+An application intended to help you thoroughly explore an area of the world. Pick an area of the world map with roads or paths that you'd like to explore every part of. Then, import GPX files tracking previous excursions through that area, and try to 'fill out' the entire map by visiting every point.
 
 As a stretch goal, the program will encourage re-exploration of an area by gradually fading away explored areas as time goes on. This way, you can re-explore the same areas multiple times, possibly revisiting the same routes from different angles.
 
