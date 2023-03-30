@@ -1,5 +1,5 @@
 ---
-title: "Walking App (Name TBD)"
+title: "Walking App (Prototype)"
 linktitle: "Walking App"
 date: 2022-10-03T21:40:06-04:00
 draft: false
