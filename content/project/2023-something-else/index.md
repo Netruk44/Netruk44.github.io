@@ -2,7 +2,7 @@
 title: "Something Else - A mod for OpenMW"
 date: 2023-03-30T16:46:29-04:00
 draft: false
-tags: ["C++", "Python", "OpenMW"]
+tags: ["C++", "Python", "OpenMW", "Machine Learning", "Text Generation"]
 ---
 
 Something Else is a source-level mod that adds machine-generated text to [OpenMW](https://openmw.org/en/), an open-source reimplementation of the game engine from [The Elder Scrolls III: Morrowind](https://elderscrolls.bethesda.net/en/morrowind).
