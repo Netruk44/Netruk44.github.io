@@ -26,6 +26,16 @@ Screenshot of generated dialogue
 * **Status**: Active Development
 * **State** *(As of 2023-03-30)*: Very early development, not fully functional.
 * **Download**: Not currently easily installable. See [installation instructions](https://github.com/Netruk44/ml-interface/blob/main/doc/openmw-install.md) for detailed instructions. 
+* **Repositories**:
+  * **GitHub:**[Netruk44/ml-interface](https://github.com/Netruk44/ml-interface)
+    * Python and shell scripts that interface with various model backends to generate text.
+  * **GitLab:**[Netruk44/OpenMW @ `something-else-mod`](https://gitlab.com/Netruk44/openmw/-/tree/something-else-mod?ref_type=heads)
+    * Modifications to the dialogue window to allow custom text input.
+  * **GitHub:**[Netruk44/nixpkgs @ `openmw-ipc-mod`](https://github.com/Netruk44/nixpkgs/tree/openmw-ipc-mod)
+    * The 'build system' for the mod.
+    * Package name: `openmw-mod-something-else`
+
+> **Note**: See [How it works](#how-it-works) for more info about the individual pieces.
 
 ## Description
 The starting point for "Something Else" is as a conversation mod for Morrowind. You enter in a custom line of text you would like to say to the NPC, and a machine-generated response is created for you. Wouldn't it be nice if you could say something outside of a small list of predefined in-game topics? The goal is to have a mod that allows you to do just that.
@@ -68,6 +78,6 @@ Screenshot of first generated dialogue using OpenAI's GPT Chat Completion API.
 
 # How it works
 
-Here's a diagram that gives a high-level abstracted overview of how it all works.
+Here's a diagram that gives a high-level abstracted overview of how the mod works:
 
 ![](./project_overview.png)
