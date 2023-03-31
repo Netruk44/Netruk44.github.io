@@ -65,3 +65,9 @@ Screenshot of first ever generated dialogue using t5-small.
 Screenshot of first generated dialogue using OpenAI's GPT Chat Completion API.  
 *(With the expected vastly improved results compared to un-finetuned T5-small)*
 {{% /img-subtitle %}}
+
+# How it works
+
+Here's a diagram that gives a high-level abstracted overview of how it all works.
+
+![](./project_overview.png)
