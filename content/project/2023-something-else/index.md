@@ -7,7 +7,7 @@ tags: ["C++", "Python", "OpenMW", "Machine Learning", "Text Generation", "Nix"]
 
 Something Else is a source-level mod that adds machine-generated text to [OpenMW](https://openmw.org/en/), an open-source reimplementation of the game engine from [The Elder Scrolls III: Morrowind](https://elderscrolls.bethesda.net/en/morrowind).
 
-The name comes from the button added to the dialogue window that allows you to enter a custom line of dialogue to speak to the NPC.
+The name comes from a new button added to the dialogue window that allows you to enter a custom line of dialogue to speak to an NPC.
 
 {{< contact-me box="somethingelse" is-mid-article=true >}}
 
