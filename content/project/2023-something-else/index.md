@@ -17,7 +17,8 @@ The name comes from a new button added to the dialogue window that allows you to
 The button
 {{% /img-subtitle %}}
 
-![](./03_28_openai.png)
+<!-- ![](./03_28_openai.png) -->
+[![](./04_03_dialogue_history_3.png)](./04_03_dialogue_history_3.png)
 {{% img-subtitle %}}
 Screenshot of generated dialogue  
 *(using OpenAI's GPT Chat Completion API)*
@@ -63,7 +64,7 @@ With that in mind, the end goal for the mod is to (eventually) be a little bit m
   * Instead of just clicking "Taunt", "Bribe" and "Intimidate" buttons, you can roleplay your way through the conversation instead.
 
 # Screenshots
-![](./03_27_t5_small.png)
+[![](./03_27_t5_small.png)](./03_27_t5_small.png)
 {{% img-subtitle %}}
 **2023-03-27**  
 Screenshot of first ever generated dialogue using t5-small.  
@@ -71,11 +72,29 @@ Screenshot of first ever generated dialogue using t5-small.
 *The model mostly just regurgitates the input json.)*
 {{% /img-subtitle %}}
 
-![](./03_28_openai.png)
+[![](./03_28_openai.png)](./03_28_openai.png)
 {{% img-subtitle %}}
 **2023-03-28**  
 Screenshot of first generated dialogue using OpenAI's GPT Chat Completion API.  
 *(With the expected vastly improved results compared to un-finetuned T5-small)*
+{{% /img-subtitle %}}
+
+[![](./04_03_dialogue_history_1.png)](./04_03_dialogue_history_1.png)
+{{% img-subtitle %}}
+Screenshot of first generated dialogue with the model aware of dialogue history.
+*(Using OpenAI's GPT Chat Completion API)*
+{{% /img-subtitle %}}
+
+[![](./04_03_dialogue_history_2.png)](./04_03_dialogue_history_2.png)
+{{% img-subtitle %}}
+Screenshot of generated dialogue with the model aware of dialogue history.
+*(Using OpenAI's GPT Chat Completion API)*
+{{% /img-subtitle %}}
+
+[![](./04_03_dialogue_history_3.png)](./04_03_dialogue_history_3.png)
+{{% img-subtitle %}}
+Screenshot of generated dialogue with the model aware of dialogue history.
+*(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
 # How it works
