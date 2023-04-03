@@ -81,19 +81,19 @@ Screenshot of first generated dialogue using OpenAI's GPT Chat Completion API.
 
 [![](./04_03_dialogue_history_1.png)](./04_03_dialogue_history_1.png)
 {{% img-subtitle %}}
-Screenshot of first generated dialogue with the model aware of dialogue history.
+Screenshot of first generated dialogue with the model aware of dialogue history.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
 [![](./04_03_dialogue_history_2.png)](./04_03_dialogue_history_2.png)
 {{% img-subtitle %}}
-Screenshot of generated dialogue with the model aware of dialogue history.
+Screenshot of generated dialogue with the model aware of dialogue history.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
-[![](./04_03_dialogue_history_3.png)](./04_03_dialogue_history_3.png)
+[![](./04_03_custom_topic.png)](./04_03_custom_topic.png)
 {{% img-subtitle %}}
-Screenshot of generated dialogue with the model aware of dialogue history.
+Come up with your own custom topics if the list doesn't cover what you're looking for.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
