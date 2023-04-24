@@ -97,6 +97,12 @@ Come up with your own custom topics if the list doesn't cover what you're lookin
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
+[![](./04_23_disposition.png)](./04_23_disposition.png)
+{{% img-subtitle %}}
+Giving some additional context to the model, such as disposition, what faction the NPC is in, what class the player is, their name, etc.  
+*(Using OpenAI's GPT Chat Completion API)*
+{{% /img-subtitle %}}
+
 # How it works
 
 Here's a diagram that gives a high-level abstracted overview of how the mod works:
