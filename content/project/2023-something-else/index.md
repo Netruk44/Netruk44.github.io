@@ -30,10 +30,13 @@ Screenshot of generated dialogue
 * **Source**:
   * **GitHub:**[Netruk44/ml-interface](https://github.com/Netruk44/ml-interface)
     * Python and shell scripts that interface with various model backends to generate text.
+    * Currently holds the logic to transform the context json into the dialogue format that GPT Chat works with.
   * **GitLab:**[Netruk44/OpenMW @ `something-else-mod`](https://gitlab.com/Netruk44/openmw/-/tree/something-else-mod?ref_type=heads)
     * Modifications to the dialogue window to allow custom text input.
+    * Creation of context json object that gets sent to the ml-interface scripts.
   * **GitHub:**[Netruk44/nixpkgs @ `openmw-ipc-mod`](https://github.com/Netruk44/nixpkgs/tree/openmw-ipc-mod)
     * The 'build system' for the mod.
+    * Packages everything into a runnable executable.
     * Package name: `openmw-mod-something-else`
 
 > **Note**: See [How it works](#how-it-works) for more info about the individual pieces.
