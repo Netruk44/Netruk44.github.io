@@ -99,6 +99,7 @@ Come up with your own custom topics if the list doesn't cover what you're lookin
 
 [![](./04_23_disposition.png)](./04_23_disposition.png)
 {{% img-subtitle %}}
+**2023-04-23**  
 Giving some additional context to the model, such as disposition, what faction the NPC is in, what class the player is, their name, etc.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
