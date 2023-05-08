@@ -24,7 +24,7 @@ Screenshot of generated dialogue
 {{% /img-subtitle %}}
 
 * **Status**: Active Development
-* **State** *(As of 2023-05-01)*: In early development. Dialogue generation in conversations is functional, but there's nothing implemented outside of that. (No disposition changes for being rude/nice, no dynamic quest generations, no memory of conversations, etc.)
+* **State** *(As of 2023-05-01)*: In early development. Dialogue generation in conversations is functional, but there's nothing implemented outside of that. (No disposition changes for being rude/nice, no memory of conversations, the model isn't aware of the actor's knowledge, etc.)
 * **Download**: Not currently easily installable. See [installation instructions](https://github.com/Netruk44/ml-interface/blob/main/doc/openmw-install.md) for detailed instructions. 
 * **Source**:
   * **GitHub:**[Netruk44/ml-interface](https://github.com/Netruk44/ml-interface)
