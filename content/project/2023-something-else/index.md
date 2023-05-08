@@ -17,7 +17,6 @@ The name comes from a new button added to the dialogue window that allows you to
 The button
 {{% /img-subtitle %}}
 
-<!-- ![](./03_28_openai.png) -->
 [![](./04_03_dialogue_history_3.png)](./04_03_dialogue_history_3.png)
 {{% img-subtitle %}}
 Screenshot of generated dialogue  
@@ -25,12 +24,12 @@ Screenshot of generated dialogue
 {{% /img-subtitle %}}
 
 * **Status**: Active Development
-* **State** *(As of 2023-03-30)*: Very early development, not fully functional.
+* **State** *(As of 2023-05-01)*: In early development. Dialogue generation in conversations is functional, but there's nothing implemented outside of that. (No disposition changes for being rude/nice, no dynamic quest generations, no memory of conversations, etc.)
 * **Download**: Not currently easily installable. See [installation instructions](https://github.com/Netruk44/ml-interface/blob/main/doc/openmw-install.md) for detailed instructions. 
 * **Source**:
   * **GitHub:**[Netruk44/ml-interface](https://github.com/Netruk44/ml-interface)
     * Python and shell scripts that interface with various model backends to generate text.
-    * Currently holds the logic to transform the context json into the dialogue format that GPT Chat works with.
+    * Currently holds the logic to transform the context json into the dialogue format that ChatGPT works with.
   * **GitLab:**[Netruk44/OpenMW @ `something-else-mod`](https://gitlab.com/Netruk44/openmw/-/tree/something-else-mod?ref_type=heads)
     * Modifications to the dialogue window to allow custom text input.
     * Creation of context json object that gets sent to the ml-interface scripts.
@@ -111,4 +110,4 @@ Giving some additional context to the model, such as disposition, what faction t
 
 Here's a diagram that gives a high-level abstracted overview of how the mod works:
 
-![](./project_overview.png)
+[![](./project_overview.png)](./project_overview.png)
