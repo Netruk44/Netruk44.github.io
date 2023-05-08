@@ -66,6 +66,14 @@ With that in mind, the end goal for the mod is to (eventually) be a little bit m
   * Instead of just clicking "Taunt", "Bribe" and "Intimidate" buttons, you can roleplay your way through the conversation instead.
   * Beg for money on the streets, if you're desperate enough. Maybe someone will give you a gold or two.
 
+
+# How it works
+
+Here's a diagram that gives a high-level abstracted overview of how the mod works:
+
+[![](./project_overview.png)](./project_overview.png)
+
+
 # Screenshots
 [![](./03_27_t5_small.png)](./03_27_t5_small.png)
 {{% img-subtitle %}}
@@ -106,9 +114,3 @@ Come up with your own custom topics if the list doesn't cover what you're lookin
 Giving some additional context to the model, such as disposition, what faction the NPC is in, what class the player is, their name, etc.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
-
-# How it works
-
-Here's a diagram that gives a high-level abstracted overview of how the mod works:
-
-[![](./project_overview.png)](./project_overview.png)
