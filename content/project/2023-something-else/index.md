@@ -92,13 +92,13 @@ Screenshot of first generated dialogue using OpenAI's GPT Chat Completion API.
 
 [![](./04_03_dialogue_history_1.png)](./04_03_dialogue_history_1.png)
 {{% img-subtitle %}}
-Screenshot of first generated dialogue with the model aware of dialogue history.  
+Screenshot of first generated dialogue with the model aware of dialogue history, notice how the model matches the length of the message that comes before it.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
 [![](./04_03_dialogue_history_2.png)](./04_03_dialogue_history_2.png)
 {{% img-subtitle %}}
-Screenshot of generated dialogue with the model aware of dialogue history.  
+Screenshot of generated dialogue with the model aware of dialogue history, referencing the contents of a message that came before.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
@@ -111,6 +111,6 @@ Come up with your own custom topics if the list doesn't cover what you're lookin
 [![](./04_23_disposition.png)](./04_23_disposition.png)
 {{% img-subtitle %}}
 **2023-04-23**  
-Giving some additional context to the model, such as disposition, what faction the NPC is in, what class the player is, their name, etc.  
+Giving some additional context to the model, such as disposition, what faction the NPC is in, what race the player is, their name, etc.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
