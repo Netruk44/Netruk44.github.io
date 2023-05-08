@@ -64,6 +64,7 @@ With that in mind, the end goal for the mod is to (eventually) be a little bit m
   * If you're a notorious thief, a shopkeeper might call the guards on you just to keep you out of their store.
   * A trainer may provide you their services for free if you can convince them it'll be worth their time.
   * Instead of just clicking "Taunt", "Bribe" and "Intimidate" buttons, you can roleplay your way through the conversation instead.
+  * Beg for money on the streets, if you're desperate enough. Maybe someone will give you a gold or two.
 
 # Screenshots
 [![](./03_27_t5_small.png)](./03_27_t5_small.png)
