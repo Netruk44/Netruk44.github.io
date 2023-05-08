@@ -9,14 +9,14 @@ Something Else is a source-level mod that adds machine-generated text to [OpenMW
 
 The name comes from a new button added to the dialogue window that allows you to enter a custom line of dialogue to speak to an NPC.
 
-{{< contact-me box="somethingelse" is-mid-article=true >}}
-
-# Info
 ![](./logo.png#center)
 {{% img-subtitle %}}
 The button
 {{% /img-subtitle %}}
 
+{{< contact-me box="somethingelse" is-mid-article=true >}}
+
+# Info
 [![](./04_03_dialogue_history_3.png)](./04_03_dialogue_history_3.png)
 {{% img-subtitle %}}
 Screenshot of generated dialogue  
