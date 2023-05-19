@@ -114,3 +114,11 @@ Come up with your own custom topics if the list doesn't cover what you're lookin
 Giving some additional context to the model, such as disposition, what faction the NPC is in, what race the player is, their name, etc.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
+
+[![](./05_19_using_status.png)](./05_19_using_status.png)
+{{% img-subtitle %}}
+**2023-05-19**  
+Additional context has been added to the prompt given to the model.  
+ Here's an example of the model noticing the player is low on stamina.  
+*(Using OpenAI's GPT Chat Completion API)*
+{{% /img-subtitle %}}
