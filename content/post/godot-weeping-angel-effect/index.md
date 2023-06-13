@@ -211,7 +211,7 @@ For the player-controlled object with built-in camera, I've found [FPSController
 
 You can use the `AssetLib` tab on the top, search for `FPS` and install it into the project. When installing, you should import only the `Player.tscn` and `Player.cs` files, you won't need anything else.
 
-![The Asset Installer dialogue showing just two files selected for import](Step3-2.png#center)
+![The Asset Installer dialogue showing the two files selected for import. The files are located under "fpscontroller/objects/player/"](Step3-2.png#center)
 
 > **Note**: If you attempt to open the `Player.tscn` scene, you'll get an error about a missing dependency:
 >
