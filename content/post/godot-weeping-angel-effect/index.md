@@ -22,19 +22,19 @@ A GitHub repository with the completed tutorial can be found [here](https://gith
 > ### Tangent about Stonewick Manor
 > This doesn't really have anything to do with Godot, but I wanted to provide a little insight as to how the effect was accomplished the first time I tried it in college.
 >
-> ![](Stonewick.jpg#center)
+> ![A screenshot from Stonewick Manor, two pillars with cherub statues on top.](Stonewick.jpg#center)
 >
 > Our very first attempt at implementing this effect was to do a dot product between the player's facing direction and the statue's current location. We checked to see if the product was lower than a certain value. If it was below that threshold, we knew that the statue was located within the player's field of view.
 >
 > However, we felt this approach was lacking. There's a few issues with it, but our main issue with it was that you could effectively neuter the cherub just by looking in its direction through walls (remember this for later!). We wanted something a little more robust than that.
 >
-> ![](Stonewick2.jpg#center)
+> ![A screenshot from Stonewick Manor, a large empty room with unpainted walls and a staircase, lit by a pole light. Underneath the staircase is a door with red light bleeding out from underneath.](Stonewick2.jpg#center)
 >
 > In the final version of Stonewick Manor, we accomplished this effect by rendering the frame two times, with a whole pass dedicated to figuring out what's on-screen. We felt we could get away with rendering everything twice, because as a college game the art wasn't exactly very demanding on the hardware.
 >
 > On the second render, we would render everything but the statue in black to a texture. This was mainly intended to set up the z-buffer to quickly reject rendering the cherub, which we then rendered in a pseudorandom color (derived from its handle ID). Finally, we then checked the texture to see if any non-black pixels existed within it. If we did find non-black pixels, the color of it told us which character was currently visible. This way, we knew when it was safe for the statue to be moving, and when the statue should stop moving.
 >
-> ![](Stonewick3.jpg#center)
+> ![A screenshot from Stonewick Manor, a brick room filled with wooden boxes that act as makeshift walls. There is a table with a key on top, and candles littered throughout the room.](Stonewick3.jpg#center)
 >
 > As part of the implementation, I wrote a little bit of handcrafted assembly to check the texture for non-black pixels (`repne scasb` is very fast!). I was very proud of it at the time, but I feel compilers would probably do something like that optimization for you automatically these days.
 >
@@ -46,33 +46,33 @@ A GitHub repository with the completed tutorial can be found [here](https://gith
 
 To begin, create a new scene which will contain the object that will be moving behind the player's back.
 
-![](Step1-1.png#center)
+![The Godot Editor](Step1-1.png#center)
 
 When creating the root note, select "Other Node" and create a `CharacterBody3D`. A [CharacterBody3D](https://docs.godotengine.org/en/stable/classes/class_characterbody3d.html) is a node that is used to represent a character in a 3D game. It has a few useful properties, such as a `velocity` property that can be used to move the character around.
 
-![](Step1-2.png#center)
+![The create new node dialogue in Godot, showing the tree "Node3D/CollisionObject3D/PhysicsBody3D/CharacterBody3D"](Step1-2.png#center)
 
 Create the root node, and change the name to something more appropriate than `CharacterBody3D`, e.g. `Statue`. For this tutorial, we're just going to make a sphere that moves itself around offscreen, so I'll name mine `Ball`.
 
 Godot should now be warning you that you need to add a `CollisionShape` to the object. A [CollisionShape](https://docs.godotengine.org/en/stable/classes/class_collisionshape3d.html) is a node that represents the shape of an object in the game world. This is for physics collisions only, the visibility calculations use a separate shape.
 
-![](Step1-3.png#center)
+![The create new node dialogue in Godot, showing the tree "Node3D/CollisionShape3D"](Step1-3.png#center)
 
 Add a `CollisionShape3D` to the object, and in the right-hand side menu create a new shape for the collision. What you should use depends on what kind of object you're going to be applying this effect to. For this simple tutorial, we're going to be making a ball, so we'll use a `SphereShape3D`.
 
-![](Step1-4.png#center)
+![The Godot editor, showing the shape creation menu](Step1-4.png#center)
 
 Now that we have a body and shape, we need to give it some kind of visual representation. Add a `MeshInstance3D` to the ball, and in the right-hand side menu create a new `SphereMesh`. Or if you're using your own model, you can load that instead.
 
-![](Step1-5.png#center)
-![](Step1-6.png#center)
+![The create new node dialogue in Godot, showing the tree "Node3D/VisualInstance3D/GeometryInstance3D/MeshInstance3D"](Step1-5.png#center)
+![The Godot editor, showing the mesh creation menu](Step1-6.png#center)
 
 And, finally, we need to add a `VisibleOnScreenNotifier3D` to the ball. You might be able to guess its purpose. This is the node that will tell us when the object is (possibly) visible on-screen. We'll use this to determine when the object should be moving.
 
 > "Possibly" because the visibility heuristics are not perfect. They are designed to be used for culling, which means they will err on the side of assuming the object is visible even when it may not be, as we'll see and fix later.
 
-![](Step1-7.png#center)
-![](Step1-8.png#center)
+![The create new node dialogue in Godot, showing the tree "Node3D/VisualInstance3D/VisibleOnScreenNotifier3D"](Step1-7.png#center)
+![The Godot editor, showing the gizmo and configuration for the VisibleOnScreenNotifier3D](Step1-8.png#center)
 
 You'll notice the default shape for the visibilty notifier is a cube, and not a sphere like the object we made. This is because Godot uses Axis-Aligned Bounding Boxes for the visibility heuristics. As of Godot 4.0, there is no way to change the shape of the visibility notifier, so we'll have to make do with a cube.
 
@@ -80,7 +80,7 @@ Adjust the size of the cube to be closer to the size of the object. This will be
 
 > **Note**: If you make the size of the AABB to exactly fit the object within, you may notice that you can see the shadow of the object moving off-frame. If this is undesirable for your scenario, you should make the AABB large enough to encompass the object's shadow as well.
 
-![](Step1-9.png#center)
+![The Godot editor, showing the resized gizmo](Step1-9.png#center)
 
 Save the object, and move onto creating the script.
 
@@ -92,14 +92,14 @@ For this tutorial, I will be showing you how to do this in C#, but the same prin
 
 Right click the object and select "Attach Script".
 
-![](Step2-1.png#center)
+![The Godot editor, showing the context menu when right clicking on a node, with "attach script" selected](Step2-1.png#center)
 
 Change the language to C# (or don't), and save the script.
 
 > **Note**: If this is the first C# script you're making for this project, make sure to create the solution file, too. You can do this by going to `Project > Tools > C# > Generate C# Solution` in the top menu. If you don't do this, your scripts won't be compiled and nothing will work.
 
-![](Step2-2.png#center)
-![](Step2-3.png#center)
+![The Attach Node Script menu, with Language set to C#](Step2-2.png#center)
+![The Script tab in the Godot editor, showing the newly created script](Step2-3.png#center)
 
 By default, the script will be created with a template specific to `CharacterBody3D`, which contains some code we won't need. Remove code in the `_PhysicsProcess` function until it looks like this (or just copy and paste this code):
 
@@ -201,17 +201,17 @@ Make sure to also add a light. We'll add a camera and player-controlled object a
 
 This is the level I made:
 
-![](Step3-1.png#center)
+![The Godot editor, showing a simple level with four cylindar pillars and cuboid walls connecting some of the pillars](Step3-1.png#center)
 
 For the player-controlled object with built-in camera, I've found [FPSControllerMono](https://github.com/ismailgamedev/FPS-Controller-Mono) to be an okay starting point, but as of writing this the plugin has not yet been updated for Godot 4.0 and fails to build, so you may need to make some fixes.
 
 You can use the `AssetLib` tab on the top, search for `FPS` and install it into the project. When installing, you should import only the `Player.tscn` and `Player.cs` files, you won't need anything else.
 
-![](Step3-2.png#center)
+![The Asset Installer dialogue showing just two files selected for import](Step3-2.png#center)
 
 > **Note**: If you attempt to open the `Player.tscn` scene, you'll get an error about a missing dependency:
 >
->![](Step3-3.png#center)
+>![An error dialogue titled "Error loading: Player.tscn" with the message "Load failed due to missing dependencies: res://default_env.tres", with the button "Open Anyway" highlighted](Step3-3.png#center)
 >
 >This error is unimportant, and can be ignored. It's complaining that we didn't import one of the environment files that was stored in the plugin we downloaded. The environment contains configuration for the camera with settings such as bloom, SSAO, and other post-processing effects. We don't need this for our purposes, so we can just ignore it.
 
@@ -219,15 +219,18 @@ Next, set up input bindings for your project. You can do this by going to `Proje
 
 At a minimum, you will need to define the following actions before you can play the game (you can bind them however you like):
 
-![](Step3-4.png#center)
+![The Project Settings dialogue, opened to the Input Map. The defined actions are Jump, Crouch, Sprint, Move_Left, Move_Right, Move_Forward, Move_Backward. These actions are bound to keyboard keys.](Step3-4.png#center)
 
 Now import the player into your environment by dragging `Player.tscn` into the scene. Make sure to move the player out of the ground if necessary.
 
-![](Step3-5.png#center)
+![The Godot Editor, showing the player object in the environment](Step3-5.png#center)
 
 Now you can hit the "Play" button in the upper right hand corner and walk around your environment.
 
-![](Step3-6.png#center)
+![A screenshot from the game outside of the editor. The player is looking up at the walls and pillars, which tower above them.](Step3-6.png#center)
+{{% img-subtitle %}}
+*I thought the player would be a little bit taller than this, but it's fine.*
+{{% /img-subtitle %}}
 
 Add a few of the balls to the scene in the same way you added the player, and run the game again. You should be able to see, or rather *shouldn't* see, the balls moving while you look away.
 
@@ -251,15 +254,15 @@ Godot uses some heuristics inside `VisibleOnScreenNotifier3D` to determine if an
 
 To enable occlusion culling, go to `Project > Project Settings` in the top menu, then enable `Advanced Settings`. Go to `Rendering/Occlusion Culling` and set `Use Occlusion Culling` to `On`.
 
-![](Step4-1.png#center)
+![The Project Settings Dialogue, annotated with red numbers. Number 1 is the Advanced Settings toggle, which has been toggled on. Number 2 is on the left-hand list of setting categories, showing where "Rendering/Occlusion Culling" is in the list. Number 3 is on the checkbox for "Use Occlusion Culling", which is checked.](Step4-1.png#center)
 
 Now in your environment, select the 'Environment' node you created earlier, and add an `OccluderInstance3D` node as a child, alongside your environment objects.
 
-![](Step4-2a.png#center)
+![The create new node dialogue in Godot, showing the tree "Node3D/OccluderInstance3D"](Step4-2a.png#center)
 
 This is the node that creates the occlusion map for the scene. With the node selected, you'll notice a new button on your viewport: `Bake Occluders`.
 
-![](Step4-2.png#center)
+![The Godot editor, with a red outline around a new button that has appeared at the top of the viewport labeled "Bake Occluders"](Step4-2.png#center)
 
 Click the button to generate the occlusion map. You will be asked to save the resulting file somewhere in your project folder.
 
