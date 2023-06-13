@@ -208,7 +208,7 @@ This is the level I made:
 
 ![The Godot editor, showing a simple level with four cylindar pillars and cuboid walls connecting some of the pillars](Step3-1.png#center)
 
-For the player-controlled object with built-in camera, I've found [FPSControllerMono](https://github.com/ismailgamedev/FPS-Controller-Mono) to be an okay starting point, but as of writing this the plugin has not yet been updated for Godot 4.0 and fails to build, so you may need to make some fixes.
+For the player-controlled object with built-in camera, I've found [FPSControllerMono](https://github.com/ismailgamedev/FPS-Controller-Mono) to be an okay starting point, but as of writing this the plugin has not yet been updated for Godot 4.0 and fails to compile cleanly, so you may need to make some fixes.
 
 You can use the `AssetLib` tab on the top, search for `FPS` and install it into the project. When installing, you should import only the `Player.tscn` and `Player.cs` files, you won't need anything else.
 
