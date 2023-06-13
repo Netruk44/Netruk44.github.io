@@ -17,7 +17,7 @@ So let's try to make this kind of effect happen in Godot!
 Here's a preview of the effect we're going to be making:
 {{< video source="https://storage.danieltperry.me/share/website-videos/godot-weeping-angel/StatueTest.mp4" id="intro-video" >}}
 
-A GitHub repository with the completed sample project can be found [here](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel).
+A GitHub repository with the completed tutorial can be found [here](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel).
 
 > ### Tangent about Stonewick Manor
 > This doesn't really have anything to do with Godot, but I wanted to provide a little insight as to how the effect was accomplished the first time I tried it in college.
@@ -38,7 +38,7 @@ A GitHub repository with the completed sample project can be found [here](https:
 >
 > As part of the implementation, I wrote a little bit of handcrafted assembly to check the texture for non-black pixels (`repne scasb` is very fast!). I was very proud of it at the time, but I feel compilers would probably do something like that optimization for you automatically these days.
 >
-> This tutorial will be using a similar approach, but instead of rendering the frame twice, we will instead be using the Godot engine's built-in visibility heuristics to determine when the statue is visible.
+> Stonewick Manor was made with a custom-written game engine in C++ and using DirectX. Much like compilers have gotten a whole lot better in the 10+ years since I was in college, so too have off-the-shelf game engines drastically improved. This tutorial will be using the Godot engine's built-in visibility heuristics to determine when the statue is visible. No complicated math or assembly required!
 
 ## The Godot Way
 
