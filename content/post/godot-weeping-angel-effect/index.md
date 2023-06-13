@@ -33,6 +33,8 @@ A GitHub repository with the completed sample project can be found [here](https:
 >
 > On the second render, we would render everything but the statue in black to a texture. Once the occluders were rendered, we then rendered the statue in a pseudorandom color (derived from its handle ID) to the texture. Finally, we then checked the texture to see if any non-black pixels were rendered. If we did find non-black pixels, the color of it told us which character was currently visible. This way, we knew when it was safe for the statue to be moving, and when the statue should stop moving.
 >
+> ![](Stonewick3.jpg#center)
+>
 > As part of the implementation, I wrote a little bit of handcrafted assembly to check the texture for non-black pixels (`repne scasb` is very fast!). I was very proud of it at the time, but I feel compilers would probably do something like that optimization for you automatically these days.
 >
 > This tutorial will be using a similar approach, but instead of rendering the frame twice, we will instead be using the Godot engine's built-in visibility heuristics to determine when the statue is visible.
