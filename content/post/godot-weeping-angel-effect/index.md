@@ -32,7 +32,7 @@ A GitHub repository with the completed tutorial can be found [here](https://gith
 >
 > In the final version of Stonewick Manor, we accomplished this effect by rendering the frame two times, with a whole pass dedicated to figuring out what's on-screen. We felt we could get away with rendering everything twice, because as a college game the art wasn't exactly very demanding on the hardware.
 >
-> On the second render, we would render everything but the statue in black to a texture. Once the occluders were rendered, we then rendered the statue in a pseudorandom color (derived from its handle ID) to the texture. Finally, we then checked the texture to see if any non-black pixels were rendered. If we did find non-black pixels, the color of it told us which character was currently visible. This way, we knew when it was safe for the statue to be moving, and when the statue should stop moving.
+> On the second render, we would render everything but the statue in black to a texture. This was mainly intended to set up the z-buffer to quickly reject rendering the cherub, which we then rendered in a pseudorandom color (derived from its handle ID). Finally, we then checked the texture to see if any non-black pixels existed within it. If we did find non-black pixels, the color of it told us which character was currently visible. This way, we knew when it was safe for the statue to be moving, and when the statue should stop moving.
 >
 > ![](Stonewick3.jpg#center)
 >
