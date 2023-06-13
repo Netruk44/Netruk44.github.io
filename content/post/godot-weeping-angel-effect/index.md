@@ -25,13 +25,13 @@ Here's a preview of the effect we're going to be making:
 >
 > Our very first attempt at implementing this effect was to do a dot product between the player's facing direction and the statue's current location. We checked to see if the product was lower than a certain value. If it was below that threshold, we knew that the statue was located within the player's field of view.
 >
-> However, we felt this approach was lacking. There's a few issues with it, but our main issue with it was that you could effectively pacify the cherub just by looking in its direction through walls (remember this for later!). We wanted something a little more robust than that.
+> However, we felt this approach was lacking. There's a few issues with it, but our main complaint was that you could effectively pacify the cherub just by looking in its direction through walls (remember this for later!). We wanted something a little more robust than that.
 >
 > ![A screenshot from Stonewick Manor, a large empty room with unpainted walls and a staircase, lit by a pole light. Underneath the staircase is a door with red light bleeding out from underneath.](Stonewick2.jpg#center)
 >
 > In the final version of Stonewick Manor, we accomplished this effect by rendering the frame two times, with a whole pass dedicated to figuring out what's on-screen. We felt we could get away with rendering everything twice, because as a college game the art wasn't exactly very demanding on the hardware.
 >
-> On the second render, we would render everything but the statue in black to a texture. This was mainly intended to set up the z-buffer to quickly reject rendering the cherub, which we then rendered in a pseudorandom color (derived from its handle ID). Finally, we then checked the texture to see if any non-black pixels existed within it. If we did find non-black pixels, the color of it told us which character was currently visible. This way, we knew when it was safe for the statue to be moving, and when the statue should stop moving.
+> On the second render, we would render everything but the statue in black to a texture. This was mainly intended to set up the z-buffer to quickly reject rendering the cherub, which we then rendered in a pseudorandom color (derived from its handle ID). Finally, we checked the texture to see if any non-black pixels existed within it. If we did find non-black pixels, the color of it told us which character was currently visible. This way, we knew when it was safe for the statue to be moving, and when the statue should stop moving.
 >
 > ![A screenshot from Stonewick Manor, a brick room filled with wooden boxes that act as makeshift walls. There is a table with a key on top, and candles littered throughout the room.](Stonewick3.jpg#center)
 >
