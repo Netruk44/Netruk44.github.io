@@ -250,7 +250,11 @@ To enable occlusion culling, go to `Project > Project Settings` in the top menu,
 
 ![](Step4-1.png#center)
 
-Now in your environment, select the 'Environment' node you created earlier, and add an `OccluderInstance3D` node as a child, alongside your environment objects. This is the node that creates the occlusion map for the scene. With the node selected, you'll notice a new button on your viewport: `Bake Occluders`.
+Now in your environment, select the 'Environment' node you created earlier, and add an `OccluderInstance3D` node as a child, alongside your environment objects.
+
+![](Step4-2a.png#center)
+
+This is the node that creates the occlusion map for the scene. With the node selected, you'll notice a new button on your viewport: `Bake Occluders`.
 
 ![](Step4-2.png#center)
 
