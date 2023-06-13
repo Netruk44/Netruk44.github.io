@@ -9,15 +9,14 @@ I've recently been working on implementing some game concepts in the [Godot game
 
 One of the core game mechanics of that game was a little cherub statue that followed you around. But there's a catch, it can only move when you aren't looking at it. The idea was, naturally, inspired by *Dr. Who*'s [Weeping Angels](https://en.wikipedia.org/wiki/Blink_(Doctor_Who)).
 
-So let's try to make this kind of effect happen in Godot!
+Let's try to create this kind of effect in Godot!
 
 **Godot Version**: 4.0.3 .NET  
-**Difficulty**: Easy - Intermediate
+**Difficulty**: Easy - Intermediate  
+**GitHub Repository**: Completed tutorial [here](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel)
 
 Here's a preview of the effect we're going to be making:
 {{< video source="https://storage.danieltperry.me/share/website-videos/godot-weeping-angel/StatueTest.mp4" id="intro-video" >}}
-
-A GitHub repository with the completed tutorial can be found [here](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel).
 
 > ### Tangent about Stonewick Manor
 > This doesn't really have anything to do with Godot, but I wanted to provide a little insight as to how the effect was accomplished the first time I tried it in college.
@@ -36,9 +35,9 @@ A GitHub repository with the completed tutorial can be found [here](https://gith
 >
 > ![A screenshot from Stonewick Manor, a brick room filled with wooden boxes that act as makeshift walls. There is a table with a key on top, and candles littered throughout the room.](Stonewick3.jpg#center)
 >
-> As part of the implementation, I wrote a little bit of handcrafted assembly to check the texture for non-black pixels (`repne scasb` is very fast!). I was very proud of it at the time, but I feel compilers would probably do something like that optimization for you automatically these days.
+> Stonewick Manor was made with a custom-written game engine in C++ and using DirectX. As part of the implementation, I wrote a little bit of handcrafted assembly to check the texture for non-black pixels (It turns out that `repne scasb` is pretty quick). I was very proud of it at the time, but I feel compilers would probably do something like that optimization for you automatically these days.
 >
-> Stonewick Manor was made with a custom-written game engine in C++ and using DirectX. Much like compilers have gotten a whole lot better in the 10+ years since I was in college, so too have off-the-shelf game engines drastically improved. This tutorial will be using the Godot engine's built-in visibility heuristics to determine when the statue is visible. No complicated math or assembly required!
+> And while compilers have gotten a whole lot better in the 10+ years since I was in college, so too have off-the-shelf game engines drastically improved. This tutorial will be using the Godot engine's <u>built-in</u> visibility heuristics to determine when our object is visible. No complicated math or handcrafted assembly required!
 
 ## The Godot Way
 
