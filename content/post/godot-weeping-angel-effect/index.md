@@ -16,7 +16,7 @@ For this tutorial, I'll be using **Godot 4.0 dotnet** (specifically, version 4.0
 Here's a preview of the effect we're going to be making:
 {{< video source="https://storage.danieltperry.me/share/website-videos/godot-weeping-angel/StatueTest.mp4" id="intro-video" >}}
 
-A GitHub repository with the completed sample project can be found [here]().
+A GitHub repository with the completed sample project can be found [here](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel).
 
 > ### Tangent about Stonewick Manor
 > This doesn't really have anything to do with Godot, but I wanted to provide a little insight as to how the effect was accomplished the first time I tried it in college.
@@ -260,6 +260,6 @@ Run the game again, and you should notice an improvement in the effect:
 
 ## Conclusion
 
-And that's it! You should now have a working Weeping Angel effect in your game. If you want to see the full source code for this project, you can find it on my [GitHub]().
+And that's it! You should now have a working Weeping Angel effect in your game. If you want to see the full source code for this completed tutorial, you can find it on my [GitHub](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel).
 
 {{< contact-me box="godot" >}}
