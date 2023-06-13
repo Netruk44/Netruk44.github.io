@@ -67,7 +67,9 @@ Now that we have a body and shape, we need to give it some kind of visual repres
 ![](Step1-5.png#center)
 ![](Step1-6.png#center)
 
-And, finally, we need to add a `VisibleOnScreenNotifier3D` to the ball. This is a node that will tell us when the object is visible on-screen. We'll use this to determine when the object should be moving.
+And, finally, we need to add a `VisibleOnScreenNotifier3D` to the ball. You might be able to guess its purpose. This is the node that will tell us when the object is (possibly) visible on-screen. We'll use this to determine when the object should be moving.
+
+> "Possibly" because the visibility heuristics are not perfect. They are designed to be used for culling, which means they will err on the side of assuming the object is visible even when it may not be, as we'll see and fix later.
 
 ![](Step1-7.png#center)
 ![](Step1-8.png#center)
