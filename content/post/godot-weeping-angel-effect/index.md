@@ -75,7 +75,7 @@ You'll notice the default shape for the visibilty notifier is a cube, and not a 
 
 Adjust the size of the cube to be closer to the size of the object. This will be a manual process if you are using a custom model, but if you're using a generated shape then you should be able to calculate the size of the box.
 
-> **Note**: If you make the size of the AABB to exactly fit the object within, you may notice that you can see the shadow of the object moving off-frame. If this undesirable for your scenario, you should make the AABB large enough to encompass the object's shadow as well.
+> **Note**: If you make the size of the AABB to exactly fit the object within, you may notice that you can see the shadow of the object moving off-frame. If this is undesirable for your scenario, you should make the AABB large enough to encompass the object's shadow as well.
 
 ![](Step1-9.png#center)
 
