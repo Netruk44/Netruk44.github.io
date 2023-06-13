@@ -57,7 +57,7 @@ Godot should now be warning you that you need to add a `CollisionShape` to the o
 
 ![The create new node dialogue in Godot, showing the tree "Node3D/CollisionShape3D"](Step1-3.png#center)
 
-Add a `CollisionShape3D` to the object, and in the right-hand side menu create a new shape for the collision. What you should use depends on what kind of object you're going to be applying this effect to. For this simple tutorial, we're going to be making a ball, so we'll use a `SphereShape3D`.
+Add a `CollisionShape3D` to the object, and in the right-hand side menu create a new shape for the collision. What you should use depends on what kind of object you're going to be applying this effect to. To our ball, we'll add a `SphereShape3D`.
 
 ![The Godot editor, showing the shape creation menu](Step1-4.png#center)
 
@@ -66,7 +66,7 @@ Now that we have a body and shape, we need to give it some kind of visual repres
 ![The create new node dialogue in Godot, showing the tree "Node3D/VisualInstance3D/GeometryInstance3D/MeshInstance3D"](Step1-5.png#center)
 ![The Godot editor, showing the mesh creation menu](Step1-6.png#center)
 
-And, finally, we need to add a `VisibleOnScreenNotifier3D` to the ball. You might be able to guess its purpose. This is the node that will tell us when the object is (possibly) visible on-screen. We'll use this to determine when the object should be moving.
+And finally, we need to add a `VisibleOnScreenNotifier3D` to the ball. You might be able to guess its purpose. This is the node that will tell us when the object is (possibly) visible on-screen. We'll use this to determine when the object should be moving.
 
 > "Possibly" because the visibility heuristics are not perfect. They are designed to be used for culling, which means they will err on the side of assuming the object is visible even when it may not be, as we'll see and fix later.
 
@@ -81,7 +81,7 @@ Adjust the size of the cube to be closer to the size of the object. This will be
 
 ![The Godot editor, showing the resized gizmo](Step1-9.png#center)
 
-Save the object, and move onto creating the script.
+Save the object, and let's make the script.
 
 ### Step 2 - Create the script
 
@@ -139,6 +139,7 @@ public override void _PhysicsProcess(double delta)
         velocity.Y -= gravity * (float)delta;
 
     // vvvv New Code vvvv
+
     if (!visibleOnScreenNotifier.IsOnScreen())
     {
         // TODO: Move the object
@@ -148,6 +149,7 @@ public override void _PhysicsProcess(double delta)
         // Stop the object.
         velocity.X = velocity.Z = 0;
     }
+
     // ^^^^^^^^^^^^^^^^^^^
 
     Velocity = velocity;
@@ -157,7 +159,7 @@ public override void _PhysicsProcess(double delta)
 
 And that's really just about it. All that's left is determining *where* the object should move when it's off-screen.
 
-For this tutorial, let's make the object just move in circles. Let's keep track of the total time elapsed since the object was created, and use that to determine the angle of movement.
+To keep things simple, let's make the object move in circles. We can keep track of the total time elapsed since the object was created, and use that to determine the angle of movement.
 
 Add a private member to keep track of the time elapsed, and increment it in `_PhysicsProcess`:
 
@@ -200,7 +202,7 @@ When creating your whiteboxed level, make sure to parent all your environment ob
 
 Make sure all your walls and floors contain all three `StaticBody3D`, `CollisionShape3D` and `MeshInstance3D` nodes. Pillars (cylinders) that are wide enough to occlude the entire object are particularly fun to play with.
 
-Make sure to also add a light. We'll add a camera and player-controlled object after the level is created.
+You may also want to add a light with shadows enabled to the scene. And for extra credit, you can assign materials to some of the objects so it's not all flat white surfaces. We'll add a camera and player-controlled object after the level is created.
 
 This is the level I made:
 
