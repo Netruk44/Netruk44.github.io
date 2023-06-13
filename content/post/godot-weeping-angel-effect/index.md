@@ -47,7 +47,7 @@ To begin, create a new scene which will contain the object that will be moving b
 
 ![The Godot Editor](Step1-1.png#center)
 
-When creating the root note, select "Other Node" and create a `CharacterBody3D`. A [CharacterBody3D](https://docs.godotengine.org/en/stable/classes/class_characterbody3d.html) is a node that is used to represent a character in a 3D game. It has a few useful properties, such as a `velocity` property that can be used to move the character around.
+When creating the root node, select "Other Node" and create a `CharacterBody3D`. A [CharacterBody3D](https://docs.godotengine.org/en/stable/classes/class_characterbody3d.html) is a node that is used to represent a character in a 3D game. It has a few useful properties, such as a `velocity` property that can be used to move the character around.
 
 ![The create new node dialogue in Godot, showing the tree "Node3D/CollisionObject3D/PhysicsBody3D/CharacterBody3D"](Step1-2.png#center)
 
