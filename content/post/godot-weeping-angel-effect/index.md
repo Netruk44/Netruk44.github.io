@@ -11,7 +11,8 @@ One of the core game mechanics of that game was a little cherub statue that foll
 
 So let's try to make this kind of effect happen in Godot!
 
-For this tutorial, I'll be using **Godot 4.0 dotnet** (specifically, version 4.0.3).
+**Godot Version**: 4.0.3 .NET  
+**Difficulty**: Easy - Intermediate
 
 Here's a preview of the effect we're going to be making:
 {{< video source="https://storage.danieltperry.me/share/website-videos/godot-weeping-angel/StatueTest.mp4" id="intro-video" >}}
