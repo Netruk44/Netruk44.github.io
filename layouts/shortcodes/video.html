@@ -1,0 +1,19 @@
+{{ $id := .Get "id" }}
+<div class="container">
+  <div id="player-wrapper-{{ $id }}" class="player"></div>
+</div>
+
+<script type="text/javascript" src="/extern/clappr/clappr.min.js"></script>
+
+<script>
+  var playerElement = document.getElementById("player-wrapper-{{ $id }}");
+
+  var player = new Clappr.Player({
+    source: {{ .Get "source" }},
+    mute: true,
+    height: 360,
+    width: 640
+  });
+
+  player.attachTo(playerElement);
+</script>
