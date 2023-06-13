@@ -43,7 +43,7 @@ A GitHub repository with the completed sample project can be found [here](https:
 
 ### Step 1 - Create the object that moves offscreen
 
-The begin, create a new scene which will contain the object that will be moving behind the player's back.
+To begin, create a new scene which will contain the object that will be moving behind the player's back.
 
 ![](Step1-1.png#center)
 
