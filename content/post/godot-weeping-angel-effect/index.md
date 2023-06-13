@@ -5,7 +5,7 @@ draft: false
 tags: ["godot", "gamedev", "tutorial", "C#"]
 ---
 
-I've recently been working on implementing some game concepts in the [Godot game engine](https://godotengine.org/). One of the things I normally do when messing around with a game-engine is try to recreate one aspect of a game I worked on in college, [Stonewick Manor](https://old.danieltperry.me/stonewick.html).
+I've recently been working on implementing some game concepts in the [Godot game engine](https://godotengine.org/). One of the things I normally do when messing around with a game engine is try to recreate one aspect of a game I worked on in college, [Stonewick Manor](https://old.danieltperry.me/stonewick.html).
 
 One of the core game mechanics of that game was a little cherub statue that followed you around. But there's a catch, it can only move when you aren't looking at it. The idea was, naturally, inspired by *Dr. Who*'s [Weeping Angels](https://en.wikipedia.org/wiki/Blink_(Doctor_Who)).
 
