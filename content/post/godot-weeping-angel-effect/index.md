@@ -25,7 +25,7 @@ Here's a preview of the effect we're going to be making:
 >
 > Our very first attempt at implementing this effect was to do a dot product between the player's facing direction and the statue's current location. We checked to see if the product was lower than a certain value. If it was below that threshold, we knew that the statue was located within the player's field of view.
 >
-> However, we felt this approach was lacking. There's a few issues with it, but our main issue with it was that you could effectively neuter the cherub just by looking in its direction through walls (remember this for later!). We wanted something a little more robust than that.
+> However, we felt this approach was lacking. There's a few issues with it, but our main issue with it was that you could effectively pacify the cherub just by looking in its direction through walls (remember this for later!). We wanted something a little more robust than that.
 >
 > ![A screenshot from Stonewick Manor, a large empty room with unpainted walls and a staircase, lit by a pole light. Underneath the staircase is a door with red light bleeding out from underneath.](Stonewick2.jpg#center)
 >
