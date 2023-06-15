@@ -9,6 +9,8 @@ I've recently been working on implementing some game concepts in the [Godot game
 
 One of the core game mechanics of that game was a little cherub statue that followed you around. But there's a catch, it can only move when you aren't looking at it. The idea was, naturally, inspired by *Dr. Who*'s [Weeping Angels](https://en.wikipedia.org/wiki/Blink_(Doctor_Who)).
 
+> **Fun Fact**: My lame claim to fame is that Markiplier actually played Stonewick Manor on his channel back in 2013. You can watch that video [here](https://www.youtube.com/watch?v=p5h2lj9J8KI). Fair warning, the game looks and plays like a college game from 2013, haha.
+
 Let's try to create this kind of effect in Godot!
 
 **Godot Version**: 4.0.3 .NET  
