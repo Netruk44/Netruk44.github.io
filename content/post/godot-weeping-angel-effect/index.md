@@ -91,6 +91,8 @@ Adjust the size of the cube to be closer to the size of the object. This will be
 
 Save the object, and let's make the script.
 
+---
+
 ### Step 2 - Create the script
 
 Now that we have the object created, we need to add a script to it. This script will be responsible for moving the object around when it is not visible on-screen.
@@ -196,9 +198,11 @@ Now we can replace the TODO:
     }
 ```
 
-And that's it! You should now have a ball that moves in circles behind your back. Now we have to test it out.
+And now we're actually done! You should now have a ball that moves in circles behind your back. Let's test it out.
 
 > **Note**: If you have a game of your own all ready to go, you should be able to drop this object in and watch it work. Skip Step 3 and move onto Step 4 to check out an improvement you can make to the effect!
+
+---
 
 ### Step 3 - Make it playable
 
@@ -255,6 +259,8 @@ But if you play around with it enough, you'll notice that the balls don't move w
 
 Can we improve it?
 
+---
+
 ### Step 4 - Occlusion Culling
 
 Godot uses some heuristics inside `VisibleOnScreenNotifier3D` to determine if an object is visible or not. However, with the default settings, it does not take into account occlusion by other objects. If you enable occlusion culling for your project and set up the environment correctly, you can get a much more impressive effect.
@@ -283,8 +289,20 @@ Run the game again, and you should notice an improvement in the effect:
 
 {{< video source="https://storage.danieltperry.me/share/website-videos/godot-weeping-angel/complete2.mp4" id="complete2" >}}
 
+--- 
+
 ## Conclusion
 
-And that's it! You should now have a working Weeping Angel effect in your game. If you want to see the full source code for this completed tutorial, you can find it on my [GitHub](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel).
+With occlusion culling enabled, you should now have a pretty impressive-looking Weeping Angel effect in your game! If you want to see the full source code for this completed tutorial, you can find it on my [GitHub](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel).
+
+By now you know that the *real* star of the show here is `VisibleOnScreenNotifier3D` which enables a lot of cool things. There's plenty other things you can do with it in addition to the Weeping Angels. 
+
+For example, you might re-arrange a room's furniture by disabling one set of objects and enabling a different set of objects. With visibility notifier nodes placed on both locations, you will know for a fact when it can all be done off-camera.
+
+You can also inverse the effect. Make an enemy that dislikes being looked at. It gets angrier the more it's on-screen, and starts running at you as soon as you see it. Look away to keep them at bay.
+
+I haven't looked into this at all, so I assume this probably won't *actually* work, but I wonder if it might even be possible to use this node for some kind of stealth mechanic. Put cameras on some guards and a visibility notifier on the player to see if they're visible to the guard. I'm sure there's way simpler ways to implement stealth than that, but I wonder if there's anything interesting you could do with this implementation of it.
+
+There's a lot of possibilities here, and I'm sure you can come up with some cool ideas of your own! I'd love to see some new games out there that make use of this effect. If you make something cool, let me know!
 
 {{< contact-me box="godot" >}}
