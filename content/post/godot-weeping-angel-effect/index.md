@@ -39,7 +39,9 @@ Let's try to recreate this kind of effect in Godot!
 >
 > In the final version of Stonewick Manor, we accomplished this effect by rendering the frame two times, with a whole pass dedicated to figuring out what's on-screen. We felt we could get away with rendering everything twice, because as a college game the art wasn't exactly very demanding on the hardware.
 >
-> On the second render, we would render everything but the statue in black to a texture. This was mainly intended to set up the z-buffer to quickly reject rendering the cherub, which we then rendered in a pseudorandom color (derived from its handle ID). Finally, we checked the texture to see if any non-black pixels, or non-zero values, existed within it. If we did find any, the values we found told us which character was currently visible. This way, we could have multiple statues in a level, and we knew when it was safe for each statue to be moving. Not that we ever actually used that feature, if I recall correctly, but it was there!
+> On the second render, we would render everything but the statue in black to a texture. This was mainly intended to set up the z-buffer to quickly reject rendering the cherub, which we then rendered in a pseudorandom color (derived from its handle ID).
+>
+>Finally, we checked the texture to see if any non-black pixels, or non-zero values, existed within it. If we did find any, the values we found told us which character was currently visible. This way, we could have multiple statues in a level, and we knew when it was safe for each statue to be moving. Not that we ever actually used that feature, if I recall correctly, but it was there!
 >
 > ![A screenshot from Stonewick Manor, a brick room filled with wooden boxes that act as makeshift walls. There is a table with a key on top, and candles littered throughout the room.](Stonewick3.jpg#center)
 >
