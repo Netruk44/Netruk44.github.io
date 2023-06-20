@@ -28,6 +28,7 @@ params:
   hideFooter: true
   socialIcons:
     - name: github
+      title: "GitHub - netruk44"
       url: "https://github.com/netruk44"
     #- name: cv
     #  title: "Resume"
@@ -35,8 +36,10 @@ params:
     - name: email
       url: "mailto:contact@danieltperry.me"
     - name: mastodon
+      title: "Mastodon - @netruk44@fosstodon.org"
       url: "https://fosstodon.org/@netruk44"
     - name: tiktok
+      title: "TikTok - @netruk44_dev"
       url: "https://www.tiktok.com/@netruk44_dev"
     - name: Rss
       url: "index.xml"
