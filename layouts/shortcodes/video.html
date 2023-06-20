@@ -12,7 +12,9 @@
     source: {{ .Get "source" }},
     mute: true,
     height: 360,
-    width: 640
+    width: 640,
+    autoPlay: {{ .Get "autoplay" | default false }},
+    loop: {{ .Get "loop" | default false }}
   });
 
   player.attachTo(playerElement);

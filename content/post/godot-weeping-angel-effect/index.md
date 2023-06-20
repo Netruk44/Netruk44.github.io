@@ -5,8 +5,7 @@ draft: false
 tags: ["godot", "gamedev", "tutorial", "C#"]
 ---
 
-<img src="./preview.gif" style="display: block; margin: 0 auto;" />
-
+{{< video source="./header.mp4" id="header" autoplay=true loop=true >}}
 
 >**Godot Version**: 4.0.3 .NET  
 >**Difficulty**: Easy - Intermediate  
@@ -259,11 +258,11 @@ Now you can hit the "Play" button in the upper right hand corner and walk around
 
 Add a few of the balls to the scene in the same way you added the player, and run the game again. You should be able to see, or rather *shouldn't* see, the balls moving while you look away.
 
-{{< video source="https://storage.danieltperry.me/share/website-videos/godot-weeping-angel/complete1.mp4" id="complete1" >}}
+{{< video source="./complete1.mp4" id="complete1" >}}
 
 But if you play around with it enough, you'll notice that the balls don't move when they're occluded by walls:
 
-{{< video source="https://storage.danieltperry.me/share/website-videos/godot-weeping-angel/issue1.mp4" id="issue1" >}}
+{{< video source="./issue1.mp4" id="issue1" >}}
 
 Can we improve it?
 
@@ -295,7 +294,7 @@ Click the button to generate the occlusion map. You will be asked to save the re
 
 Run the game again, and you should notice an improvement in the effect:
 
-{{< video source="https://storage.danieltperry.me/share/website-videos/godot-weeping-angel/complete2.mp4" id="complete2" >}}
+{{< video source="./complete2.mp4" id="complete2" >}}
 
 --- 
 
