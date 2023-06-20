@@ -24,7 +24,7 @@ Let's try to recreate this kind of effect in Godot!
 ---
 
 > ### Tangent about Stonewick Manor
-> This doesn't really have anything to do with Godot, but I wanted to provide a little insight as to how the effect was accomplished the first time I tried it in college. It shows just how far game dev tools have come over the past 10 years.
+> I wanted to provide a little insight as to how the effect was accomplished the first time I tried it in college. It doesn't really have much to do with Godot, other than to show just how far game dev tools have come over the past 10 years.
 >
 > **Fun fact**: My lame claim to fame is that Markiplier actually played Stonewick Manor on his channel back in 2013. You can watch that video [here](https://www.youtube.com/watch?v=p5h2lj9J8KI). Fair warning, the game looks and plays like a student project from 2013, haha.
 >
