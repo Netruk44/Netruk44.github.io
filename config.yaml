@@ -34,6 +34,10 @@ params:
     #  url: "resume.pdf"
     - name: email
       url: "mailto:contact@danieltperry.me"
+    - name: mastodon
+      url: "https://fosstodon.org/@netruk44"
+    - name: tiktok
+      url: "https://www.tiktok.com/@netruk44_dev"
     - name: Rss
       url: "index.xml"
 
