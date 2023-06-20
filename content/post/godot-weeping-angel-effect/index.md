@@ -17,8 +17,6 @@ tags: ["godot", "gamedev", "tutorial", "C#"]
 
 I've recently been working on implementing some game concepts in the [Godot game engine](https://godotengine.org/). One of the things I normally do when messing around with a game engine is try to recreate one aspect of a game I helped make in college, [Stonewick Manor](https://old.danieltperry.me/stonewick.html).
 
-> **Fun Fact**: My lame claim to fame is that Markiplier actually played Stonewick Manor on his channel back in 2013. You can watch that video [here](https://www.youtube.com/watch?v=p5h2lj9J8KI). Fair warning, the game looks and plays like a student project from 2013, haha.
-
 One of the core game mechanics of that game was a little cherub statue that followed you around. But there's a catch, it can only move when you aren't looking at it. The idea was, naturally, inspired by *Dr. Who*'s [Weeping Angels](https://en.wikipedia.org/wiki/Blink_(Doctor_Who)).
 
 Let's try to recreate this kind of effect in Godot!
@@ -27,6 +25,8 @@ Let's try to recreate this kind of effect in Godot!
 
 > ### Tangent about Stonewick Manor
 > This doesn't really have anything to do with Godot, but I wanted to provide a little insight as to how the effect was accomplished the first time I tried it in college. It shows just how far game dev tools have come over the past 10 years.
+>
+> **Fun fact**: My lame claim to fame is that Markiplier actually played Stonewick Manor on his channel back in 2013. You can watch that video [here](https://www.youtube.com/watch?v=p5h2lj9J8KI). Fair warning, the game looks and plays like a student project from 2013, haha.
 >
 > ![A screenshot from Stonewick Manor, two pillars with cherub statues on top.](Stonewick.jpg#center)
 >
