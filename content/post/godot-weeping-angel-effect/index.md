@@ -10,8 +10,6 @@ tags: ["godot", "gamedev", "tutorial", "C#"]
 >**Godot Version**: 4.0.3 .NET  
 >**Difficulty**: Easy - Intermediate  
 >**GitHub Repository**: Completed tutorial [here](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel)
->
-> ***Note**: This tutorial is complete, but it is still being tweaked and edited. If you find any errors or have any suggestions, please let me know!*
 
 ---
 
