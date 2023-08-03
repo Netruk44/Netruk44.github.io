@@ -46,7 +46,7 @@ Once your scene is completed drop in a player-controlled object so that you can 
 
 > For a player-controlled object with built-in camera, I've found [FPSControllerMono](https://github.com/ismailgamedev/FPS-Controller-Mono) to be an okay starting point, but as of writing this the plugin has not yet been updated for Godot 4.0 and fails to compile cleanly, so you may need to make some fixes.
 
-The FPSControllerMono isn't very difficult to make yourself by hand if you're experienced with Godot, but it helps to have a starting point. It's just a KinematicBody with a Camera and a CollisionShape, with a script to handle input and mouse looking.
+The FPSControllerMono isn't very difficult to make yourself by hand if you're experienced with Godot, but it helps to have a starting point. It's just a CharacterBody3D with a Camera and a CollisionShape, with a script to handle input and mouse looking.
 
 ## Creating the NavMesh
 
@@ -235,26 +235,24 @@ Go back to your agent scene and select the `NavigationAgent3D` node. In the righ
 
 The `Radius` setting here is separate from the one we set on the `NavigationMesh` earlier. This radius doesn't affect pathfinding in any way whatsoever. This is only used to figure out how quickly other agents should move away *from us*. If you increase this, the agents will spread out more, but they'll also generally move more slowly as they have to work around each other.
 
-Another important option on this menu is `Max Speed`. This will be the real speed of the agent. Since our velocity will be coming from the `NavigationAgent3D` now, this is how we control the speed of the agent.
+Another important option on this menu is `Max Speed`. This is the maximum speed that the agent will move at. Even if you set `Speed` in your agent's script to be higher than this, the agent will never move faster than this speed. In effect, you now have *two* places you need to manage this agent's speed. This can be confusing, so I recommend setting `Max Speed` to be the same as `Speed` in your agent's script, or finding some other way to keep them in sync.
 
 The other settings in this menu are outside the scope of this tutorial, but feel free to play around with them and see what they do. There are tooltip descriptions on the labels which are pretty helpful for figuring out what they control.
 
 > **Important**: Make sure that `Avoidance Layers` has at least one layer checked, and also make sure `Avoidance Mask` has that same layer checked. This is what tells the agents to avoid each other.
 
-Now let's update our code to have `NavigationAgent3D` provide our velocity. Replace the following in `_PhysicsProcess`:
+Now let's update our code to have `NavigationAgent3D` provide our velocity. Remove the following in `_PhysicsProcess`:
 
 ```cs
     Velocity = velocity;
     MoveAndSlide();
 ```
 
-with this:
+And replace it with this:
 
 ```cs
     navigationAgent.Velocity = velocity;
 ```
-
-<!-- TODO: Do we need to remove Speed from the agent? -->
 
 That'll start the async process of calculating the agent's proper velocity to avoid obstacles. Once it's done, it'll emit an event that we can listen to. Add the following to the `_Ready` method:
 
@@ -288,7 +286,7 @@ There are two different kind of obstacles, dynamic and static. If you set the `R
 
 For this tutorial, I'm just going to set a radius, even though I won't be moving the obstacle around dynamically. Feel free to use the same avoidance layer as the agents (layer 1 by default), or if you would like to use a different one make sure to update the avoidance mask on the agents.
 
-> **Note**: If it looks like the agents aren't avoiding the obstacle, try changing the `Height` setting, or moving the obstacle up so that the center of the obstacle is roughly the same height as the centerpoint of your agents.
+> **Note**: If it looks like the agents aren't avoiding the obstacle, try increasing the `Height` setting, or moving the obstacle up so that the center of the obstacle is roughly the same height as the centerpoint of your agents.
 
 ![The obstacle in the scene](./obstacle_in_scene.png#center)
 
