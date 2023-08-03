@@ -48,7 +48,7 @@ Once your scene is completed drop in a player-controlled object so that you can 
 
 The FPSControllerMono isn't very difficult to make yourself by hand if you're experienced with Godot, but it helps to have a starting point. It's just a CharacterBody3D with a Camera and a CollisionShape, with a script to handle input and mouse looking.
 
-## Creating the NavMesh
+### Creating the NavigationRegion
 
 Once you have a scene ready, it's time to create the NavMesh. Start by adding a NavigationRegion3D node to the scene, and move the parent node of the scenery objects underneath it.
 
