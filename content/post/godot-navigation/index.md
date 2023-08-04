@@ -63,6 +63,12 @@ For the most part, the default settings are okay. The only thing you really need
 
 > **Important**: If you find that your agents are getting stuck on walls, or if the navmesh just isn't showing up in certain parts of the scene, adjust the agent radius setting and/or the `Cell Size` setting under `Cells/Size`. The smaller the cells, the more accurate the NavMesh will be, but the more expensive it will be to calculate.
 
+Another important setting to know about is under `Geometry/Parsed Geometry Type`. This tells Godot what kind of objects to look for in the scene when sampling the scene to make the NavMesh. You have a choice of "Mesh Instances", "Static Colliders" or "Both". The default option is "Mesh Instances" which is fine for this tutorial. However, for complicated scenes you may instead want to use the "Static Colliders" option, as that allows you to specify the exact collision layers you want your NavMesh to use. The documentation also suggests that using "Static Colliders" is more performant when baking the NavMesh, so it's something to keep in mind if you think you may want to rebake the NavMesh during runtime.
+
+> Why would you want to rebake a NavMesh at runtime? You need to if you have a dynamic scene that you want the agents to path around dynamically. For example if you have a door that opens and closes, you may want to rebake the NavMesh after it moves so that the agents can pathfind through the door when it opens, or route around it when it's closed.
+>
+> Implementing NavMesh rebaking during runtime is outside the scope of this tutorial, but you can read more about it in the [Godot Docs](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationmeshes.html#navigationmesh-rebaking-at-runtime).
+
 Once you've set the radius, click the `Bake NavMesh` button at the top of your viewport. This will create the NavMesh, and you should see it appear in your scene as a bunch of cyan triangles floating above the ground.
 
 ![The NavMesh in the scene](./navmesh_in_scene.png#center)
@@ -93,7 +99,7 @@ Click "OK" to close the menu. You can verify that it worked if you see a new sym
 
 ### Preparing the Agent
 
-Now we need to make a scene for the objects that will be moving around. Create a new scene with a `CharacterBody3D` as the root node. Give it a `CollisionShape` a `MeshInstance` and (most importantly) a `NavigationAgent3D`, and add a script to the root node.
+Now we need to make a scene for the objects that will be moving around. Create a new scene with a `CharacterBody3D` as the root node. Give it a `CollisionShape3D` a `MeshInstance3D`, a `NavigationAgent3D`, and add a script to the root node.
 
 ![The agent scene](./agent_tree.png#center)
 
@@ -276,7 +282,11 @@ And that's it! Now the agents will avoid each other while they're moving towards
 
 ### Avoiding obstacles
 
-Avoiding obstacles is very similar to avoiding other agents. The only difference is that we need to add a `NavigationObstacle3D` node to the scene. The `NavigationAgent3D` will automatically avoid any `NavigationObstacle3D` nodes in the scene (so long as the layers and masks are set correctly).
+Avoiding obstacles is very similar to avoiding other agents. To add an obstacle, we need to add a `NavigationObstacle3D` node to the scene. The `NavigationAgent3D` will automatically avoid any `NavigationObstacle3D` nodes in the scene (so long as the layers and masks are set correctly).
+
+> **Important**: It can be a little bit confusing to understand, but if you add an obstacle that completely blocks the path to the target, for example you place an obstacle that takes up the entire width of a hallway, the agent will not re-route their path around the obstacle. As I mentioned, avoidance does not affect pathfinding, so the agent will just keep trying to force their way past the obstacle.
+>
+> If you want to dynamically block off an area of the navmesh, you'll need to rebake the navmesh at runtime. This is outside the scope of this tutorial, but the [Godot Docs](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationmeshes.html#navigationmesh-rebaking-at-runtime) have a section on rebaking your navigation mesh at runtime.
 
 In your scene add a `NavigationObstacle3D` node and place it somewhere in the scene. The way you configure it is somewhat convoluted, however.
 
