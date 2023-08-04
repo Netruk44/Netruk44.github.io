@@ -5,6 +5,8 @@ draft: false
 tags: ["godot", "gamedev", "tutorial", "C#"]
 ---
 
+![A screenshot of the completed tutorial](./finished.png)
+
 >**Godot Version**: 4.1.1 .NET  
 >**Difficulty**: Intermediate  
 >**GitHub Repository**: Completed tutorial [here](https://github.com/Netruk44/godot-tutorials/tree/navigation)
@@ -20,8 +22,6 @@ This tutorial will take you through the process of adding a NavMesh to a scene. 
 This tutorial will be using C# for the scripts, but GDScript should work just as well. This tutorial will also assume that you're familiar enough with Godot to know how to create a scene, how nodes work, and adding scripts to those nodes. If you're not familiar with Godot, I recommend checking out the [Godot Docs](https://docs.godotengine.org/en/stable/getting_started/step_by_step/index.html) and following their step-by-step tutorial and *"Your first 3D game"* tutorial.
 
 This tutorial *will not* be an exhaustive guide to Godot's navigation tools, just a simple tutorial to help you get started. As always, if you want to know more, check out the [Godot Docs](https://docs.godotengine.org/en/stable/tutorials/navigation/index.html).
-
-<!-- **Note**: We'll be starting off with the scene we made in the last tutorial I wrote, [Weeping Angel Effect in Godot Engine](../godot-weeping-angel-effect/). You don't need to understand how the effect works, but the map makes a nice area for agents to pathfind around in. You can find that in the `playground.tscn` file located in [this Github Repository](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel). -->
 
 ## Creating the NavMesh
 
@@ -190,7 +190,7 @@ public override void _PhysicsProcess(double delta)
 >
 > If you were using this logic for a real game, you might consider dynamically adjusting the target update interval based on the distance to the player. This is left as an excerise for the reader 😊.
 
-Now that we've set a destination and a path, we need to start moving along it. `NavigationAgent3D` provides a helper method for us: `GetNextPathPosition()`. This returns the next point in the path to the target in world space. We'll use this to move towards the target.
+Now that we've set a destination, `NavigationAgent3D` provides a helper method for us to get the path to it: `GetNextPathPosition()`. This returns the next point in the path to the target in world space. We'll use this to move towards the target.
 
 > **Note**: It's okay to call `GetNextPathPosition` on every physics frame, in fact the `NavigationAgent3D` expects/requires it to be called that often.
 
