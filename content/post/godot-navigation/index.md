@@ -53,7 +53,7 @@ The FPSControllerMono isn't very difficult to make yourself by hand if you're ex
 Once you have a scene ready, it's time to create the NavMesh. Start by adding a NavigationRegion3D node to the scene, and move the parent node of the scenery objects underneath it.
 
 ![Creating a new node in Godot](./add_navigation.jpg)
-![The node tree with the environment under the newly created NavigationRegion3D](./navigation_in_scene.png)
+[![The node tree with the environment under the newly created NavigationRegion3D](./navigation_in_scene.png)](./navigation_in_scene.png)
 
 Then, with the NavigationRegion3D selected, in the right-hand sidebar under the `Inspector` tab, create a new NavigationMesh.
 
@@ -71,7 +71,7 @@ Another important setting to know about is under `Geometry/Parsed Geometry Type`
 
 Once you've set the radius, click the `Bake NavMesh` button at the top of your viewport. This will create the NavMesh, and you should see it appear in your scene as a bunch of cyan triangles floating above the ground.
 
-![The NavMesh in the scene](./navmesh_in_scene.png#center)
+[![The NavMesh in the scene](./navmesh_in_scene.png#center)](./navmesh_in_scene.png)
 
 We've got our NavMesh, now let's add some agents to navigate it.
 
