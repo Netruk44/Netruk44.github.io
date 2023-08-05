@@ -282,7 +282,7 @@ public void OnVelocityComputed(Vector3 safeVelocity)
 }
 ```
 
-And that's it! Now the agents will avoid each other while they're moving towards the player. For this video I've increased the radius to be larger than the object just to make the avoidance more obvious.
+And that's it! Now the agents will avoid each other while they're moving towards the player. For this video I've increased the agent's radius to be larger than the mesh just to make the avoidance more obvious.
 
 {{< video source="./following2.mp4" id="avoidance" >}}
 
