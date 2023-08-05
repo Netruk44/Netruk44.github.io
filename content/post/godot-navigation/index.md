@@ -89,7 +89,7 @@ In the right hand sidebar, click `Node`, then `Groups`, then finally `Manage Gro
 
 ![Navigating to the group menu](./node_groups.png#center)
 
-In the `Manage Groups` menu, enter in a name for the group ("player" works fine) and click "Add". Then find the root node of the player in the middle column, then "Add >" to add the player node to the group.
+In the `Manage Groups` menu, enter in a name for the group ("player" works fine) and click "Add". Then find the root node of the player in the middle column, then "> Add" to add the player node to the group.
 
 ![The node group editor](./group_editor.png#center)
 
@@ -239,15 +239,19 @@ Go back to your agent scene and select the `NavigationAgent3D` node. In the righ
 
 ![The Avoidance section of the NavigationAgent3D](./avoidance_menu.png#center)
 
-The `Radius` setting here is separate from the one we set on the `NavigationMesh` earlier. This radius doesn't affect pathfinding in any way whatsoever. This is only used to figure out how quickly other agents should move away *from us*. If you increase this, the agents will spread out more, but they'll also generally move more slowly as they have to work around each other.
+The `Radius` setting here is separate from the one we set on the `NavigationMesh` earlier. This radius doesn't affect pathfinding in any way whatsoever. This is only used to figure out at what distance other agents should move away *from us*. If you increase this, the agents will spread out more. Keep in mind that they'll also generally traverse a scene slower too, as they have to move around each other in addition to the scene.
 
-Another important option on this menu is `Max Speed`. This is the maximum speed that the agent will move at. Even if you set `Speed` in your agent's script to be higher than this, the agent will never move faster than this speed. In effect, you now have *two* places you need to manage this agent's speed. This can be confusing, so I recommend setting `Max Speed` to be the same as `Speed` in your agent's script, or finding some other way to keep them in sync.
+Another important option on this menu is `Max Speed`. This is the maximum speed that the agent will move at; when you pass in a velocity to the agent, it will be capped to this speed. Even if you pass in a higher velocity by increasing `Speed` in your agent's script, the agent will never move faster than this speed.
+
+In effect, you now have *two* places you need to manage this agent's speed. This can be confusing, so I recommend setting `Max Speed` to be the same as `Speed` in your agent's script, or finding some other way to keep them in sync.
 
 The other settings in this menu are outside the scope of this tutorial, but feel free to play around with them and see what they do. There are tooltip descriptions on the labels which are pretty helpful for figuring out what they control.
 
-> **Important**: Make sure that `Avoidance Layers` has at least one layer checked, and also make sure `Avoidance Mask` has that same layer checked. This is what tells the agents to avoid each other.
+> **Important**: Make sure that `Avoidance Layers` has at least one layer selected, and also make sure `Avoidance Mask` has that same layer selected. This is what tells the agents to avoid each other.
 
-Now let's update our code to have `NavigationAgent3D` provide our velocity. Remove the following in `_PhysicsProcess`:
+Now let's update our code to have `NavigationAgent3D` provide our velocity.
+
+Remove the following in `_PhysicsProcess`:
 
 ```cs
     Velocity = velocity;
@@ -260,7 +264,9 @@ And replace it with this:
     navigationAgent.Velocity = velocity;
 ```
 
-That'll start the async process of calculating the agent's proper velocity to avoid obstacles. Once it's done, it'll emit an event that we can listen to. Add the following to the `_Ready` method:
+That'll start the async process of calculating the agent's proper velocity to avoid obstacles. Once it's done, it'll emit an event that we can listen to.
+
+Add the following to the `_Ready` method:
 
 ```cs
     navigationAgent.VelocityComputed += OnVelocityComputed;
@@ -284,25 +290,31 @@ And that's it! Now the agents will avoid each other while they're moving towards
 
 Avoiding obstacles is very similar to avoiding other agents. To add an obstacle, we need to add a `NavigationObstacle3D` node to the scene. The `NavigationAgent3D` will automatically avoid any `NavigationObstacle3D` nodes in the scene (so long as the layers and masks are set correctly).
 
-> **Important**: It can be a little bit confusing to understand, but if you add an obstacle that completely blocks the path to the target, for example you place an obstacle that takes up the entire width of a hallway, the agent will not re-route their path around the obstacle. As I mentioned, avoidance does not affect pathfinding, so the agent will just keep trying to force their way past the obstacle.
+> **Important**: It can be a little bit confusing to understand, but if you add an obstacle that completely blocks the path to the target, the agent will not re-route their path around the obstacle.
+> 
+> Let's say for example you place an obstacle in the center of a hallway that doesn't leave a large enough gap for the agent to go around. As I mentioned, avoidance does not affect pathfinding, so the agent will just keep trying to force their way past the obstacle.
 >
-> If you want to dynamically block off an area of the navmesh, you'll need to rebake the navmesh at runtime. This is outside the scope of this tutorial, but the [Godot Docs](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationmeshes.html#navigationmesh-rebaking-at-runtime) have a section on rebaking your navigation mesh at runtime.
+> If you want to dynamically block off an area of the navmesh, you'll need to rebake the navmesh at runtime, as mentioned above.
 
-In your scene add a `NavigationObstacle3D` node and place it somewhere in the scene. The way you configure it is somewhat convoluted, however.
-
-![The Settings for NavigationObstacle3D](./obstacle_settings.png#center)
-
-There are two different kind of obstacles, dynamic and static. If you set the `Radius` property, then the obstacle is dynamic. If you set the `Vertices` property, then the obstacle is static. It's possible to set both, but make sure you read the [Godot Docs](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationobstacles.html) to understand how that works.
-
-For this tutorial, I'm just going to set a radius, even though I won't be moving the obstacle around dynamically. Feel free to use the same avoidance layer as the agents (layer 1 by default), or if you would like to use a different one make sure to update the avoidance mask on the agents.
-
-> **Note**: If it looks like the agents aren't avoiding the obstacle, try increasing the `Height` setting, or moving the obstacle up so that the center of the obstacle is roughly the same height as the centerpoint of your agents.
+To your scene add a `NavigationObstacle3D` node, and move it wherever you like.
 
 ![The obstacle in the scene](./obstacle_in_scene.png#center)
 
-> **Note**: As of Godot version 4.1.1, you can't actually use the transform gizmo to move the obstacle around the XZ plane. If you try, it'll start creating points for a static obstacle instead.
+> **Note**: Currently, as of Godot version 4.1.1, you can't actually use the transform gizmo to move the obstacle around the XZ plane. If you try, it'll start creating points for a static obstacle instead.
 >
 > As a workaround, you can manually modify the node's transform in the inspector.
+
+Then, look at the settings in the right-hand sidebar.
+
+![The Settings for NavigationObstacle3D](./obstacle_settings.png#center)
+
+The settings for `NavigationObstacle3D` are a little bit convoluted. There are actually two different kinds of obstacles that are both configured here. Dynamic obstacles and static obstacles.
+
+An obstacle is considered dynamic if it uses the `Radius` property. If it uses the `Vertices` property, it's considered static. And it's also possible to use both, but make sure you read the [Godot Docs](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationobstacles.html) to understand how that works.
+
+For this tutorial, to keep things easy we're just going to set a radius, even though we won't be moving the obstacle around dynamically. I will be using the same avoidance layer as the agents (layer 1 by default). However, if you would like to use a different avoidance layer for obstacles, make sure to update the avoidance mask on the agents to include that layer.
+
+> **Note**: If it looks like the agents aren't avoiding the obstacle, try increasing the `Height` setting, or moving the obstacle up so that the center of the obstacle is roughly the same height as the origin/center of your agents.
 
 Now if you run the scene, you should see the agents avoid the obstacle as well as each other.
 
