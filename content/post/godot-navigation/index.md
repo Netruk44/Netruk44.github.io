@@ -62,6 +62,8 @@ Then, with the NavigationRegion3D selected, in the right-hand sidebar under the 
 For the most part, the default settings are okay. The only thing you really need to make sure is correct is the setting under `Agents/Radius`. This is what tells Godot how large the agents navigating your scene are.
 
 > **Important**: If you find that your agents are getting stuck on walls, or if the navmesh just isn't showing up in certain parts of the scene, adjust the agent radius setting and/or the `Cell Size` setting under `Cells/Size`. The smaller the cells, the more accurate the NavMesh will be, but the more expensive it will be to calculate.
+>
+> If you update the cell size, make sure to also update the default navigation map cell size in your project settings, under `Project Settings` under `navigation/3d/default_cell_size`.
 
 Another important setting to know about is under `Geometry/Parsed Geometry Type`. This tells Godot what kind of objects to look for in the scene when sampling the scene to make the NavMesh. You have a choice of "Mesh Instances", "Static Colliders" or "Both". The default option is "Mesh Instances" which is fine for this tutorial. However, for complicated scenes you may instead want to use the "Static Colliders" option, as that allows you to specify the exact collision layers you want your NavMesh to use. The documentation also suggests that using "Static Colliders" is more performant when baking the NavMesh, so it's something to keep in mind if you think you may want to rebake the NavMesh during runtime.
 
