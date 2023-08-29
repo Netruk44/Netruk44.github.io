@@ -30,9 +30,9 @@ params:
     - name: github
       title: "GitHub - netruk44"
       url: "https://github.com/netruk44"
-    #- name: cv
-    #  title: "Resume"
-    #  url: "resume.pdf"
+    - name: cv
+      title: "Resume"
+      url: "resume_public.pdf"
     - name: email
       url: "mailto:contact@danieltperry.me"
     - name: mastodon
