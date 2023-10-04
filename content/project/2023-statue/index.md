@@ -15,6 +15,8 @@ A horror video game concept made in the Godot engine. Try to navigate rooms and 
 **Title Screen**
 {{% /img-subtitle %}}
 
+{{< contact-me box="statue" is-mid-article=true >}}
+
 # Info
 * **Status**: In development
 * **Screenshots**: On ~~Itch.io~~ or available [below](#screenshots)
