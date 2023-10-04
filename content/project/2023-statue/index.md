@@ -19,7 +19,7 @@ A horror video game concept made in the Godot engine. Try to navigate rooms and 
 
 # Info
 * **Status**: In development
-* **Screenshots**: On ~~Itch.io~~ or available [below](#screenshots)
+* **Screenshots**: On [Itch.io](https://netruk44.itch.io/statue-concept?secret=zF5qz5X3AehnjLG9Qcoh7eiIb9Y) or available [below](#screenshots)
 * **Download**: ~~[Itch.io](https://netruk44.itch.io/statue-concept?secret=zF5qz5X3AehnjLG9Qcoh7eiIb9Y)~~ *(Not yet available)*
 * **Source**: ~~GitHub~~ *(Pending)*<!--[Github](https://github.com/Netruk44/statue-concept)-->
 * **Technologies & Languages**: Godot, C#
