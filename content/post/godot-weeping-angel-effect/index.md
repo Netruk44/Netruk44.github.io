@@ -10,6 +10,8 @@ tags: ["godot", "gamedev", "tutorial", "C#"]
 >**Godot Version**: 4.0.3 .NET  
 >**Difficulty**: Easy - Intermediate  
 >**GitHub Repository**: Completed tutorial [here](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel)
+>
+>**Related Project**: [Statue (Concept)](/project/2023-statue)
 
 ---
 

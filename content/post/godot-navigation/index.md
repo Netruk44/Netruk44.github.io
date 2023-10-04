@@ -10,6 +10,9 @@ tags: ["godot", "gamedev", "tutorial", "C#"]
 >**Godot Version**: 4.1.1 .NET  
 >**Difficulty**: Intermediate  
 >**GitHub Repository**: Completed tutorial [here](https://github.com/Netruk44/godot-tutorials/tree/navigation)
+>
+>**Related Project**: [Statue (Concept)](/project/2023-statue)  
+>**Previous Godot Tutorial**: [Weeping Angel Effect in Godot Engine](/post/godot-weeping-angel-effect)
 
 ---
 
