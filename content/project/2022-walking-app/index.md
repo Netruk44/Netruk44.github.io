@@ -3,8 +3,14 @@ title: "Walking App (Prototype)"
 linktitle: "Walking App"
 date: 2022-10-03T21:40:06-04:00
 draft: false
-tags: ["Godot", "GDScript", "OpenStreetMap", "Azure"]
+tags: ["Godot", "GDScript", "OpenStreetMap", "Azure", "Application"]
 ---
+
+<!-- Preview for the article visible on the 'projects' page -->
+
+A Godot-based application for tracking where you've been in the world, making use of OpenStreetMap data. This is a prototype for a larger idea that may be pursued in the future.
+
+# Concept
 
 An application intended to help you thoroughly explore an area of the world. Pick an area of the world map with roads or paths that you'd like to explore every part of. Then, import GPX files tracking previous excursions through that area, and try to 'fill out' the entire map by visiting every point.
 
