@@ -1,5 +1,5 @@
 ---
-title: "Statue (Concept)"
+title: "Statue (Game Concept)"
 date: 2023-10-04T16:06:20-04:00
 draft: false
 tags: ["Godot", "3D", "Video Game", "C#", "Horror"]
