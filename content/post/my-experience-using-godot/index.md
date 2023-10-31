@@ -100,9 +100,8 @@ public static class NodeExtensions
         return output;
     }
 
-    public static void FindNodesByType<T>(this Node node) where T : Node
+    public static void FindNodesByType<T>(this Node node, List<T> output) where T : Node
     {
-        List<T> output = new();
         if (node is T)
         {
             output.Add(node as T);
