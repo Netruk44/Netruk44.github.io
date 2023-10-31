@@ -95,6 +95,7 @@ public static class NodeExtensions
 {
     public static List<T> FindNodesByType<T>(this Node node) where T : Node
     {
+        List<T> output = new();
         FindNodesByType(node, output);
         return output;
     }
