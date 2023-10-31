@@ -2,7 +2,7 @@
 title: "Statue (Game Concept)"
 date: 2023-10-04T16:06:20-04:00
 draft: false
-tags: ["Godot", "3D", "Video Game", "C#", "Horror"]
+tags: ["Godot", "gamedev", "3D", "Video Game", "C#", "Horror"]
 ---
 
 <!-- TODO: Update screenshots when the game is released -->
@@ -18,7 +18,7 @@ A horror video game concept made in the Godot engine. Try to navigate rooms and 
 {{< contact-me box="statue" is-mid-article=true >}}
 
 # Info
-* **Status**: In development
+* **Status**: Released (with continued development)
 * **Screenshots**: On [Itch.io](https://netruk44.itch.io/statue-concept) or available [below](#screenshots)
 * **Download**: [Itch.io](https://netruk44.itch.io/statue-concept)
 * **Source**: ~~GitHub~~ *(Pending)*<!--[Github](https://github.com/Netruk44/statue-concept)-->
@@ -27,6 +27,7 @@ A horror video game concept made in the Godot engine. Try to navigate rooms and 
 ## Related Posts and Projects
 * **Blog Post**: [Tutorial: Weeping Angel Effect in Godot Engine](/post/godot-weeping-angel-effect)
 * **Blog Post**: [Tutorial: 3D Navigation in Godot](/post/godot-navigation)
+* **Blog Post**: [My Experience Using Godot](/post/my-experience-using-godot)
 
 ## Why?
 From the *Weeping Angel Effect in Godot Engine* blog post:

@@ -3,7 +3,7 @@ title: "Walking App (Application Concept)"
 linktitle: "Walking App"
 date: 2022-10-03T21:40:06-04:00
 draft: false
-tags: ["Godot", "GDScript", "OpenStreetMap", "Azure", "Application"]
+tags: ["Godot", "GDScript", "OpenStreetMap", "Azure", "Application", "2D"]
 ---
 
 <!-- Preview for the article visible on the 'projects' page -->
