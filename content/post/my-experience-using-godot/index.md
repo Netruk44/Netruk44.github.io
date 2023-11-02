@@ -29,7 +29,7 @@ I intend to write more of these, if/when I publish more of these projects. So ma
 
 It's a simple first person horror game based on the Weeping Angels from *Doctor Who*. The player is trapped in a room with a statue that can only move when the player can't see it. The player must find a way to escape the room without letting the statue get too close.
 
-Functionally, there's not much to the game. The player can move around, look around, and interact with little monitors that act as locks and keys. The statue can move around and damage the player when it gets too close, resulting in the player needing to restart the level if the player gets hurt too much.
+Functionally, there's not much to the game. The player can move around, look around, and interact with little monitors that act as locks and keys. The statue can move around and damage the player when it gets too close, resulting in the player needing to restart the level if they get hurt too much.
 
 ![A dark room in Statue Concept](/project/2023-statue/screenshot06.png#center)
 {{% img-subtitle %}}
@@ -96,13 +96,15 @@ I may release this as a plugin in the Godot Asset Library at some point. Assumin
 
 Another issue I encountered was that Godot's navigation code doesn't appear to handle navigating on CSG (Constructive Solid Geometry) meshes.
 
-CSG is a way to make simple 3D models (like rooms and corridors) by combining and subtracting simple shapes (like cubes, spheres, and cylinders). CSG provides a toggle for collision:
+CSG is a way to make simple 3D models (like rooms and corridors) by combining and subtracting simple shapes (like cubes, spheres, and cylinders). This is the main way I created levels in *Statue Concept*, I'm not much of a Blender artist.
+
+When generating the navmesh, Godot can either use mesh data, which is very slow, or physics data from static colliders. CSG provides a toggle to enable static body collision:
 
 ![CSG collision toggle](./csg_collision.png)
 
-But this collision doesn't appear to be recognized when a NavigationMesh's `ParsedGeometryType` is set to `Static Colliders`.
+But this collision doesn't appear to be recognized by the NavigationMesh baking process when configured to use the physics data. The navmesh will not include surfaces from CSG objects.
 
-> **Side Note**: You can still combine CSG with a NavigationMesh if you use `Mesh Instances` instead of `Static Colliders`, but this is way less performant. *Statue Concept* rebakes the navmesh constantly in the background during gameplay, so I need the performance.
+> **Side Note**: You can still combine CSG with a NavigationMesh if you generate the navmesh from mesh instances instead of static colliders, but as mentioned this is way less performant. *Statue Concept* rebakes the navmesh constantly in the background during gameplay, so I need the performance.
 >
 > Theoretically, the navmesh rebaking happens on another thread. Practically, though, it still causes a noticeable stutter in the game when regenerating a navmesh with mesh instances. Cursory investigation suggests that accessing meshes like this can't be done on a separate thread, so it's probably unavoidable.
 
