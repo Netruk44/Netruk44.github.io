@@ -2,16 +2,45 @@
 title: "My Experience Using Godot"
 date: 2023-10-31T17:00:13-04:00
 draft: false
-tags: ["Godot", "gamedev"]
+tags: ["Godot", "gamedev", "C#"]
 ---
 
-Recently, I published my game, [*Statue Concept*](/project/2023-statue/), on Itch.io and wanted to share my experience using the Godot game engine. In this article, I will discuss some of the thoughts and issues I encountered while working with Godot, along with the workarounds I found. Hopefully, this will be helpful for others who are considering using Godot for their game development projects.
+![Statue Concept Title Screen](/project/2023-statue/title.png#center)
+{{% img-subtitle %}}
+*The title screen for my game prototype, Statue Concept.*
+{{% /img-subtitle %}}
+
+Recently, I published my game, [*Statue Concept*](/project/2023-statue/), on Itch.io and wanted to share my experience using the Godot game engine with C#. In this article, I will discuss some of the thoughts and issues I encountered while working with Godot, along with the workarounds I found. Hopefully, this will be helpful for others who are considering using Godot for their game development projects.
 
 I intend to write more of these, if/when I publish more of these projects. So maybe look forward to a "My Experience Using Godot Part 2" in the future.
 
 > **Note**: This is the first time I've used Godot for a project of this scale, so I am still learning. I'm sure I've missed a few obvious things that would have made my life easier. Feel free contact me if you have any suggestions or corrections 😊.
 
 {{< contact-me box="godot" is-mid-article=true >}}
+
+## Context - Statue Concept
+
+![Statue from Statue Concept](/project/2023-statue/screenshot01.png#center)
+{{% img-subtitle %}}
+*The statue from *Statue Concept*.*
+{{% /img-subtitle %}}
+
+[*Statue Concept*](/project/2023-statue/) is a prototype game I made to familiarize myself with how Godot works.
+
+It's a simple first person horror game based on the Weeping Angels from *Doctor Who*. The player is trapped in a room with a statue that can only move when the player can't see it. The player must find a way to escape the room without letting the statue get too close.
+
+Functionally, there's not much to the game. The player can move around, look around, and interact with little monitors that act as locks and keys. The statue can move around and damage the player when it gets too close, resulting in the player needing to restart the level if the player gets hurt too much.
+
+![A dark room in Statue Concept](/project/2023-statue/screenshot06.png#center)
+{{% img-subtitle %}}
+*The statue can also move around in the dark.*
+{{% /img-subtitle %}}
+
+The main technical challenge of the game is that in addition to being able to move off-camera, the statue can also move when it isn't being lit by light. This required some fancy math and level design to figure out when the statue is being lit, and when the player can see the silhouette of the statue moving in front of a lit background.
+
+The idea is that the statue should be able to move around in the dark in front of the player, but the player can't see it because it's too dark.
+
+To help control the statue, the player is given a flashlight that can be used to create light that stops the statue from moving. The flashlight has a limited battery however, so the player must use it sparingly.
 
 ## Issue 1 - Referencing scene objects from C# can be flaky
 One issue I faced while using Godot with C# was a mild difficulty with referencing other scene objects from C# code. The `GetNode<Node3D>("path/to/object")` method can easily break if objects are moved around in the scene, causing it to silently return null instead of the desired object.
@@ -115,9 +144,22 @@ public static class NodeExtensions
 }
 ```
 
+And it's pretty simple to use. Here's an example of how I find all SpotLight3D nodes in a scene:
+
+```csharp
+public partial class example_object : Node3D
+{
+    public override void _Ready()
+    {
+        // Find all SpotLight3D nodes in the scene.
+        List<SpotLight3D> lights = GetTree().Root.FindNodesByType<SpotLight3D>();
+    }
+}
+```
+
 While it's not a lot of code, I think it would be nice if it were built-in.
 
-I may also put this in the Godot Asset Library, too, but I'm not sure. It's a pretty small amount of code.
+Adding this to the Asset Library is something else I might do, but I'm not sure. It's not much code to just write yourself.
 
 ## Conclusion
 
