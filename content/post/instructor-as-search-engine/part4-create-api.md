@@ -5,5 +5,12 @@ draft: false
 tags: []
 ---
 
+{{% series-nav name="Steam Game Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}
 
-{{% series-footer name="Steam Game Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}
+---
+
+TODO: Write post.
+
+---
+
+{{% series-nav name="Steam Game Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}

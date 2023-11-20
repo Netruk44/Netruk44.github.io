@@ -5,5 +5,12 @@ draft: false
 tags: []
 ---
 
+{{% series-nav name="Steam Game Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
 
-{{% series-footer name="Steam Game Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
+---
+
+TODO: Write post.
+
+---
+
+{{% series-nav name="Steam Game Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
