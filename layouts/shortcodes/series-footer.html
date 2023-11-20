@@ -1,0 +1,30 @@
+<hr />
+
+<div>
+    <p>
+        <em>This post is part of a series. Use the links below to navigate between posts.</em>
+    </p>
+</div>
+
+<table style="display:revert;width:auto;margin-left:auto; margin-right:auto;">
+<thead>
+<tr>
+    <th style="text-align:center">⬅️ Previous Post</th>
+    <th style="text-align:center">⬆️ Series</th>
+    <th style="text-align:center">Next Post ➡️</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+
+<td style="text-align:center">
+{{ if .Get "previous" }}<a href="../{{ .Get "previous" }}">{{ .Get "previousTitle" }}</a>{{else}}<em>No previous post.</em>{{ end }}
+</td>
+<td style="text-align:center">
+<a href="../">{{ .Get "name" }}</a>
+</td>
+<td  style="text-align:center">
+{{ if .Get "next" }}<a href="../{{ .Get "next" }}">{{ .Get "nextTitle" }}</a>{{else}}<em>No next post.</em>{{ end }}
+</td>
+</tr>
+</table>

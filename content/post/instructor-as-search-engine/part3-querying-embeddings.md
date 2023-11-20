@@ -5,3 +5,5 @@ draft: false
 tags: []
 ---
 
+
+{{% series-footer name="Steam Game Search" previous="part2-creating-embeddings" previousTitle="Part 2: Creating Embeddings" next="part4-create-api" nextTitle="Part 4: Create an API" %}}

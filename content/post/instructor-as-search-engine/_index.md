@@ -2,7 +2,7 @@
 title: "Steam Game Search: Using Instructor for Searching"
 date: 2023-11-20T10:33:44-05:00
 draft: true
-tags: ["Python", "Instructor", "Application", "Docker", "CSS", "React", "Sqlite", "Machine Learning", "Embeddings"]
+tags: []
 ---
 
 
