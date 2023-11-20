@@ -2,7 +2,7 @@
 title: "Repo Search"
 date: 2023-07-08T14:58:13-04:00
 draft: false
-tags: ["Python", "OpenAI", "OpenAI Embeddings"]
+tags: ["Python", "OpenAI", "OpenAI Embeddings", "Embeddings"]
 ---
 
 Repo Search is a tool for searching for code by what it does using natural language queries, based on OpenAI's embeddings. Use it to help figure out what file you need to be working on!
