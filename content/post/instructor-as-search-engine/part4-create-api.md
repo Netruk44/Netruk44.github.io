@@ -6,7 +6,7 @@ tags: []
 summary: "Making an API that generates an embedding for a query and compares it to the database."
 ---
 
-{{% series-nav name="Steam Game Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}
+{{% series-nav name="Embedding-Based Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}
 
 ---
 
@@ -14,4 +14,4 @@ TODO: Write post.
 
 ---
 
-{{% series-nav name="Steam Game Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}
+{{% series-nav name="Embedding-Based Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}

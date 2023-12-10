@@ -20,7 +20,7 @@
 {{ if .Get "previous" }}<a href="../{{ .Get "previous" }}">{{ .Get "previousTitle" }}</a>{{else}}<em>No previous post.</em>{{ end }}
 </td>
 <td style="text-align:center">
-<a href="../">{{ .Get "name" }}</a>
+<a href="../#posts">{{ .Get "name" }}</a>
 </td>
 <td  style="text-align:center">
 {{ if .Get "next" }}<a href="../{{ .Get "next" }}">{{ .Get "nextTitle" }}</a>{{else}}<em>No next post.</em>{{ end }}

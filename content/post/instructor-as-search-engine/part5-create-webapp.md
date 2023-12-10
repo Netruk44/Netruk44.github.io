@@ -6,7 +6,7 @@ tags: []
 summary: "A dabble in React to create a simple webapp that calls the API."
 ---
 
-{{% series-nav name="Steam Game Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
+{{% series-nav name="Embedding-Based Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
 
 ---
 
@@ -14,4 +14,4 @@ TODO: Write post.
 
 ---
 
-{{% series-nav name="Steam Game Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
+{{% series-nav name="Embedding-Based Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
