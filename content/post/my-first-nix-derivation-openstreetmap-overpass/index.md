@@ -13,6 +13,8 @@ This post is pretty rambly, and not really edited for concise teaching. This pos
 
 {{< contact-me box="nix" is-mid-article=true >}}
 
+{{% toc %}}
+
 ## Background
 
 I've been working on an [app](/project/2022-walking-app), intended mainly for my own usage (currently, anyway). It acts as kind of a repository of GPX traces I take while I'm out on walks. The app reads the GPS positions from the traces, then cross references my traversed points with roads on a map. The app highlights which roads I've never walked on before, and I use that to vaguely direct my daily walking exercises.

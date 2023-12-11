@@ -16,6 +16,10 @@ tags: ["godot", "gamedev", "tutorial", "C#"]
 
 ---
 
+{{% toc %}}
+
+## Introduction
+
 Godot has some pretty good built-in tools for pathfinding and navigation, but when getting set up I found that the Godot docs don't have a complete end-to-end example of getting everything setup. There's lots of separate tutorials that cover different parts of the process, and if you can follow them all you can get it working, but I wanted to put together a single tutorial that covers everything from start to finish.
 
 Also pretty much every Godot tutorial out there that isn't the official Godot docs appears to be a YouTube video, which was frustrating to me as someone who prefers to read tutorials instead of watching them.

@@ -18,6 +18,8 @@ I intend to write more of these, if/when I publish more of these projects. So ma
 
 {{< contact-me box="godot" is-mid-article=true >}}
 
+{{% toc %}}
+
 ## Context - Statue Concept
 
 ![Statue from Statue Concept](/project/2023-statue/screenshot01.png#center)

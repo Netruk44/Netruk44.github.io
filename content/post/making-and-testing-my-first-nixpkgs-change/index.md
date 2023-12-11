@@ -13,6 +13,8 @@ I eventually managed to [make a PR](https://github.com/NixOS/nixpkgs/pull/220750
 
 How do you even build a change to nixpkgs, anyway?
 
+{{% toc %}}
+
 ## The Motivation
 I have some projects in mind I'd like to make involving [OpenMW](https://openmw.org/en/), an open-source ~~recrea~~ game engine that is able to play The Elder Scrolls III: Morrowind. These future projects will likely require source modifications to create.
 
