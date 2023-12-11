@@ -18,7 +18,7 @@ This post contains definitions, background information, and a broad overview of 
 
 ![Overview](../steam-embeddings-overview.png)
 
-The project was broken down into multiple steps, each of which is covered in its own post. A brief summary of each step is below.
+The project was broken down into multiple steps, each of which is covered in its own post. A brief summary of each step is below. Each piece was implemented with Python.
 
 **[Part 1: Obtaining Data](../part1-obtaining-data)**
 
