@@ -1,7 +1,7 @@
 ---
 title: "Azure CDN for GitHub Pages with Custom Domain"
 date: 2022-11-03T11:37:58-04:00
-draft: false
+draft: true
 tags: ["Azure", "GitHub Pages"]
 ---
 
