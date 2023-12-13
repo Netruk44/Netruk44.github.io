@@ -58,6 +58,9 @@ A vague rule of thumb is that one token is about equivalent to 4 characters of t
 These tokens are what the model sees as input, and in the case of LLMs (Large Language Models, such as ChatGPT), they are also what the model predicts as output. What we're interested in, however, is something else. When we feed a piece of text into a model, we want to get back a bundle of numbers that represents that text. This is called an "embedding".
 
 ### Embeddings
+
+> **See also**: [OpenAI Embeddings Guide](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings) for a quick overview of embeddings and their uses.
+
 Implementation-wise, an embedding is just an array of numbers (usually floating point values). As a whole, those numbers represent an individual piece of text. You can then use math on them to accomplish a variety of things. The most common use case is to figure out how similar two pieces of text are to each other. But you can also do other things with these embeddings, as I'll show later.
 
 By using similarity, you can do things like find the most similar games to another game based on their user reviews, or discovering a game that best matches a given description of game play and mechanics.
@@ -76,7 +79,7 @@ As input, Instructor takes in a max sequence length of 512 tokens (< 2000 charac
 
 For output, Instructor returns a 768-dimensional embedding for each input sequence. This means that the array representing the embedding will be 768 elements long, or about 6KB in size (768 * 8 bytes per float = 6144 bytes in the case of 64-bit floats).
 
-There are two 'sizes' of Instructor. `instructor-large` and `instructor-xl`. The size of the model determines how many parameters the model contains, which affect the quality of the embeddings and how long (how many operations) it takes to generate them. A bigger model generally produces better, more accurate embeddings. The drawback is that larger models take longer to train, longer to generate embeddings, and require more memory to run.
+There are two 'sizes' of Instructor. `instructor-large` and `instructor-xl`, with this project using the latter. The size of the model determines how many parameters the model contains, which affect the quality of the embeddings and how long (how many operations) it takes to generate them. A bigger model generally produces better, more accurate embeddings. The drawback is that larger models take longer to train, longer to generate embeddings, and require more memory to run.
 
 Just as a note, the size of the model does not necessarily affect the size of the embeddings themselves. The size of the embeddings is determined by the model architecture, or how the model was designed. In the case of Instructor, both `large` and `xl` versions produce 768-dimensional embeddings.
 
