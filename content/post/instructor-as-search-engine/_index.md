@@ -11,7 +11,7 @@ summary: "A complete implementation overview using embeddings to create a custom
 
 > **URL:** [https://netrukpub.z5.web.core.windows.net/steamvibes/build/index.html](https://netrukpub.z5.web.core.windows.net/steamvibes/build/index.html)
 >
-> **Source:** GitHub - [Netruk44/steam-text-search](https://github.com/Netruk44/steam-text-search)
+> **Source:** GitHub - [Netruk44/steam-embedding-search](https://github.com/Netruk44/steam-embedding-search)
 >
 > **Model:** [Instructor-XL](https://huggingface.co/hkunlp/instructor-xl) on [HuggingFace](https://huggingface.co/)
 
@@ -23,7 +23,7 @@ Since I'm going to be waiting a while for the whole database to be populated (it
 
 I believe that embeddings are a really cool tool that are going to become more and more commonplace as AI models become more advanced, so I hope that this can be useful to anyone who wants to do something similar, or just wants to learn more about how embeddings work.
 
-To check out the final product, head over to the [search page](https://netrukpub.z5.web.core.windows.net/steamvibes/build/index.html) to test it out for yourself. Maybe by the time you're reading this, the database will be fully populated. You can also see the complete source code for every part of this project on [GitHub](https://github.com/Netruk44/steam-text-search).
+To check out the final product, head over to the [search page](https://netrukpub.z5.web.core.windows.net/steamvibes/build/index.html) to test it out for yourself. Maybe by the time you're reading this, the database will be fully populated. You can also see the complete source code for every part of this project on [GitHub](https://github.com/Netruk44/steam-embedding-search).
 
 Check out the individual parts below for all the details of how it was made.
 
