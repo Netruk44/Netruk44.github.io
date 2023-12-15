@@ -241,6 +241,12 @@ Enough promise, at least, that I wanted to put it on the internet and write a bl
 
 So, now that we have something that works (vaguely), the next step is to show someone else and get some feedback. These days, that means making a website. But we aren't going to have the user's browser do the search through the database, so that means we're going to need to create an API that can be used to query the database.
 
+{{<collapse summary="Database progress report?">}}
+> We've moved onto review gathering. Currently 35 hours in and 36% complete. Things aren't looking good for my 'write one post every other day' technique. I may not finish the series before it's done!
+>
+> In total, the application details took 108 hours and 51 minutes to complete.
+{{</collapse>}}
+
 ---
 
 {{% series-nav name="Embedding-Based Search" previous="part2-creating-embeddings" previousTitle="Part 2: Creating Embeddings" next="part4-create-api" nextTitle="Part 4: Create an API" %}}
