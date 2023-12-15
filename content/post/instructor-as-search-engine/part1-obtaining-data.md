@@ -72,7 +72,7 @@ As mentioned, I decided that I was going to be storing the complete JSON respons
 
 Sqlite has methods for working with JSON, but I wasn't sure what the performance of those would be like. So in addition to having a column for the JSON, I also include extra columns for the specific data I'm interested in.
 
-### Game List
+#### Game List
 The first and simplest table is the game list table. It has the following columns:
 
 <!--
