@@ -6,7 +6,7 @@ tags: ["Python", "Instructor", "Sqlite", "Machine Learning", "Embeddings"]
 summary: "This post covers how I used Instructor to create embeddings for my database. Details involved include how I implemented chunking, and how I stored embeddings in sqlite3."
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part1-obtaining-data" previousTitle="Part 1: Obtaining Data" next="part3-querying-embeddings" nextTitle="Part 3: Querying Embeddings" %}}
+{{% series-nav name="Embedding-Based Search" previous="part1-obtaining-data" previousTitle="Part 1: Obtaining Data" next="part3-querying-embeddings" nextTitle="Part 3: Querying Embeddings" include-explanation="true" %}}
 
 ---
 
@@ -42,7 +42,7 @@ I've used these embeddings before in the project I mentioned earlier, and they w
 
 [T5](https://huggingface.co/docs/transformers/model_doc/t5) is an encoder-decoder model used in natural language processing. Typically, you'd use it to perform some kind of task like converting text from English to German, or summarizing a piece of text. However, by using the final hidden state of the encoder, you can get an embedding for a piece of text.
 
-For example (adapted from the HuggingFace "How to get Started" section):
+For example (adapted from the [t5-small](https://huggingface.co/t5-small) HuggingFace page, "How to get Started" section):
 
 ```py
 from transformers import T5Tokenizer, T5Model
@@ -156,6 +156,8 @@ With everything figured out, I hit start on my first run. In total, it took abou
 >
 > Will I finish writing this series before the database is fully populated? Who could say.
 {{</collapse>}}
+
+Join me in the next section where we figure out if what we made actually works or not. Are the embeddings any good? What do the results look like? Let's find out.
 
 ---
 

@@ -6,7 +6,7 @@ tags: ["Python", "Sqlite", "Steam", "API", "Data Gathering"]
 summary: "Covering how to query the Steam API to get game data, and how to store it in a database from Python. It also covers some issues that arose along the way."
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="overview" previousTitle="Steam Game Search Overview" next="part2-creating-embeddings" nextTitle="Part 2: Creating Embeddings" %}}
+{{% series-nav name="Embedding-Based Search" previous="overview" previousTitle="Steam Game Search Overview" next="part2-creating-embeddings" nextTitle="Part 2: Creating Embeddings" include-explanation="true" %}}
 
 ---
 

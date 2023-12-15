@@ -17,7 +17,7 @@ summary: "A complete implementation overview using embeddings to create a custom
 
 I recently had the idea of using machine learning text embedding models to generate embeddings for [Steam](https://store.steampowered.com/) game descriptions and their reviews. Steam game discovery has been a notoriously difficult problem to solve, and I think embeddings could be a really useful tool for helping games become more discoverable.
 
-I've been working on this project for a little while now, and I've gotten to the point where I have a web UI used for querying a database of embeddings. I think that as a first attempt using an off-the-shelf model, it shows some promise for the future. Current performance so far has not been spectacular, but I'm hoping that performance might improve with better future models.
+I've been working on this project for a little while now, and I've gotten to the point where I have a web UI used for querying a database of embeddings. I think that as a first attempt using an off-the-shelf model, it shows some promise for the future. However, search results so far have not been spectacular, but I'm hoping that performance might improve with some slight changes to my implementation, or better future models.
 
 Since I'm going to be waiting a while for the whole database to be populated (it's going to take a few days due to the Steam store's API rate limiting), I thought I would write up a series of blog posts all about how each piece was implemented, and the challenges I faced along the way.
 
