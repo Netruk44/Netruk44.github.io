@@ -48,7 +48,7 @@ I'm obviously not in a position to give a comprehensive reasoning behind why Fla
 
 Flask is a lightweight web framework for Python. It's pretty easy to get something up and running, all you need to do is implement an `app.py` file that defines the route you want.
 
-I was able to just lift-and-shift my query python script into my `app.py` file. All I had to do was write a function that would take the query parameters from the request and pass them to the query function, then return the results as JSON.
+I was able to lift-and-shift my query function into my `app.py` file. All I had to do was write a function that would take the query parameters from the request and pass them to the query function, then return the results as JSON.
 
 ## Issues encountered
 
