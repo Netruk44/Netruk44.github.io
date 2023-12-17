@@ -14,6 +14,8 @@ This is the first part in a series of five that covers how I created a custom se
 
 This post in particular covers the data gathering portion of the project. How did I find the data I needed, and how did I store it for later use? And finally, I'll cover some issues I encountered while doing so.
 
+> **Source for this section**: Available on [GitHub](https://github.com/Netruk44/steam-embedding-search/tree/main/01_gamedataset)
+
 {{% toc %}}
 
 ## Finding the APIs

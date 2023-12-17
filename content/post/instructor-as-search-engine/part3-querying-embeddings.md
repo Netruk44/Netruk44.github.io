@@ -14,6 +14,9 @@ This is the third part in a series that covers how I created a custom search eng
 
 At this point, we have a database of embeddings for Steam game descriptions and reviews. We now need to do a bit of a 'spot check' to make sure that querying the embeddings with a game description actually works, and works well enough to be useful.
 
+> **Source for this section**: Available on [GitHub](https://github.com/Netruk44/steam-embedding-search/tree/main/04_querydataset)
+
+
 {{% toc %}}
 
 ## How to Query the Embeddings?

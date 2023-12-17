@@ -14,6 +14,8 @@ This is the second part in a series that covers how I created a custom search en
 
 This post covers some embeddings models I considered, how I used Instructor to create embeddings, and how I stored them in sqlite3.
 
+> **Source for this section**: Available on [GitHub](https://github.com/Netruk44/steam-embedding-search/tree/main/02_embeddingdataset)
+
 {{% toc %}}
 
 ## Embedding Models
