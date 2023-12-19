@@ -242,7 +242,9 @@ The results aren't completely useless, though. I've shown this to a couple peopl
 
 Enough promise, at least, that I wanted to put it on the internet and write a blog series about it 😊. Even if things don't work great here, maybe someone else can learn something and make a better next version.
 
-So, now that we have something that works (vaguely), the next step is to show someone else and get some feedback. These days, that means making a website. But we aren't going to have the user's browser do the search through the database, so that means we're going to need to create an API that can be used to query the database.
+So, now that we have something that works (vaguely), the next step is to show someone else and get some feedback. These days, that means making a web app of some kind.
+
+The first step in making a web app is to create an API to retrieve data from the database. That's what I'll be covering in the next post.
 
 {{<collapse summary="Database progress report?">}}
 > We've moved onto review gathering. Currently 35 hours in and 36% complete. In total, the application details took 108 hours and 51 minutes to complete.
