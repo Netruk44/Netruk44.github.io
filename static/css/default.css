@@ -1,0 +1,19 @@
+.collapse-summary {
+  cursor: pointer;
+}
+
+.banner-early {
+  background-color: var(--tertiary);
+  border-top: 5px solid var(--tertiary);
+  border-bottom: 5px solid var(--tertiary);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.banner-early p {
+  margin: 0;
+}
+
+.banner-early h1, .banner-early h2, .banner-early h3, .banner-early h4, .banner-early h5, .banner-early h6 {
+  margin-top: 0;
+}
