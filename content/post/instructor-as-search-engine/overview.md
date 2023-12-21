@@ -10,6 +10,8 @@ summary: "A brief implementation overview of the entire project and how it was p
 
 ---
 
+{{%banner-early%}}
+
 This post contains definitions, background information, and a broad overview of how the Steam Game Search project works. Feel free to skip any sections that you're already familiar with.
 
 {{% toc %}}

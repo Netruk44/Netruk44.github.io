@@ -7,6 +7,7 @@
   border-top: 5px solid var(--tertiary);
   border-bottom: 5px solid var(--tertiary);
   padding: 1rem;
+  margin-bottom: 1rem;
 }
 
 .banner-early p {

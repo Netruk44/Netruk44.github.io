@@ -10,6 +10,8 @@ summary: "The first step in sharing the project with others. In this post, we'll
 
 ---
 
+{{%banner-early%}}
+
 This is the fourth part in a series of five that covers how I created a custom search engine for Steam games using embeddings.
 
 In the previous post, we created a simple script that could query the embeddings we created previously. However, expecting people to run a Python script is not a great way to share a project. In this post, we'll create a simple API that can be used to query the embeddings we've created.

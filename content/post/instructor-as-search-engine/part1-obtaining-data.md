@@ -10,6 +10,8 @@ summary: "Covering how to query the Steam API to get game data, and how to store
 
 ---
 
+{{%banner-early%}}
+
 This is the first part in a series of five that covers how I created a custom search engine for Steam games using embeddings.
 
 This post in particular covers the data gathering portion of the project. How did I find the data I needed, and how did I store it for later use? And finally, I'll cover some issues I encountered while doing so.
