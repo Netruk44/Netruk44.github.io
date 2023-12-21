@@ -6,7 +6,7 @@ tags: []
 summary: "The first step in sharing the project with others. In this post, we'll create a simple API that can be used to query the embeddings we've created."
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}
+{{% series-nav name="Embedding-Based Steam Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}
 
 ---
 
@@ -135,4 +135,4 @@ Now we need to build a UI to display the results from the query nicely. That's w
 
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}
+{{% series-nav name="Embedding-Based Steam Search" previous="part3-querying-embeddings" previousTitle="Part 3: Querying Embeddings" next="part5-create-webapp" nextTitle="Part 5: Create a Web App" %}}

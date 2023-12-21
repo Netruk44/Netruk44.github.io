@@ -6,7 +6,7 @@ tags: ["Python", "Instructor", "Application", "Docker", "CSS", "React", "Sqlite"
 summary: "A brief implementation overview of the entire project and how it was put together, including definitions and background information needed to understand how it works."
 ---
 
-{{% series-nav name="Embedding-Based Search" next="part1-obtaining-data" nextTitle="Part 1: Obtaining Data" include-explanation="true" %}}
+{{% series-nav name="Embedding-Based Steam Search" next="part1-obtaining-data" nextTitle="Part 1: Obtaining Data" include-explanation="true" %}}
 
 ---
 
@@ -95,4 +95,4 @@ These are links to some additional resources that I found useful while trying to
 
 ---
 
-{{% series-nav name="Embedding-Based Search" next="part1-obtaining-data" nextTitle="Part 1: Obtaining Data" %}}
+{{% series-nav name="Embedding-Based Steam Search" next="part1-obtaining-data" nextTitle="Part 1: Obtaining Data" %}}

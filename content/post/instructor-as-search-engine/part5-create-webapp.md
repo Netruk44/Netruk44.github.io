@@ -6,7 +6,7 @@ tags: []
 summary: "How to write a React app when you don't know React, using Copilot to write most of the code for you."
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
+{{% series-nav name="Embedding-Based Steam Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
 
 ---
 
@@ -123,4 +123,4 @@ One thing I've learned is that you don't always need to make the most optimal ch
 
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}
+{{% series-nav name="Embedding-Based Steam Search" previous="part4-create-api" previousTitle="Part 4: Create an API" %}}

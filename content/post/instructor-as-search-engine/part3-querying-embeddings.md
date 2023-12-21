@@ -6,7 +6,7 @@ tags: ["Python", "Machine Learning", "Embeddings"]
 summary: "Covering the math behind embedding comparisons, how to create an index for the embeddings, and providing some examples of the results from my testing database."
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part2-creating-embeddings" previousTitle="Part 2: Creating Embeddings" next="part4-create-api" nextTitle="Part 4: Create an API" %}}
+{{% series-nav name="Embedding-Based Steam Search" previous="part2-creating-embeddings" previousTitle="Part 2: Creating Embeddings" next="part4-create-api" nextTitle="Part 4: Create an API" %}}
 
 ---
 
@@ -258,4 +258,4 @@ The first step in making a web app is to create an API to retrieve data from the
 
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part2-creating-embeddings" previousTitle="Part 2: Creating Embeddings" next="part4-create-api" nextTitle="Part 4: Create an API" %}}
+{{% series-nav name="Embedding-Based Steam Search" previous="part2-creating-embeddings" previousTitle="Part 2: Creating Embeddings" next="part4-create-api" nextTitle="Part 4: Create an API" %}}

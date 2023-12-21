@@ -6,7 +6,7 @@ tags: ["Python", "Instructor", "Sqlite", "Machine Learning", "Embeddings"]
 summary: "This post covers how I used Instructor to create embeddings for my database. Details involved include how I implemented chunking, and how I stored embeddings in sqlite3."
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part1-obtaining-data" previousTitle="Part 1: Obtaining Data" next="part3-querying-embeddings" nextTitle="Part 3: Querying Embeddings" include-explanation="true" %}}
+{{% series-nav name="Embedding-Based Steam Search" previous="part1-obtaining-data" previousTitle="Part 1: Obtaining Data" next="part3-querying-embeddings" nextTitle="Part 3: Querying Embeddings" include-explanation="true" %}}
 
 ---
 
@@ -186,4 +186,4 @@ Join me in the next section where we figure out if what we made actually works o
 
 ---
 
-{{% series-nav name="Embedding-Based Search" previous="part1-obtaining-data" previousTitle="Part 1: Obtaining Data" next="part3-querying-embeddings" nextTitle="Part 3: Querying Embeddings" %}}
+{{% series-nav name="Embedding-Based Steam Search" previous="part1-obtaining-data" previousTitle="Part 1: Obtaining Data" next="part3-querying-embeddings" nextTitle="Part 3: Querying Embeddings" %}}
