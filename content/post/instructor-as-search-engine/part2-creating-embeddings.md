@@ -144,10 +144,31 @@ CREATE TABLE description_embeddings (
 )
 -->
 
+**description_embeddings**
+
 | Column | Type | Description |
 | --- | --- | --- |
-| `appid` / `recommendationid` | `INTEGER` | The description's appid or review's recommendationid. |
-| `embedding` | `BLOB` | The embedding for the description or review. |
+| `appid` / | `INTEGER` | The description's appid. |
+| `embedding` | `BLOB` | The embedding for the description. |
+
+
+<!--
+CREATE TABLE revoew_embeddings (
+    recommendationid INTEGER PRIMARY KEY,
+    embedding BLOB NOT NULL,
+    appid INTEGER NOT NULL,
+)
+-->
+
+**review_embeddings**
+
+| Column | Type | Description |
+| --- | --- | --- |
+| `recommendationid` / | `INTEGER` | The review's recommendationid. |
+| `embedding` | `BLOB` | The embedding for the review. |
+| `appid` | `INTEGER` | The appid of the game the review is for. |
+
+The extra `appid` column in the `review_embeddings` table is so that I can easily get all reviews for a specific appid. This will be useful later when querying the database.
 
 ## Conclusion
 
