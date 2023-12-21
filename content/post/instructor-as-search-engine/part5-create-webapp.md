@@ -2,7 +2,7 @@
 title: "Part 5: Create a Webapp"
 date: 2023-11-20T10:33:39-05:00
 draft: false
-tags: []
+tags: ["React", "Copilot", "Javascript", "Azure", "webdev"]
 summary: "How to write a React app when you don't know React, using Copilot to write most of the code for you."
 ---
 
