@@ -1,3 +1,14 @@
 .collapse-summary {
   cursor: pointer;
 }
+
+.banner-early {
+  background-color: var(--tertiary);
+  border-top: 5px solid var(--tertiary);
+  border-bottom: 5px solid var(--tertiary);
+  padding: 1rem;
+}
+
+.banner-early p {
+  margin: 0;
+}

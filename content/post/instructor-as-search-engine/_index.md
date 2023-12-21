@@ -1,11 +1,12 @@
 ---
-title: "Embedding-based Steam Search: Using Instructor for Searching"
+title: "Dev Journal: Embedding-Based Steam Search"
 date: 2023-11-20T10:33:44-05:00
 draft: false
 tags: []
 summary: "A complete implementation overview using embeddings to create a custom search engine for Steam games."
 ---
 
+{{%banner-early%}}
 
 ![](./project_preview.png)
 
@@ -23,7 +24,7 @@ Since I'm going to be waiting a while for the whole database to be populated (it
 
 > **Important**: I'm by no means an expert in any of this. I'm just a guy who made a thing and is sharing how he made that thing. I'm sure there are lots of mistakes and optimizations that I could have made all over the place. Feel free to e-mail me about them!
 >
-> Don't take this as a definitive 'best practices' guide for how to implement something like this. Just as documentation for how one person did it.
+> Under no circumstance should you be under the impression that what I've written here is the 'best' way of implementing all or any part of this project. I'm simply documenting how I made the thing.
 
 I believe that embeddings are a really cool tool that are going to become more and more commonplace as AI models become more advanced, so I hope that this can be useful to anyone who wants to do something similar, or just wants to learn more about how embeddings work.
 
