@@ -71,7 +71,7 @@ Larger revisions to the code were done the same way. I asked the GPT-vision mode
 
 Eventually I got to a point where I was happy with the app, and I was ready to deploy it. I wouldn't really say that I "know" React now, but I do have at least a little bit of understanding of how to use it.
 
-### Deploying the app
+## Deploying the app
 
 Azure Blob Storage has a built-in feature for hosting static websites. You can enable it per storage account in the Azure Portal. This creates a special blob container called `$web` that you can upload your static files to.
 
