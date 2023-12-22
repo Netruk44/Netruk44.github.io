@@ -8,7 +8,7 @@ summary: "A complete implementation overview using embeddings to create a custom
 
 ![](./project_preview.png)
 
-> **URL:** [https://netrukpub.z5.web.core.windows.net/steamvibes/build/index.html](https://netrukpub.z5.web.core.windows.net/steamvibes/build/index.html)
+> **URL:** [https://azstatic.danieltperry.me/steamvibes/build](https://azstatic.danieltperry.me/steamvibes/build)
 >
 > **Source:** GitHub - [Netruk44/steam-embedding-search](https://github.com/Netruk44/steam-embedding-search)
 >
