@@ -8,11 +8,9 @@ summary: "A complete implementation overview using embeddings to create a custom
 
 ![](./project_preview.png)
 
-> **URL:** [https://azstatic.danieltperry.me/steamvibes/build](https://azstatic.danieltperry.me/steamvibes/build)
+> **Published Project URL:** [https://azstatic.danieltperry.me/steamvibes/build](https://azstatic.danieltperry.me/steamvibes/build)
 >
-> **Source:** GitHub - [Netruk44/steam-embedding-search](https://github.com/Netruk44/steam-embedding-search)
->
-> **Model:** [Instructor-XL](https://huggingface.co/hkunlp/instructor-xl) on [HuggingFace](https://huggingface.co/)
+> **Project Details Sheet:** [Steam Embedding Search](/project/2023-steam-embedding-search/)
 
 {{%banner-early%}}
 
@@ -36,6 +34,6 @@ You can also see the complete source code for every part of this project on [Git
 
 Check out the individual parts below for all the details of how it was made.
 
-{{< contact-me box="steamsearch" is-mid-article=true >}}
+{{< contact-me box="steam_search" is-mid-article=true >}}
 
 ## Posts
