@@ -87,6 +87,30 @@ The tutorial I followed to learn how to use FAISS was the Pinecone tutorial [Int
 
 As of the time of writing, I haven't yet added the index to my project, but I will be doing so soon. I suspect it will be pretty straightforward. If I have any additional thoughts on it, I'll add them here.
 
+#### Update (2023-12-28)
+
+I've now implemented embedding indexing into the project, and unfortunately I wasn't able to use FAISS to do it.
+
+The issue ultimately came down to installation of the library. FAISS can only be installed via conda. There isn't any way to install the library without conda installed.
+
+> There is an [outdated pip library](https://pypi.org/project/faiss/) that might work, but I'm weary of using unmaintained libraries.
+
+Up to this point, I had been using venv to setup and manage the environment of each step of this project, which uses pip to install packages.
+
+I made a brief attempt at creating a conda setup script for this step so that I could install FAISS. I was working on this when I discovered hnswlib and saw that it was available natively via pip, so I decided to try using that instead.
+
+### Hnswlib
+
+> This section was added after the initial publication of this post.
+
+[Hnswlib](https://github.com/nmslib/hnswlib) is a library that does much the same thing as FAISS. It implements a quick nearest-neighbor search algorithm that can be used to create an index for embeddings. Now that I've successfully deployed the index to a cloud machine, I thought I'd write about my experience using it.
+
+After spending a few hours tweaking the parameters, I was able to get 90%+ recall accuracy on my completed database. The database contains about 100,000 unique game description embeddings and about 75,000 unique review embeddings (after mean pooling reviews with the same appid). I created an index for each of those separately, which takes about 15 ms to query in total on my Ryzen 7 5800X.
+
+Setting up Hnswlib requires you to experiment with your dataset to find the best `M` and `ef` parameters. The math-style variable names did hinder my understanding a bit as I was learning things. Thankfully, descriptions of what everything means can be found in the [Hnswlib GitHub repository](https://github.com/nmslib/hnswlib/blob/master/ALGO_PARAMS.md).
+
+To help discover the parameters that worked best for my dataset, I made a Jupyter notebook to interactively tweak the parameters until I got good enough results. You can hopefully check out that notebook [here](https://github.com/Netruk44/steam-embedding-search/blob/main/03_hnsw-index/playground.ipynb) (if I haven't accidentally moved it somewhere else).
+
 ## Spot Check
 
 With the implementation finally complete, I was able to check the results for the first time. I was a little disappointed, but not surprised, to find that the results were not amazing. Let's take a look at some examples.
