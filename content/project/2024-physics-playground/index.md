@@ -38,7 +38,7 @@ Instead, I may write up a tutorial on how to make your own physics sandbox app u
 
 ## Screenshots
 
-![](./intro_window.jpg)
+![](./intro_window.jpg#center)
 {{% img-subtitle %}}
 The startup window
 {{% /img-subtitle %}}
@@ -48,12 +48,12 @@ The startup window
 The tool window
 {{% /img-subtitle %}}
 
-![](./screenshot2.jpg)
+![](./screenshot2.jpg#center)
 {{% img-subtitle %}}
 Creating a sphere
 {{% /img-subtitle %}}
 
-![](./fling_tool2.jpg)
+![](./fling_tool2.jpg#center)
 {{% img-subtitle %}}
 The fling tool
 {{% /img-subtitle %}}
