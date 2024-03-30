@@ -13,9 +13,11 @@ App Icon
 
 Spatial Physics Playground is a simple app for the Vision Pro. It's a physics sandbox where you can create objects and interact with them in your physical environment. Using Apple's RealityKit, the objects you create can collide with each other and the real world.
 
-## Support Requests
-
-Please send me an e-mail at <a href="mailto:physicsplayground@danieltperry.me?subject=Spatial Physics Playground Support">physicsplayground\@danieltperry.me</a>
+> ## Support Requests
+>
+> For support, please send me an e-mail at <a href="mailto:physicsplayground@danieltperry.me?subject=Spatial Physics Playground Support">physicsplayground\@danieltperry.me</a>
+> 
+> If you have any suggestions or feedback, feel free to send me an e-mail at the same address.
 
 # Info
 ![](./screenshot1.jpg#center)
@@ -26,6 +28,7 @@ Screenshot of the app
 * **Status**: Released / Continued Development
 * **State**: Prototype. Basic functionality is complete.
 * **Download**: Available in App Store soon. Source to be released on GitHub eventually.
+* **Privacy Policy**: [View Privacy Policy](./privacy)
 * **Technologies & Languages**: Swift, SwiftUI, RealityKit, ARKit
 
 ## Description
