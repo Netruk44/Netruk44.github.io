@@ -29,7 +29,7 @@ Screenshot of the app
 
 * **Status**: Released / Continued Development
 * **State**: Prototype. Basic functionality is complete.
-* **Download**: Available in App Store soon. Source to be released on GitHub eventually.
+* **Download**: Available in the [App Store](https://apps.apple.com/us/app/spatial-physics-playground/id6480322995). Source to be released on GitHub eventually.
 * **Privacy Policy**: [View Privacy Policy](./privacy)
 * **Technologies & Languages**: Swift, SwiftUI, RealityKit, ARKit
 
