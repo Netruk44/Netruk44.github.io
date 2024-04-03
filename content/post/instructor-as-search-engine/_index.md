@@ -12,8 +12,6 @@ summary: "A complete implementation overview using embeddings to create a custom
 >
 > **Project Details Sheet:** [Steam Embedding Search](/project/2023-steam-embedding-search/)
 
-{{%banner-early%}}
-
 ## Foreword
 
 I recently had the idea of using machine learning text embedding models to generate embeddings for [Steam](https://store.steampowered.com/) game descriptions and their reviews. Steam game discovery has been a notoriously difficult problem to solve, and I think embeddings could be a really useful tool for helping games become more discoverable.
