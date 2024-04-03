@@ -10,8 +10,6 @@ summary: "This post covers how I used Instructor to create embeddings for my dat
 
 ---
 
-{{%banner-early%}}
-
 This is the second part in a series that covers how I created a custom search engine for Steam games using embeddings.
 
 This post covers some embeddings models I considered, how I used Instructor to create embeddings, and how I stored them in sqlite3.

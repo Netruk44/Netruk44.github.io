@@ -10,8 +10,6 @@ summary: "How to write a React app when you don't know React, using Copilot to w
 
 ---
 
-{{%banner-early%}}
-
 This is the final part in a series of five that covers how I created a custom search engine for Steam games using embeddings.
 
 This post covers the creation of the React webapp I made that can be used to query the API we created in the previous post.

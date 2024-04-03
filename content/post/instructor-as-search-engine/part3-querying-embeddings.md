@@ -10,8 +10,6 @@ summary: "Covering the math behind embedding comparisons, how to create an index
 
 ---
 
-{{%banner-early%}}
-
 This is the third part in a series that covers how I created a custom search engine for Steam games using embeddings.
 
 At this point, we have a database of embeddings for Steam game descriptions and reviews. We now need to do a bit of a 'spot check' to make sure that querying the embeddings with a game description actually works, and works well enough to be useful.
