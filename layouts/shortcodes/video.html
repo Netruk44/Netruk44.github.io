@@ -10,7 +10,7 @@
 
   var player = new Clappr.Player({
     source: {{ .Get "source" }},
-    mute: true,
+    mute: {{ .Get "mute" | default true }},
     height: 360,
     width: 640,
     autoPlay: {{ .Get "autoplay" | default false }},
