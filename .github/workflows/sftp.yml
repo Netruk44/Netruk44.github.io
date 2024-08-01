@@ -28,8 +28,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     # This is now set in the GitHub Actions UI
-    #env:
-    #  HUGO_VERSION: 0.124.1
+    env:
+      HUGO_VERSION: ${{ vars.HUGO_VERSION }}
     steps:
       - name: Install Hugo CLI
         run: |
