@@ -2,6 +2,7 @@ baseURL: 'https://www.danieltperry.me/'
 languageCode: 'en'
 title: 'DanielTPerry.me'
 theme: 'PaperMod'
+enableRobotsTXT: true
 
 params:
   assets:
