@@ -8,7 +8,7 @@ summary: "A complete implementation overview using embeddings to create a custom
 
 ![](./project_preview.png)
 
-> **Published Project URL:** [https://azstatic.danieltperry.me/steamvibes/build](https://azstatic.danieltperry.me/steamvibes/build)
+> **Published Project URL:** [https://storage.danieltperry.me/share/steamvibes/build](https://storage.danieltperry.me/share/steamvibes/build)
 >
 > **Project Details Sheet:** [Steam Embedding Search](/project/2023-steam-embedding-search/)
 
