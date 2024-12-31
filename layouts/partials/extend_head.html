@@ -1,1 +1,4 @@
 <link rel="stylesheet" href="/css/default.css">
+{{ if .Param "math" }}
+{{ partialCached "math.html" . }}
+{{ end }}

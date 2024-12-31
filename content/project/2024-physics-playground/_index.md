@@ -2,7 +2,7 @@
 title: "Spatial Physics Playground - A Vision Pro App"
 date: 2024-03-28T15:50:55-04:00
 draft: false
-tags: ["Vision Pro", "Swift", "XR", "Video Game", "Apple"]
+tags: ["Vision Pro", "Swift", "XR", "Video Game", "Apple", "Apple Vision"]
 summary: "Spatial Physics Playground is a simple app for the Vision Pro. It's a physics sandbox where you can create objects and interact with them in your physical environment. Using Apple's RealityKit, the objects you create can collide with each other and the real world."
 params:
   hideList: true
