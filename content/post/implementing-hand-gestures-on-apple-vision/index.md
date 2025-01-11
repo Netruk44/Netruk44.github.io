@@ -104,14 +104,19 @@ Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/han
 ### Background Math - The Line Projection Formula
 * > This section is tongue-in-cheek, and is going to be a whirlwind tour of deriving a formula. I'm definitely not the best person to be teaching math concepts, so unfortunately there will be a lot of detail-skipping involved.
 * > Don't worry if a lot of this goes over your head. This section is here to explain the logic behind the math we're about to implement. I'll explain the details we need in more detail next.
-* [Wikipedia tells us](https://en.wikipedia.org/wiki/Projection_%28linear_algebra%29#Formulas) all we need to know about projection. Give it a glance, and tell me that it isn't simplicity itself.
+* [Wikipedia](https://en.wikipedia.org/wiki/Projection_%28linear_algebra%29#Formulas) tells us all we need to know about projection. Give it a glance, and tell me that it isn't simplicity itself.
 * ...
 * What do you mean you don't understand? It's right there, clear as day:
   * \( P_A = \sum_i \langle \mathbf u_i, \cdot \rangle \mathbf u_i \)
   * In this formula:
     * \( P_A \) is "the projection onto subspace A"
-    * \( \mathbf{u} \) defines the basis of the space we're projecting onto.
-    * \( \mathbf{u}_i \) is the basis vector for a single dimension of the space.
+    * \( \sum_i \) is a sum (using the placeholder variable \( _i \)). You figure out all the terms of the sum, then add them together. A single term is defined by what's after the \( \sum_i \) symbol, and you replace all placeholder \( _i \) after the \( \sum_i \) with 0, 1, 2 ... up to the number of terms you have.
+    * \( \langle x , y \rangle \) is an inner product. It's essentially a way to compare two things (vectors, in this case) to see how much they "point in the same direction".
+    * \( \mathbf{u} \) (without the \( _i \)) defines the basis of the space we're projecting onto. Depending on the number of dimensions of the space you're projecting onto, this could be 1 to n (orthogonal!) vectors.
+      * (The basis of our space will be the 1-dimensional line from the user's middle finger tip to their middle finger knuckle.)
+    * So then, it follows that \( \mathbf{u}_i \) is the basis vector for a single dimension of the space.
+    * Finally, the \( \cdot \) inside the angled brackets is a placeholder for the vector we're projecting.
+    * Also, keep in mind that multiplication is usually not written out like \( x*y \) or similar. It's just implied when you have two things next to each other.
   * (Collapse: "But there's a simpler formula!")
     * Yes, I can see that formula for projecting onto a line:
       * \( P_\mathbf{u} = \mathbf u \mathbf u^\mathsf{T} \)
@@ -119,22 +124,28 @@ Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/han
     * The one I'm using is generalized and will lead us to something we're looking for.
     * Whereas this specialized formula doesn't do that. So...I'm not going to explain it.
     * Being good at math is recognizing which formulas to apply and when. Some lead you to a more helpful place, others don't.
-  * Let's rewrite this formula just a little bit so we can introduce \( \mathbf{v} \), the vector we're going to project, as well as \( \mathbf{d} \), the number of dimensions of the space we're projecting onto:
+  * Let's rewrite this formula just a little bit so we can introduce \( \mathbf{v} \), the vector we're going to project, as well as \( \mathbf{d} \), the number of dimensions of the space we're projecting onto (both of which are already in the formula implicitly, we're just going to make them explicit):
   * \( P_A(\mathbf{v}) = \sum_{i=1}^{d} \langle \mathbf{u}_i, \mathbf{v} \rangle \mathbf{u}_i \)
-  * And obviously since we're projecting onto a one-dimensional line, d = 1:
+  * This is the exact same formula, just rewritten for clarity.
+  * Let's start massaging this formula to suit our specific needs.
+  * Now, obviously since we're projecting onto a one-dimensional line, d = 1:
   * \( P_A(\mathbf{v}) = \sum_{i=1}^{1} \langle \mathbf{u}_i, \mathbf{v} \rangle \mathbf{u}_i \)
   * A sum from i = 1 to 1 is just one term, so let's simplify:
   * \(  P_A(\mathbf{v}) = \langle \mathbf{u}_1, \mathbf{v} \rangle \mathbf{u}_1 \)
-  * We can rename u1 to just u now as we only have the one basis vector (the line we're projecting onto):
+  * We can rename \( \mathbf{u}_1 \) to just \( \mathbf{u} \) now as we only have the one basis vector (the line we're projecting onto):
   * \( P_A(\mathbf{v}) = \langle \mathbf{u}, \mathbf{v} \rangle \mathbf{u} \)
-  * And, remembering our math classes, we know the angled brackets means "inner product", so we can expand this out (making sure to normalize the basis vector!):
+  * By default it's assumed that basis vectors are normalized, but we may not be working with a normalized basis vector (most people's fingers aren't exactly 1 meter long). It's not harmful to normalize an already-normalized vector, so let's normalize. Divide by the length of the basis vector (\(\mathbf{u} \cdot \mathbf{u}\)):
+  * \( P_A(\mathbf{v}) = \frac{\langle \mathbf{u}, \mathbf{v} \rangle \mathbf{u}}{\mathbf{u} \cdot \mathbf{u}} \)
+  * Let's re-order this a little bit. Remembering our elementary math classes, multiplication and division are associative. In other words, \( \frac{xy}{z} \) is equal to \( \frac{x}{z}y \):
+  * \( P_A(\mathbf{v}) = \frac{\langle \mathbf{u}, \mathbf{v} \rangle}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \)
+  * And, continuing to remember our math classes, we know we can replace the inner product with a dot product (since we're dealing with vectors and not, say functions or complex numbers):
   * \( P_A(\mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \)
-* **There we have it, the projection formula for projecting a point `v` onto a one-dimensional space `A` defined by vector `u`.**
+* **There we have it, the projection formula for projecting a point `v` onto a one-dimensional space `A` defined by a potentially un-normalized vector `u`.**
+* This is the standard formula you'll see if you look up how to project a point onto a line orthogonally. We just derived it ourself.
 * Wikipedia couldn't have made it any simpler for us.
 * ...
 * What do you mean you still don't understand?
-  * The little dots means it's a dot product.
-  * You know what a dot product is, right?
+  * You know how to do a dot product, right?
 * Alright, fine. I guess I can explain a *little* bit more.
 
 ### Background Math - Dot Products
@@ -145,30 +156,29 @@ Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/han
   * So, for example, the dot product of two 3D vectors is:
   * \( \mathbf{u} \cdot \mathbf{v} = u_1 v_1 + u_2 v_2 + u_3 v_3 \)
   * Or, in code: `(u.x * v.x) + (u.y * v.y) + (u.z * v.z)`
-  * (The idea generalizes to higher/lower dimensions, but we're keeping it simple here.)
 * Dot products have many, many uses and are well worth familiarizing yourself with, if you haven't already.
 * This post won't dive into how to use dot products (remember them if you need to know the angle between two vectors!), but they'll be a part of our implementation.
 
 ### Background Math - How to Implement Tap Gesture?
-* Okay, so we have the point projected onto the line. What now?
+* Okay, so we have the thumb's position projected onto the line. What now?
 * Now we need to know whether the thumb is touching the line.
 * That sounds like a distance calculation to me.
 * While the thumb remains within a certain radius of the projected point on the line, the thumb is considered to be 'touching' the middle finger
-  * We don't know how thick the user's middle finger is, so we need to pick a reasonable threshold.
+  * We don't know how thick the user's middle finger is, so we need to pick a reasonable threshold. Likely through testing out the gesture to see what feels best.
   * Keep in mind that since we're only using a single line segment that goes from finger tip directly to the knuckle, and most people are naturally going to bend their fingers a little bit, the imaginary line is likely going to mostly go through the air in front of the user's middle finger.
   * So the threshold should be large enough so that the thumb can't accidentally go 'through' this line too far and exit out the back.
   * ![](./handmissed.png)
 
 ### Background Math - How to Implement Drag Gesture?
-* Let's take a closer look at the projection formula, and massage it a little to suit our needs:
+* Let's take a closer look at the projection formula and try to break it down a little bit:
 * This is the formula we derived earlier:
 * \( P_A(\mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \)
-* To me this looks like *"something"* multiplied by the line we're interested in. What is this *"something"*?
+* To me this looks like *"something"* (\( \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \)) multiplied by the line we're interested in (\( u \)). What is this *"something"*?
 * Using the previous section, we can tell that it's a dot product divided by another dot product.
 * We know that dot products result in scalar values, which means this whole *"something"* is itself a scalar (again, that it's just a number and not a vector)
 * If we know that this *"something"* is a scalar, and we're multiplying it by the line (a vector), then the result has to be a point somewhere along that line.
 * So then this *"something"* must be the component that tells us how far along the line the projected point is.
-* Let's call it \( \mathbf{t} \) for now.
+* Let's call it \( \mathbf{t} \):
   * \( t = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \)
 * **`t` is the component that tells us how far along the line `u` the projected point `v` is.**
 * If we track this over time, we can tell if the thumb is moving up or down the line.
@@ -181,6 +191,7 @@ Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/han
 * We know when the user has begun to touch their thumb to their middle finger, but we don't exactly know which gesture they're about to perform.
 * People aren't machines, and the hand tracking isn't perfect, so our code is always going to see some slight up and down movement as the user moves their fingers, even as they're attempting to perform a tap gesture.
 * There needs to be some minimum threshold for movement up and down the line before we consider the action a drag gesture.
+  * Again, discovered through testing.
 * It also helps to consider how long the user has been touching their thumb to their middle finger when determining the gesture.
   * If the touch time is longer than a second, it's unlikely the user is attempting a tap gesture.
   * Likewise, if we detect a large drag in less than a quarter of a second, it's unlikely the user meant to perform a drag gesture.
@@ -188,11 +199,51 @@ Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/han
 
 ## Implementation
 
+If you haven't already browsed through Apple's documentation for [Tracking and Visualizing Hand Movement](https://developer.apple.com/documentation/visionos/tracking-and-visualizing-hand-movement), I would recommend you do so first. It's a great starting point for understanding how to set up hand tracking in your app.
+
+(Hopefully Apple hasn't changed the link by the time you're reading this.)
+
 ### Hand Tracking Provider Setup
+
+* It's hard to get data if there's no data provider. Let's get that setup.
+* Inside your immersive view or inside a model, create an `ARKitSession` and `HandTrackingProvider`
+
+```swift
+private let arSession = ARKitSession()
+private let handTracking = HandTrackingProvider()
+```
+
+* When the user enters the immersive view, request authorization for hand tracking and start the hand tracking provider.
+
+```swift
+    func handTrackingIsAuthorized() async -> Bool{
+        return await arSession.requestAuthorization(for: HandTrackingProvider.requiredAuthorizations).allSatisfy{ authorization in authorization.value == .allowed }
+    }
+```
+
+```swift
+struct ImmersiveView : View {
+  var body: some View {
+    // ...
+  }.task {
+    do {
+      var dataProviders: [DataProvider] = [] // Required providers
+
+      if await handTrackingIsAuthorized() {
+        dataProviders.append(handTracking)
+      }
+
+      try await arSession.run(dataProviders: dataProviders)
+    } catch {
+      // Handle error
+    }
+  }
+}
+```
 
 ### Storing the Latest Hand Data
 
-### Setting up a Thruster System
+### Setting up a System
 
 * Responsible for controlling things based on hand gestures.
 * Keeps track of hand status (previous t value, whether the thumb was touching the line, etc.)
