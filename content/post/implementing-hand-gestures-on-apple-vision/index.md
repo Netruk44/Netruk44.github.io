@@ -20,11 +20,12 @@ params:
 >**Difficulty**: Intermediate  
 >**Related Projects**: [Spatial Physics Playground](/project/2024-physics-playground/)
 
+{{< contact-me box="avp" >}}
+
 ---
 
-{{% toc %}}
 
-<!-- Just a brief outline for now, content TODO -->
+{{% toc %}}
 
 ## Introduction
 
@@ -52,7 +53,7 @@ params:
   * A simple object that can be attached to other objects in the app.
   * When activated, it applies a force to the object it is attached to.
   * The specifics of the truster implementation aren't important for this post.
-  * Let's assume that we can dynamically toggle and set the thruster's strength at runtime.
+  * Many things are going to be glossed over in favor of making a more clear tutorial.
 
 ### Hand Gesture Idea
 
@@ -68,10 +69,7 @@ params:
 
 ### What's Provided by ARKit?
 
-<!-- Image of hand joints from substack -->
-<!-- https://varrall.substack.com/p/hand-tracking-in-visionos -->
-<!-- ./avp_joints.jpg -->
-![](./avp_joints.jpg)
+![A diagram depicting the hand joints provided by ARKit](./avp_joints.jpg)
 {{% img-subtitle %}}
 Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/hand-tracking-in-visionos)
 {{% /img-subtitle %}}
@@ -84,7 +82,8 @@ Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/han
 
 
 ### The Idea
-![](./handok.png)
+![An illustration showing a hand with the thumb touching the middle finger. There's a line overlaid on top of the middle finger and a notch in the line where the thumb has been projected onto the line.](./handok.png)
+
 * The plan: project the thumb tip onto an imaginary line that extends from the middle finger tip to the middle finger knuckle.
   * Then we can see how far away the thumb is from this line.
   * If the thumb is close enough to the line, we can consider it to be 'touching' the middle finger.
@@ -199,38 +198,77 @@ Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/han
 
 ## Implementation
 
-If you haven't already browsed through Apple's documentation for [Tracking and Visualizing Hand Movement](https://developer.apple.com/documentation/visionos/tracking-and-visualizing-hand-movement), I would recommend you do so first. It's a great starting point for understanding how to set up hand tracking in your app.
+> ⚠️ **Important Note**
+> 
+> This post was written when visionOS 2.2 was the latest version.
+> 
+> If you're reading this in the future, some of this code may be outdated.
 
-(Hopefully Apple hasn't changed the link by the time you're reading this.)
+I'm going to move quickly through the Apple-specific WhateverKit-interfacing code for a couple reasons. First, I'm not writing extensive documentation for Apple for free. And second, Apple-specific code ages like milk (it becomes quickly outdated), so some of these sections are just going to be a quick reference without much explanation.
+
+If you haven't already browsed through Apple's documentation for [Tracking and Visualizing Hand Movement](https://developer.apple.com/documentation/visionos/tracking-and-visualizing-hand-movement), I would recommend you do so first. It'll make understanding this code much easier.
+
+Hopefully Apple hasn't changed the link by the time you're reading this, but if they have feel free to e-mail me and I can update it:
+
+{{< contact-me box="avp" is-mid-article=true >}}
+
+### App Setup
+
+* Apps on Apple Vision work the same as apps for other Apple platforms.
+* But to get to the interesting data, there's some limitations that we'll have to work around.
+* For example, certain data can only be obtained under certain circumstances.
+  * Specifically, certain data providers (like the hand tracking provider) can only be run inside immersive spaces (where your app is the only one visible to the user).
+* Inside your app's `body`, you'll have to create an `ImmersiveSpace`, and a `View` to put inside it.
+
+```swift
+@main
+struct MyCoolApp : App {
+  @state private var viewModel = ViewModel()
+  @state private var handTrackingModel = HandTrackingModel()
+
+  var body: some Scene {
+    WindowGroup {
+      DefaultView()
+        .environment(viewModel)
+    }
+
+    ImmersiveSpace {
+      ImmersiveView()
+        .environment(handTrackingModel)
+    }
+  }
+}
+```
 
 ### Hand Tracking Provider Setup
 
-* It's hard to get data if there's no data provider. Let's get that setup.
-* Inside your immersive view or inside a model, create an `ARKitSession` and `HandTrackingProvider`
+* Let's set up the data provider, which provides us data...about the transforms of the user's hand joints.
+* Inside your immersive view, or perhaps inside a `HandTrackingModel` struct, create an `ARKitSession` and `HandTrackingProvider`
 
 ```swift
-private let arSession = ARKitSession()
-private let handTracking = HandTrackingProvider()
+@Observable
+class HandTrackingModel {
+  let arSession = ARKitSession()
+  let handTracking = HandTrackingProvider()
+}
 ```
 
 * When the user enters the immersive view, request authorization for hand tracking and start the hand tracking provider.
 
 ```swift
-    func handTrackingIsAuthorized() async -> Bool{
-        return await arSession.requestAuthorization(for: HandTrackingProvider.requiredAuthorizations).allSatisfy{ authorization in authorization.value == .allowed }
-    }
-```
-
-```swift
 struct ImmersiveView : View {
+  @Environment var handTrackingModel: HandTrackingModel
+
   var body: some View {
     // ...
   }.task {
     do {
       var dataProviders: [DataProvider] = [] // Required providers
 
-      if await handTrackingIsAuthorized() {
-        dataProviders.append(handTracking)
+      if await handTrackingModel.handTrackingIsAuthorized() {
+        dataProviders.append(handTrackingModel.handTracking)
+      } else {
+        // Handle not having hand tracking available
       }
 
       try await arSession.run(dataProviders: dataProviders)
@@ -238,32 +276,245 @@ struct ImmersiveView : View {
       // Handle error
     }
   }
+  .task {
+    await handTrackingModel.processHandTrackingUpdates()
+  }
 }
 ```
 
-### Storing the Latest Hand Data
+```swift
+class HandTrackingModel {
+// ...
+    func handTrackingIsAuthorized() async -> Bool{
+      // You may want to call this function *before* the ImmersiveView is shown,
+      // if you'd like to control when the user is asked for permissions.
+      return await arSession.requestAuthorization(for: HandTrackingProvider.requiredAuthorizations).allSatisfy{ authorization in authorization.value == .allowed }
+    }
+/// ...
+}
+```
+
+* Remember to add `NSHandsTrackingUsageDescription` to your app's `Info.plist` file. Otherwise, your app will crash when you call `requestAuthorization`.
+
+```xml
+<key>NSHandsTrackingUsageDescription</key>
+<string>A short description explaining why your app needs this permission.</string>
+```
+
+### Handling Updates and Storing State
+
+* Let's store the latest state of the user's hands in some variables.
+* First, let's define a struct to store this state.
+
+```swift
+struct HandsStatus {
+    var left: HandAnchor?
+    var right: HandAnchor?
+    
+    // Useful utility function:
+    func forChirality(_ chirality: HandAnchor.Chirality) -> HandAnchor? {
+        if chirality == .left {
+            left
+        } else {
+            right
+        }
+    }
+}
+```
+
+* Let's store the latest hand state in a global that can be accessed by the System we'll define later.
+
+```swift
+// In global scope
+var latestHandTracking = HandsStatus()
+```
+
+* I dislike using global variables, but it's what I did in Spatial Physics Playground (which was based off some Apple documentation sample code).
+  * I haven't yet found a way to avoid it, either, as there doesn't seem to be any mechanism to transfer external data into a System.
+  * Refactoring out the global is left as an exercise for the reader.
+    * And my future self 😊.
+* Now let's update the `HandTrackingModel` to store the latest hand state.
+
+```swift
+class HandTrackingModel {
+  // ...
+  func processHandTrackingUpdates() async {
+    for await update in handTrackingProvider.anchorUpdates {
+      switch update.event{
+      case .updated:
+        let anchor = update.anchor
+        
+        if anchor.isTracked {
+          // Update the appropriate hand info
+          if anchor.chirality == .left {
+            latestHandTracking.left = anchor
+          } else if anchor.chirality == .right {
+            latestHandTracking.right = anchor
+          }
+        } else {
+          // Anchor has been lost, set hand tracking to nil.
+          if anchor.chirality == .left {
+            latestHandTracking.left = nil
+          } else {
+            latestHandTracking.right = nil
+          }
+        }
+          
+      default:
+        break
+      }
+    }
+  }
+  // ...
+}
+```
 
 ### Setting up a System
 
-* Responsible for controlling things based on hand gestures.
-* Keeps track of hand status (previous t value, whether the thumb was touching the line, etc.)
-* Updates the thruster strength based on the t value.
-* Toggles the thruster on and off based on the tap gesture.
+* Remember to read [Apple's documentation](https://developer.apple.com/documentation/realitykit/implementing-systems-for-entities-in-a-scene) about implementing RealityKit Systems, if you haven't already.
+* We'll need a System that's responsible for doing things based on the user's current hand state.
+* The system will need to determine (and store) 
+  * The current/previous t values
+  * Whether the thumb is/was touching the imaginary line
+  * etc.
+* Then use the stored information to affect the simulation
+  * Updates the thruster strength based on the t value.
+  * Toggles the thruster on and off based on the tap gesture.
+* Let's define a stub System for now to get us started.
 
-#### Defining the Thruster Component
-
-#### Defining the Thumb Status
-
-#### A Simplified Update Function
-
-* Update thumb statuses, probably just this (to be explained in detail later):
 ```swift
-self.updateThumbContacts(deltaTime: deltaTime)
-isTapping = self.determineTap()
-dragAmount = self.determineDrag()
+class ThrusterSystem : System {
+  required init(scene: Scene) { }
+
+  func update(context: SceneUpdateContext) {
+    // TODO: This.
+  }
+}
 ```
-* Query scene for Thruster components
-* For each thruster, update state and strength
+
+* Systems search through entities within a scene by using Components primarily (well, my Systems do), so let's make a Thruster Component.
+
+```swift
+struct ThrusterComponent : Component {
+  var enabled: Bool
+  var strength: Float
+}
+```
+
+* This is enough to let us toggle the thruster and adjust its strength at runtime.
+* We'll need to remember to add this component to the Entity when the user creates a Thruster in the app.
+  * But that's for me to worry about, not you.
+* We're also going to need a structure to hold the thumb's state inside the `ThrusterSystem`.
+  
+```swift
+
+class ThrusterSystem : System {
+  // ...
+  struct ThumbStatus {
+    // t-value tracking
+    var currentT: Float = 0.0
+    var previousT: Float = 0.0
+    var totalTChange: Float = 0.0 // Increases as the user moves their thumb either up or down the line
+
+    var contactTime: Float = -1.0
+    var justReleased: Bool = false
+
+    // BLOG POST TODO: Remove references to thumbMoved
+    //var thumbMoved: Bool { totalTChange > 0.1 } // If true: User is performing a drag gesture
+
+    var isDrag: Bool { totalTChange > 0.1 } // If true: User is performing a drag gesture
+    var isTap: Bool { !isDrag && contactTime > 0.05 && contactTime < 0.5 } // If true: User is performing a tap gesture
+  }
+
+  // BLOG POST TODO: Rename to handStatus after all the code is in the post.
+  private var thumbStatus: [HandAnchor.Chirality: ThumbStatus] = [
+    .left: ThumbStatus(),
+    .right: ThumbStatus()
+  ]
+}
+```
+
+* Let's work on implementing that `update` function!
+
+### Implementing the System Update Function
+
+* The update function will need to be broken up into two sections.
+  * First, for each hand, we need to process the joint data and determine the thumb's position on the imaginary line, and if it's moved up or down.
+  * Second, we need to update `ThrusterComponent` state based on the thumb state, then apply thruster forces to the entity.
+* Let's write that out.
+
+```swift
+
+class ThrusterSystem : System {
+  // ...
+  func update(context: SceneUpdateContext) {
+    // Part 1 - Update thumb contacts
+    let deltaTime = Float(context.deltaTime)
+    let handTrackingAvailable = latestHandTracking.left != nil || latestHandTracking.right != nil
+    let isTapping: Bool
+    let strengthChange: Float
+
+    if handTrackingAvailable {
+      // We'll implement these 3 functions in a later section.
+      self.updateThumbContacts(deltaTime: deltaTime)
+      isTapping = self.determineTap()
+      strengthChange = self.determineDrag() * 10.0 // Scale by 10 to make the drag more sensitive
+    } else {
+      resetThumbContact(.left)
+      resetThumbContact(.right)
+      isTapping = false
+      strengthChange = 0.0
+    }
+
+    // Part 2 - Update thruster components
+    let query = EntityQuery(where: .has(ThrusterComponent.self))
+    for thruster in context.entities(matching: query, updatingSystemWhen: .rendering) {
+      if isTapping {
+        let isNowEnabled = !thruster.components[ThrusterComponent.self]?.enabled ?? false
+        thruster.components[ThrusterComponent.self]?.enabled = isNowEnabled
+      }
+
+      if abs(strengthChange) > 0.0 {
+        let currentStrength = thruster.components[ThrusterComponent.self]?.strength ?? 0.0
+        let finalStrength = max(0.0, currentStrength + strengthChange)
+        thruster.components[ThrusterComponent.self]?.strength = finalStrength
+      }
+
+      // Apply forces, etc.
+    }
+  }
+}
+```
+* This should be mostly self-explanitory except for the functions we'll implement later and `resetThumbContact`.
+* Let's explain `resetThumbContact`:
+  * The way this will work is, once the user lets go of their middle finger, `resetThumbContact` will be called, which will set the `justReleased` flag to true while maintaining the current state.
+  * The frame afterward, we'll check this flag to toggle the thruster on or off.
+  * At which point, `resetThumbContact` will be called again to actually reset the thumb state.
+  * This way we can handle hand tracking being lost by going through this same process.
+* Here's the implementation:
+
+```swift
+class ThrusterSystem : System {
+  // ...
+  func resetThumbContact(_ chirality: HandAnchor.Chirality) {
+    // If justReleased is set, then this is the second pass, so actually reset the state.
+    if self.thumbStatus[chirality]?.justReleased ?? false {
+      // Was just released, now no longer justReleased
+      self.thumbStatus[chirality]?.justReleased = false
+      
+      // Clear state
+      self.thumbStatus[chirality]?.contactTime = -1.0
+      // etc.
+    } else if self.thumbStatus[chirality]!.contactTime > 0.0 {
+      // Check contactTime to make sure we don't get phantom quick taps.
+
+      // justReleased hasn't been set yet, so set it.
+      self.thumbStatus[chirality]!.justReleased = true
+      // Preserve state so that other functions can use it until next frame.
+    }
+  }
+}
+```
 
 ### Implement updateThumbContacts
 
@@ -286,11 +537,12 @@ let middleKnucklePosition = middleFingerKnuckle.anchorFromJointTransform.columns
 // However, you could equally use the middle knuckle as the origin.
 // Math doesn't care.
 
-// lineAB - Line from knuckle to tip
+// lineAB - Line from middle finger tip to knuckle (destination - source)
 let lineAB = middleKnucklePosition - middleFingerTipPosition
 
-// lineAP - Position of thumb tip relative to middle finger tip
-//        - The point we're going to project onto lineAB
+// lineAP - Position of the thumb tip in this local coordinate system
+//          (in other words, the thumb tip's position relative to middle finger tip)
+//        - This is the point we're going to project onto lineAB
 let lineAP = thumbPosition - middleFingerTipPosition
 ```
 
@@ -320,9 +572,11 @@ let closestPointOnLineToThumb = middleFingerTipPosition + tClamped * lineAB
 let distanceBetweenThumbAndLine = simd_length(closestPointOnLineToThumb - thumbPosition)
 ```
 
-## Conclusion
+## Final Result
 
 <!-- TODO: Video of the gesture in action -->
+
+### Conclusion
 
 * We've implemented a simple hand gesture system for Apple Vision.
 * The system allows for a tap and drag gesture to control a thruster in the Spatial Physics Playground app.
