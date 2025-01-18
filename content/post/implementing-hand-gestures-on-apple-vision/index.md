@@ -424,6 +424,11 @@ class ThrusterSystem : System {
 
     var isDrag: Bool { totalTChange > 0.1 } // If true: User is performing a drag gesture
     var isTap: Bool { !isDrag && contactTime > 0.05 && contactTime < 0.5 } // If true: User is performing a tap gesture
+
+    mutating func reset() {
+      currentT = 0.0
+      // etc.
+    }
   }
 
   // BLOG POST TODO: Rename to handStatus after all the code is in the post.
@@ -455,11 +460,14 @@ class ThrusterSystem : System {
     let strengthChange: Float
 
     if handTrackingAvailable {
-      // We'll implement these 3 functions in a later section.
+      // Implementation coming later:
       self.updateThumbContacts(deltaTime: deltaTime)
+
+      // These two are implemented below:
       isTapping = self.determineTap()
       strengthChange = self.determineDrag() * 10.0 // Scale by 10 to make the drag more sensitive
     } else {
+      // Explanation and implementation coming next:
       resetThumbContact(.left)
       resetThumbContact(.right)
       isTapping = false
@@ -483,30 +491,62 @@ class ThrusterSystem : System {
       // Apply forces, etc.
     }
   }
+
+  func determineTap() -> Bool {
+    for chirality in [
+      HandAnchor.Chirality.left,
+      HandAnchor.Chirality.right
+    ] {
+      // If just released and isTap, then the user is tapping.
+      if self.thumbStatus[chirality]!.justReleased && self.thumbStatus[chirality]!.isTap {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  func determineDrag() -> Float {
+    // We haven't discussed how to handle dragging with multiple hands simultaneously.
+    // Here, we'll just handle it by taking the first hand we see that's dragging.
+    // You may need to adjust for your own use cases.
+    for chirality in [
+      HandAnchor.Chirality.left,
+      HandAnchor.Chirality.right
+    ] {
+      if self.thumbStatus[chirality]!.isDrag {
+        guard let previousT = self.thumbStatus[chirality]?.previousT,
+              let currentT = self.thumbStatus[chirality]?.currentT else { continue }
+        
+        return currentT - previousT
+      }
+    }
+
+    return 0.0
+  }
 }
 ```
-* This should be mostly self-explanitory except for the functions we'll implement later and `resetThumbContact`.
+* This should be mostly self-explanitory except for `resetThumbContact` and `updateThumbContacts`.
+* `updateThumbContacts` is going to be a big function with its own dedicated section, so let's skip that for now.
 * Let's explain `resetThumbContact`:
-  * The way this will work is, once the user lets go of their middle finger, `resetThumbContact` will be called, which will set the `justReleased` flag to true while maintaining the current state.
-  * The frame afterward, we'll check this flag to toggle the thruster on or off.
-  * At which point, `resetThumbContact` will be called again to actually reset the thumb state.
-  * This way we can handle hand tracking being lost by going through this same process.
+  * The way this will work is, as long as the user isn't touching their middle finger with their thumb, `resetThumbContact` will be called every frame.
+  * The first frame the user lets go of their middle finger, this function will only set the `justReleased` flag to true and do nothing else.
+  * The frame afterward, we will be able to check this flag in the System to do our logic (toggle the thruster on or off).
+  * After that update is complete, `resetThumbContact` will be called again to actually clear the thumb state.
+  * Further calls to `resetThumbContact` will be made every frame afterward, but do nothing until the user touches their middle finger again.
+  * Hand tracking being lost will be handled by simply going through this same process (calling `resetThumbContact` every frame there's no hand tracking available).
 * Here's the implementation:
 
 ```swift
 class ThrusterSystem : System {
   // ...
   func resetThumbContact(_ chirality: HandAnchor.Chirality) {
-    // If justReleased is set, then this is the second pass, so actually reset the state.
+    // If justReleased is true, then we need to actually clear the state.
     if self.thumbStatus[chirality]?.justReleased ?? false {
-      // Was just released, now no longer justReleased
-      self.thumbStatus[chirality]?.justReleased = false
-      
       // Clear state
-      self.thumbStatus[chirality]?.contactTime = -1.0
-      // etc.
+      self.thumbStatus[chirality]?.reset()
     } else if self.thumbStatus[chirality]!.contactTime > 0.0 {
-      // Check contactTime to make sure we don't get phantom quick taps.
+      // Only set justReleased if the user has made contact for at least one frame.
 
       // justReleased hasn't been set yet, so set it.
       self.thumbStatus[chirality]!.justReleased = true
@@ -518,63 +558,230 @@ class ThrusterSystem : System {
 
 ### Implement updateThumbContacts
 
-#### Obtaining Joint Positions
-
-* Explain how the final column of a transform matrix is the position.
-
-#### Calculating Local Coordinates
-
-* Explain how we can't use the world coordinates directly, and need to calculate local coordinates.
+* We've got the framework in place, now we just have to implement `updateThumbContacts`.
+* Before we begin, let's take a look at what data we have available to us from the hand tracking provider.
+* We're passing the data to our System via the global variable `latestHandTracking`, which is is a structure we made earlier that contains two optional `HandAnchor` objects, one for each hand.
+* Looking at the [Apple Documentation](https://developer.apple.com/documentation/arkit/handanchor), we can see that we'll need to use the `handSkeleton` property to get to the joint data.
+* The [HandSkeleton](https://developer.apple.com/documentation/arkit/handskeleton) object contains a function `joint(_ named: HandSkeleton.JointName)` we can use to get data about a specific joint.
+* The [HandSkeleton.Joint](https://developer.apple.com/documentation/arkit/handskeleton/joint) object contains a `anchorFromJointTransform` property that we can use to get the position of the joint relative to its hand anchor.
+* You may be a desire to also use the `originFromAnchorTransform` property on the `HandAnchor` object to convert the joints to world space.
+  * However, we don't need to do this. After all, we're not interested in the world position of these joints. Only their relative positions to each other, all of which are under the same `HandAnchor`.
+  * The math is the same, no matter what basis you're using for your coordinate system, so long as all your data uses that same basis.
+  * No need to waste time calculating the world transform matrix for each joint if we don't have to.
+* Plan in place, let's write just a little bit of `updateThumbContacts`.
 
 ```swift
-// Get the positions of the joints (in world coordinates)
-let thumbPosition = thumbTip.anchorFromJointTransform.columns.3[SIMD3(0, 1, 2)]
-let middleFingerTipPosition = middleFingerTip.anchorFromJointTransform.columns.3[SIMD3(0, 1, 2)]
-let middleKnucklePosition = middleFingerKnuckle.anchorFromJointTransform.columns.3[SIMD3(0, 1, 2)]
+class ThrusterSystem : System {
+  // ...
+  func updateThumbContacts(deltaTime: Float) {
+    for chirality in [
+      HandAnchor.Chirality.left,
+      HandAnchor.Chirality.right
+    ] {
+      guard let handAnchor = latestHandTracking.forChirality(chirality),
+            let thumbTip = handAnchor.handSkeleton?.joint(.thumbTip),
+            let middleFingerTip = handAnchor.handSkeleton?.joint(.middleFingerTip),
+            let middleFingerKnuckle = handAnchor.handSkeleton?.joint(.middleFingerKnuckle) else {
+        // Hand not tracked, skip
+        resetThumbContact(chirality)
+        continue
+      }
 
-// Set up a local coordinate system for the line.
-// This system uses the middle finger tip as the origin.
-// However, you could equally use the middle knuckle as the origin.
-// Math doesn't care.
+      // -- Mark 1 --
+      // ...
+    }
+  }
+}
+```
 
-// lineAB - Line from middle finger tip to knuckle (destination - source)
-let lineAB = middleKnucklePosition - middleFingerTipPosition
+* We're going to loop through each hand, updating the thumb's status for each hand.
+* If tracking data isn't available for a hand, we'll go through the `resetThumbContact` process to ensure the state is reset.
+* Now let's extract the joint positions.
 
-// lineAP - Position of the thumb tip in this local coordinate system
-//          (in other words, the thumb tip's position relative to middle finger tip)
-//        - This is the point we're going to project onto lineAB
-let lineAP = thumbPosition - middleFingerTipPosition
+#### Obtaining Joint Positions
+
+* At this point, we have the transformation matrix of each joint, which tells us the position and orientation of the joint relative to the hand anchor.
+* A transformation matrix is a 4x4 matrix, of which the last column is the position of the joint.
+* However, positions are 3D vectors, so we only need the first three elements of the final column.
+* Implementation:
+
+```swift
+class ThrusterSystem : System {
+  // ...
+  func updateThumbContacts(deltaTime: Float) {
+    // ...
+    // -- Mark 1 --
+
+    // Get the positions of the joints (relative to the hand anchor)
+    let thumbPosition = thumbTip.anchorFromJointTransform.columns.3[SIMD3(0, 1, 2)]
+    let middleFingerTipPosition = middleFingerTip.anchorFromJointTransform.columns.3[SIMD3(0, 1, 2)]
+    let middleKnucklePosition = middleFingerKnuckle.anchorFromJointTransform.columns.3[SIMD3(0, 1, 2)]
+
+    // -- Mark 2 --
+    // ...
+  }
+}
+
+```
+
+#### Calculating U and V of the Projection Formula
+
+* Remember our formula from earlier?
+  * From way back when?
+  * ...It's been a while, hasn't it?
+  * It's time to implement it.
+  * \( P_A(\mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \)
+* In our case, u is the line from the middle finger tip to the middle finger knuckle, and v is the thumb tip.
+  * But `u` and `v` don't make good programming variable names, so let's rename them to something more descriptive.
+  * Let's use `lineAB` for the line we're projecting onto (middle finger tip to knuckle).
+  * And use `pointP` for the point we're projecting.
+* For the projection formula to work, we have to provide `pointP` in the same basis as `lineAB`.
+  * So we'll need to calculate the thumb tip's position relative to the origin of `lineAB`, or in other words, the middle finger tip.
+* Implementation:
+
+```swift
+class ThrusterSystem : System {
+  // ...
+  func updateThumbContacts(deltaTime: Float) {
+    // ...
+    // -- Mark 2 --
+
+    // This code uses the middle finger tip as the origin.
+    // However, you could equally use the middle knuckle as the origin.
+    // Math doesn't care.
+
+    // lineAB (U) - Line from middle finger tip to knuckle (destination - source)
+    let lineAB = middleKnucklePosition - middleFingerTipPosition
+
+    // pointP (V) - Position of the thumb tip relative to middle finger tip
+    //             (This is the point we're going to project onto lineAB)
+    let pointP = thumbPosition - middleFingerTipPosition
+
+    // -- Mark 3 --
+    // ...
+  }
+}
 ```
 
 #### Calculating T - Thumb Position on Line
 
-Continuing from previous code block:
+* Now that we have `lineAB` and `pointP`, we can calculate `t` as explained earlier.
+  * \( t = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \)
+* Lines in math extend infinitely, but we're only interested in the line segment we've discussed.
+* So we'll clamp `t` to be between 0 and 1.
 
 ```swift
-// Calculate t as explained earlier
-let t = dot(lineAP, lineAB) / dot(lineAB, lineAB)
+class ThrusterSystem : System {
+  // ...
+  func updateThumbContacts(deltaTime: Float) {
+    // ...
+    // -- Mark 3 --
 
-// Clamp t to be between 0 and 1 
-// (To the line segment between the knuckle and tip)
-let tClamped = simd_clamp(t, 0.0, 1.0)
+    let t = dot(lineAB, pointP) / dot(lineAB, lineAB)
+
+    // Clamp t to be between 0 and 1 
+    // (To the line segment between the knuckle and tip)
+    let tClamped = simd_clamp(t, 0.0, 1.0)
+
+    // -- Mark 4 --
+    // ...
+  }
+}
 ```
+
+* (Isn't it nice how easy math is to implement?)
+  * (I mean...once you've correctly figured out what math *to* do.)
+  * (...You know, the hard part.)
 
 #### Calculating Thumb Distance to Line
 
-Continuing from previous code block:
+* Now we've got `t` (`Clamped`), we can now calculate the point on the line segment which is closest to the thumb tip.
+  * We'll do that by multiplying `tClamped` by `lineAB`, or in other words by completing the projection formula.
+  * This will give us the closest point on the line to the thumb tip, in the basis of `lineAB`.
+  * When you're doing math you really have to make sure to remember the basis of your vectors.
+  * You'll see why in just a second.
+* We can take that position, then figure out its distance to the thumb tip.
+  * We do this by getting the length of the line from the thumb tip to the closest point on the line.
+  * In other words (remembering destination - source) `closestPointOnLineToThumb - `...?
+  * `pointP`!
+  * "But why not `thumbPosition`?"
+    * It's the basis!
+    * `thumbPosition` is in the position of the thumb tip **in the basis of the hand anchor**.
+    * `pointP` is in the position of the thumb tip **in the basis of the middle finger tip**.
 
 ```swift
-// Calculate the closest point on the line to the thumb
-// (finish the projection, then calculate the world position)
-let closestPointOnLineToThumb = middleFingerTipPosition + tClamped * lineAB
+class ThrusterSystem : System {
+  // ...
+  func updateThumbContacts(deltaTime: Float) {
+    // ...
+    // -- Mark 4 --
 
-// Calculate the distance between the thumb and the line
-let distanceBetweenThumbAndLine = simd_length(closestPointOnLineToThumb - thumbPosition)
+    // Calculate the closest point on the line to the thumb tip
+    let closestPointOnLineToThumb = tClamped * lineAB
+
+    // Calculate the distance between the thumb and the line
+    let distanceBetweenThumbAndLine = simd_length(closestPointOnLineToThumb - pointP)
+
+    // -- Mark 5 --
+    // ...
+  }
+}
 ```
+
+#### Updating Thumb Status
+
+* Phew, we've done a lot of math.
+* Now we're back into the realm of good ol' programming.
+* Now that we know how far the thumb is from the line, we can update the thumb's status with whether it's touching the line or not.
+* If it's touching, we update the properties of the thumb status.
+* If not, we reset the thumb status.
+
+```swift
+class ThrusterSystem : System {
+
+  private static let contactDistanceThreshold: Float = 0.025 // In meters, 2.5 cm. Arbitrarily picked, adjust as needed.
+
+  // ...
+  func updateThumbContacts(deltaTime: Float) {
+    // ...
+    // -- Mark 5 --
+
+    if distanceBetweenThumbAndLine < Self.contactDistanceThreshold {
+      // Thumb is touching the line
+      let newTimeTouching = max(0.0, self.thumbStatus[chirality]!.contactTime) + deltaTime
+      self.thumbStatus[chirality]!.contactTime = newTimeTouching
+
+      // Update T
+      let previousT = self.thumbStatus[chirality]!.currentT ?? tClamped
+      let currentT = tClamped
+
+      self.thumbStatus[chirality]!.previousT = previousT
+      self.thumbStatus[chirality]!.currentT = currentT
+      self.thumbStatus[chirality]!.totalTChange += abs(currentT - previousT)
+    } else {
+      // Thumb is not touching the line
+      resetThumbContact(chirality)
+    }
+  }
+}
+```
+
+* And that's pretty much it for the `updateThumbContacts` function.
+* And that's also pretty much it for the implementation of the `ThrusterSystem` class!
+* Let's take a look at what it looks like in action.
+  * With some debug visualizations!
 
 ## Final Result
 
 <!-- TODO: Video of the gesture in action -->
+
+* (Explanation of what's happening in the video and what the various colors of the cylinder and sphere represent.)
+* Sphere is the user's thumb position
+* Cylinder is the line from the middle finger tip to the middle finger knuckle
+* Cylinder is gray when the thumb is not touching the line at all.
+* Cylinder is green when the thumb is touching the line.
+* Sphere is yellow when the user hasn't yet moved enough to perform a drag gesture.
+* Sphere is blue when the user is detected to be dragging.
 
 ### Conclusion
 
