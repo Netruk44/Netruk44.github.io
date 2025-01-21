@@ -219,9 +219,12 @@ If the thumb is close enough to the line, we can consider it to be 'touching' th
 
 For simplicity, we'll just be using this single line. Further refinements of this implementation could break this down into multiple line segments. Probably at least two, one from the middle finger tip to the "Intermediate Base" joint (number `12` in the diagram above), then one from there to the knuckle.
 
-For overkill, you could even have three different line segments, one between each tracked joint!
+![An illustration showing a hand with the thumb touching a bent middle finger. The line from fingertip to knuckle bends with the finger.](./handok_bend.png)
+{{% img-subtitle %}}
+*Using two line segments better tracks bends in the user's middle finger*
+{{% /img-subtitle %}}
 
-<!-- TODO: Image of handmissed but with multiple line segments so it works -->
+For overkill, you could even have three different line segments, one between each tracked joint!
 
 However, for now we'll just stick to the single line segment. This post is already long enough as it is.
 
