@@ -17,7 +17,7 @@ params:
 {{% /img-subtitle %}}
 
 >**visionOS Version**: 2.2  
->**Difficulty**: Intermediate  
+>**Difficulty**: Advanced  
 >**Related Projects**: [Spatial Physics Playground](/project/2024-physics-playground/)
 
 {{< contact-me box="avp" >}}
@@ -29,34 +29,104 @@ params:
 
 ## Introduction
 
+<!--
 * What is the goal of this post?
   * Implement custom hand gestures for Apple Vision
   * Use the gestures to control some kind of 'toy' in the Spatial Physics Playground app
 * Prompt: How do you implement meaningful custom hand gestures for Apple Vision?
   * The idea needs to be simple enough for a first attempt at integrating hand gestures.
+-->
 
-### Spatial Physics Playground
+Hello!
 
-<!-- TODO: Image of the app in action -->
+I've spent a bunch of time in 2024 working on my [Spatial Physics Playground](/project/2024-physics-playground) app for Apple Vision. I've been treating it as a way to keep learning new things. So much so that I've forgotten to write anything on my blog for the whole year. Whoops.
 
+I wanted to write up a few how-to posts on some of the things I've learned, just to help solidify it in my own mind. There's also not a whole lot of tutorials like this written for Apple Vision development yet, and I wanted to try writing out a longer-form tutorial than what I've done in the past.
+
+To be honest, this post might be a little **too** long, but I didn't want to break it up into parts.
+
+Hopefully you can find some use from it! If you have questions or feedback about issues in my post (I'm sure there's at least a few), feel free to reach out to me:
+
+{{< contact-me box="avp" is-mid-article=true >}}
+
+### Goals
+
+The goal of this post is to use ARKit hand tracking data to implement custom hand gestures inside an app for Apple Vision.
+
+This post will require quite a bit of math, so if you aren't familiar with linear algebra you may have a little trouble following along. Hopefully I've been able to simplify it enough for anyone to understand, but I lack the perspective to know for sure.
+
+With the goal in mind our question then becomes "How can you implement meaningful custom hand gestures for Apple Vision?"
+
+For my first attempt at learning and writing this code, I needed something simple enough to implement so I'm not completely overwhelmed. I also wanted an idea that would be fun to use as a user of my app.
+
+But it'll be hard to discuss what I implemented without first discussing the app.
+
+Don't worry, it'll be quick.
+
+### What is Spatial Physics Playground?
+
+![An image of a stack of various objects like cubes, cylinders and cones resting on top of a long cuboid that bridges the gap between real-world objects, a bed and dresser. In the background is a grid-like material overlaid on top of the real-world walls.](./recon2.jpg)
+{{% img-subtitle %}}
+*An image of Spatial Physics Playground*
+{{% /img-subtitle %}}
+
+<!--
 * Introduce Spatial Physics Playground
   * What is the app?
   * What are 'toys' in the app?
 * Idea for SPP: Add a Thruster that can be attached to other objects which integrates hand gestures.
+-->
+
+Spatial Physics Playground began its life as me re-implementing a sample project in Apple's documentation, [Incorporating real-world surroundings in an immersive experience](https://developer.apple.com/documentation/visionos/incorporating-real-world-surroundings-in-an-immersive-experience).
+
+It's more of a sandbox than a real game, there's no objective or goals. You simply place physics objects into your room and interact with them by poking them with your finger, throwing them around your room, or attaching various objects to them like ropes or hoverballs. You can also change gravity, slow down time, and just generally mess around with the physics simulation provided by RealityKit.
+
+{{<collapse summary="**Aside:** Well, actually...">}}
+
+> Well, *actually*, Physics Playground was **truly** conceived of while I was in college learning Unity. I made a simple physics toy where you used the mouse cursor to pick up and move cubes around an empty scene via a stretchy cable. Basically, a fidget toy.
+> 
+> I then re-opened that project when I got my HTC Vive and found it was just as fun to play around with in VR as it was on a 2D screen. When I got my Apple Vision, the idea obviously came back to me. This time, it would use your real-world environment as the backdrop for the physics simulation.
+>
+> None of this really matters to the tutorial, though. So let's get back to it.
+
+{{</collapse>}}
+
+The elements like ropes and hoverballs are in a category of tools that I call "toys" which are really just excuses for me to implement things. There's a "marbles" tool which I used to figure out how to randomly place a lot of objects so it looks interesting when they fall. A "hoverball" tool ripped out of Garry's Mod, which lets physics objects float around your room. And so on and so forth.
+
+![Some cylinders sitting on top of a platform suspended by hoverballs](./hoverball.jpg)
+{{% img-subtitle %}}
+*The hoverballs in action*
+{{% /img-subtitle %}}
+
+My previous experience with retrieving hand state was with implementing hand interaction with physics objects (i.e. poking them). That's pretty simple as far as detection goes, as all that I really need to do as a developer was place a physics object at the user's finger.
+
+Let's make an actual toy that uses hand gestures for some type of control. And since Garry's Mod was just such a great source of inspiration with my hoverball tool, how about we ~~steal~~ borrow another idea from it?
 
 ### The Thruster Toy
 
-<!-- TODO: Image of thruster attached to another object -->
+![A spherical thruster with nozzle that has fire and smoke coming out of it, viewed inside Reality Composer Pro](./thruster_editor.jpg)
+{{% img-subtitle %}}
+*An early version of the thruster in Reality Composer Pro*
+{{% /img-subtitle %}}
 
+<!--
 * What is the Thruster?
   * Basically stolen from Garry's Mod.
   * A simple object that can be attached to other objects in the app.
   * When activated, it applies a force to the object it is attached to.
   * The specifics of the truster implementation aren't important for this post.
   * Many things are going to be glossed over in favor of making a more clear tutorial.
+-->
+
+The idea for the toy is simple. The hoverball tool works by applying a constant upward force to the object it's attached to. Let's just change which direction the force is being applied (and maybe even vary the strength) and we have a thruster!
+
+The specifics of the thruster implementation (such as actually applying forces to objects or how to integrate particles into the thruster) aren't important for this post, though. In fact, I'm going to try as hard as possible to gloss over a lot of how the thruster works internally. Not because I want to keep it a secret, but just look at how small your scroll bar is! I'm trying to keep this thing as brief as possible. (And clearly not doing a very good job at it!)
+
+Let's consider how we can implement hand gestures to control the thruster.
 
 ### Hand Gesture Idea
 
+<!--
 * Remember, it needs to be simple to implement.
 * It also needs to complement the system-wide user interface.
 * The index finger is taken over by the system for most gestures.
@@ -64,26 +134,69 @@ params:
   * Tap to toggle the thruster on and off.
   * Drag to control the thruster's strength.
 * Let's do it!
+-->
+
+Originally, the idea was to have the user just point with their index finger in a direction they wanted the thruster to go.
+
+But then Apple released their [WWDC Spaceship demo](https://developer.apple.com/documentation/realitykit/creating-a-spaceship-game), which is probably the better implementation of that idea. (You can see how the spaceship controls on this [Reddit post](https://www.reddit.com/r/VisionPro/comments/1dga8r8/the_new_spaceship_example_app_from_wwdc_has_some/))
+
+![A screenshot of Apple's spaceship flying through an office background](./apple_spaceship_demo.jpeg)
+{{% img-subtitle %}}
+Seriously, how am I supposed to compete with that?
+{{% /img-subtitle %}}
+
+The point of my app isn't to navigate a spaceship, it's to play around with physics objects. So I decided to go with something else.
+
+How about we limit ourselves to just tap and drag gestures for our first attempt at implementing something. Even though that sounds very simple, the math won't necessarily be. It's just our first attempt after all, we can get more complex later.
+
+The "tap" gesture will be the user touching anywhere along their finger with their thumb. The "drag" gesture will be the user dragging their thumb up and down their finger.
+
+The index finger is pretty much the default system-wide tap gesture finger. It would be confusing to add additional gestures on top of that, so let's use the middle finger instead.
+
+What are the natural controls for a tap and drag gesture to be attached to in the context of a thruster that's moving around the scene? I think tapping to toggle the thruster being on and off sounds reasonable, and you can then have the dragging control the thruster's strength.
+
+<!-- Stretch TODO: Picture depicting the controls. Split into two halves. Left side: tap gesture, right side: drag gesture. -->
+<!-- Would be helpful for people just scrolling through, looking at the pictures. -->
+
+Sounds good to me! Let's get started.
 
 ## Planning
 
 ### What's Provided by ARKit?
 
-![A diagram depicting the hand joints provided by ARKit](./avp_joints.jpg)
+I always like to start by taking a quick look at the documentation before I get started writing code. It helps to know what data you're going to have available before you start thinking about how the implementation is going to work.
+
+![A diagram depicting the hand joints provided by ARKit. A hand is visible on the left with circles marking each joint in the hand, such as the wrist, knuckle, metacarpal, and finger tip, among others. Inside the circles are numbers that correspond to the joint's name listed in a table on the right.](./avp_joints.jpg)
 {{% img-subtitle %}}
-Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/hand-tracking-in-visionos)
+Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/hand-tracking-in-visionos)  
+Original source [Apple - Meet ARKit for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10082/?time=933)
 {{% /img-subtitle %}}
 
+<!--
 * Let's first look at what data is provided by ARKit.
 * Using the above image, you can see that we're provided with a lot of joints for each hand.
 * Each joint has a position and rotation that we can use to implement our hand gestures.
 * We're going to focus on the thumb and middle finger joints for this gesture.
-  * Specifically `.handThumbTip` (number `04`), `.handMiddleFingerTip` (number `14`), and `.handMiddleFingerKnuckle` (number `11`).
+  * Specifically `.handThumbTip` (number `4`), `.handMiddleFingerTip` (number `14`), and `.handMiddleFingerKnuckle` (number `11`).
+-->
 
+The image above shows the joints that ARKit provides for each hand. When data is provided to us, these are the individual joints that are going to be tracked.
 
-### The Idea
+Looking into the documentation a bit more (which we'll go over later), we find that each joint has a transform associated with it, which will give us its position and orientation.
+
+...
+
+Phew, I'm tired of looking at documentation. Thankfully, this sounds like all we need to get started.
+
+For our implementation, we'll be taking a look at the thumb and middle finger joints. Specifically, we'll be looking at the `.handThumbTip` (number `4`), `.handMiddleFingerTip` (number `14`), and `.handMiddleFingerKnuckle` (number `11`) joints. Using these joints, I think we'll be able to implement our tap and drag gestures.
+
+### The Idea - Mathematically
 ![An illustration showing a hand with the thumb touching the middle finger. There's a line overlaid on top of the middle finger and a notch in the line where the thumb has been projected onto the line.](./handok.png)
+{{% img-subtitle %}}
+*A visualization of the math behind the gesture recognition*
+{{% /img-subtitle %}}
 
+<!--
 * The plan: project the thumb tip onto an imaginary line that extends from the middle finger tip to the middle finger knuckle.
   * Then we can see how far away the thumb is from this line.
   * If the thumb is close enough to the line, we can consider it to be 'touching' the middle finger.
@@ -98,54 +211,49 @@ Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/han
   * Seems relevant to our problem, we need to know if the thumb is touching this imaginary line, and to do that we need to know the closest point on the line to the thumb.
   * The projection formula will also give us a number we can use to see if the thumb is moving up or down the line as well. Useful for a drag gesture!
 * Well, we can't put it off any longer. It's time to talk about math.
+-->
+
+The plan is to project the thumb tip onto an imaginary line that extends from the middle finger tip to the middle finger knuckle. Then, we can see how far away the thumb is from this line.
+
+If the thumb is close enough to the line, we can consider it to be 'touching' the middle finger. At that point, we can see if the thumb starts to move up or down the middle finger (drag), or if it moves away without moving up or down (tap).
+
+For simplicity, we'll just be using this single line. Further refinements of this implementation could break this down into multiple line segments. Probably at least two, one from the middle finger tip to the "Intermediate Base" joint (number `12` in the diagram above), then one from there to the knuckle.
+
+For overkill, you could even have three different line segments, one between each tracked joint!
+
+<!-- TODO: Image of handmissed but with multiple line segments so it works -->
+
+However, for now we'll just stick to the single line segment. This post is already long enough as it is.
+
+----
+
+Those of you who fear math, now's the time you might start to worry a little bit. As we're about to enter the realm of...*linear algebra*.
+
+Given a point and a line, as we have above, **projection** provides us with the closest point on that line to that point. This is a concept that's going to be very useful for our problem. We need to know if the thumb is touching this imaginary line, and to do that we need to know the closest point on the line to the thumb.
+
+As part of this, the projection formula will also provide us with a way we can track the thumb's movement up and down the middle finger over time. Useful for a drag gesture!
+
+...
+
+Well, we can't put it off any longer. It's time to talk about math.
 
 
 ### Background Math - The Line Projection Formula
-* > This section is tongue-in-cheek, and is going to be a whirlwind tour of deriving a formula. I'm definitely not the best person to be teaching math concepts, so unfortunately there will be a lot of detail-skipping involved.
-* > Don't worry if a lot of this goes over your head. This section is here to explain the logic behind the math we're about to implement. I'll explain the details we need in more detail next.
-* [Wikipedia](https://en.wikipedia.org/wiki/Projection_%28linear_algebra%29#Formulas) tells us all we need to know about projection. Give it a glance, and tell me that it isn't simplicity itself.
-* ...
-* What do you mean you don't understand? It's right there, clear as day:
-  * \( P_A = \sum_i \langle \mathbf u_i, \cdot \rangle \mathbf u_i \)
-  * In this formula:
-    * \( P_A \) is "the projection onto subspace A"
-    * \( \sum_i \) is a sum (using the placeholder variable \( _i \)). You figure out all the terms of the sum, then add them together. A single term is defined by what's after the \( \sum_i \) symbol, and you replace all placeholder \( _i \) after the \( \sum_i \) with 0, 1, 2 ... up to the number of terms you have.
-    * \( \langle x , y \rangle \) is an inner product. It's essentially a way to compare two things (vectors, in this case) to see how much they "point in the same direction".
-    * \( \mathbf{u} \) (without the \( _i \)) defines the basis of the space we're projecting onto. Depending on the number of dimensions of the space you're projecting onto, this could be 1 to n (orthogonal!) vectors.
-      * (The basis of our space will be the 1-dimensional line from the user's middle finger tip to their middle finger knuckle.)
-    * So then, it follows that \( \mathbf{u}_i \) is the basis vector for a single dimension of the space.
-    * Finally, the \( \cdot \) inside the angled brackets is a placeholder for the vector we're projecting.
-    * Also, keep in mind that multiplication is usually not written out like \( x*y \) or similar. It's just implied when you have two things next to each other.
-  * (Collapse: "But there's a simpler formula!")
-    * Yes, I can see that formula for projecting onto a line:
-      * \( P_\mathbf{u} = \mathbf u \mathbf u^\mathsf{T} \)
-    * Both of these are correct. 
-    * The one I'm using is generalized and will lead us to something we're looking for.
-    * Whereas this specialized formula doesn't do that. So...I'm not going to explain it.
-    * Being good at math is recognizing which formulas to apply and when. Some lead you to a more helpful place, others don't.
-  * Let's rewrite this formula just a little bit so we can introduce \( \mathbf{v} \), the vector we're going to project, as well as \( \mathbf{d} \), the number of dimensions of the space we're projecting onto (both of which are already in the formula implicitly, we're just going to make them explicit):
-  * \( P_A(\mathbf{v}) = \sum_{i=1}^{d} \langle \mathbf{u}_i, \mathbf{v} \rangle \mathbf{u}_i \)
-  * This is the exact same formula, just rewritten for clarity.
-  * Let's start massaging this formula to suit our specific needs.
-  * Now, obviously since we're projecting onto a one-dimensional line, d = 1:
-  * \( P_A(\mathbf{v}) = \sum_{i=1}^{1} \langle \mathbf{u}_i, \mathbf{v} \rangle \mathbf{u}_i \)
-  * A sum from i = 1 to 1 is just one term, so let's simplify:
-  * \(  P_A(\mathbf{v}) = \langle \mathbf{u}_1, \mathbf{v} \rangle \mathbf{u}_1 \)
-  * We can rename \( \mathbf{u}_1 \) to just \( \mathbf{u} \) now as we only have the one basis vector (the line we're projecting onto):
-  * \( P_A(\mathbf{v}) = \langle \mathbf{u}, \mathbf{v} \rangle \mathbf{u} \)
-  * By default it's assumed that basis vectors are normalized, but we may not be working with a normalized basis vector (most people's fingers aren't exactly 1 meter long). It's not harmful to normalize an already-normalized vector, so let's normalize. Divide by the length of the basis vector (\(\mathbf{u} \cdot \mathbf{u}\)):
-  * \( P_A(\mathbf{v}) = \frac{\langle \mathbf{u}, \mathbf{v} \rangle \mathbf{u}}{\mathbf{u} \cdot \mathbf{u}} \)
-  * Let's re-order this a little bit. Remembering our elementary math classes, multiplication and division are associative. In other words, \( \frac{xy}{z} \) is equal to \( \frac{x}{z}y \):
-  * \( P_A(\mathbf{v}) = \frac{\langle \mathbf{u}, \mathbf{v} \rangle}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \)
-  * And, continuing to remember our math classes, we know we can replace the inner product with a dot product (since we're dealing with vectors and not, say functions or complex numbers):
-  * \( P_A(\mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \)
-* **There we have it, the projection formula for projecting a point `v` onto a one-dimensional space `A` defined by a potentially un-normalized vector `u`.**
-* This is the standard formula you'll see if you look up how to project a point onto a line orthogonally. We just derived it ourself.
-* Wikipedia couldn't have made it any simpler for us.
-* ...
-* What do you mean you still don't understand?
-  * You know how to do a dot product, right?
-* Alright, fine. I guess I can explain a *little* bit more.
+
+This part used to have a whole giant explanation of how to derive the projection formula for projecting a point onto a 1D line. (I know, right? This post used to be *way* longer.)
+
+But I realized that it's not really necessary for you to understand how to derive the formula to implement the gestures. I just wanted to be snarky about how unreadable Mathematical Wikipedia can be. You can thank me later for sparing you the pain.
+
+So...here's what you need to know. The formula for projecting an n-dimensional point onto a 1D line is:
+
+\[ P_A(\mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \]
+
+Where:
+* \( P_A(\mathbf{v}) \) is the projected point
+* \( \mathbf{u} \) is the basis vector of the line you're projecting onto
+* \( \mathbf{v} \) is the point you're going to project (but have not yet)
+
+Both u and v are n-dimensional vectors, but in our case we're going to be working in 3D space.
 
 ### Background Math - Dot Products
 * What is a dot product?
@@ -773,7 +881,7 @@ class ThrusterSystem : System {
 
 ## Final Result
 
-<!-- TODO: Video of the gesture in action -->
+<!-- TODO: Video of the debug gesture in action -->
 
 * (Explanation of what's happening in the video and what the various colors of the cylinder and sphere represent.)
 * Sphere is the user's thumb position
