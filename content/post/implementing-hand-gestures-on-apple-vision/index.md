@@ -191,7 +191,7 @@ Phew, I'm tired of looking at documentation. Thankfully, this sounds like all we
 For our implementation, we'll be taking a look at the thumb and middle finger joints. Specifically, we'll be looking at the `.handThumbTip` (number `4`), `.handMiddleFingerTip` (number `14`), and `.handMiddleFingerKnuckle` (number `11`) joints. Using these joints, I think we'll be able to implement our tap and drag gestures.
 
 ### The Idea - Mathematically
-![An illustration showing a hand with the thumb touching the middle finger. There's a line overlaid on top of the middle finger and a notch in the line where the thumb has been projected onto the line.](./handok.png)
+![An illustration showing a hand with the thumb touching the middle finger. There's a line overlaid on top of the middle finger and a notch in the line where the thumb has been projected onto the line.](./handok.png#center)
 {{% img-subtitle %}}
 *A visualization of the math behind the gesture recognition*
 {{% /img-subtitle %}}
@@ -219,7 +219,7 @@ If the thumb is close enough to the line, we can consider it to be 'touching' th
 
 For simplicity, we'll just be using this single line. Further refinements of this implementation could break this down into multiple line segments. Probably at least two, one from the middle finger tip to the "Intermediate Base" joint (number `12` in the diagram above), then one from there to the knuckle.
 
-![An illustration showing a hand with the thumb touching a bent middle finger. The line from fingertip to knuckle bends with the finger.](./handok_bend.png)
+![An illustration showing a hand with the thumb touching a bent middle finger. The line from fingertip to knuckle bends with the finger.](./handok_bend.png#center)
 {{% img-subtitle %}}
 *Using two line segments better tracks bends in the user's middle finger*
 {{% /img-subtitle %}}
@@ -230,9 +230,19 @@ However, for now we'll just stick to the single line segment. This post is alrea
 
 ----
 
-Those of you who fear math, now's the time you might start to worry a little bit. As we're about to enter the realm of...*linear algebra*.
+Those of you who fear math, now's the time you might start worrying a little bit. As we're about to enter the realm of...*linear algebra*.
 
-Given a point and a line, as we have above, **projection** provides us with the closest point on that line to that point. This is a concept that's going to be very useful for our problem. We need to know if the thumb is touching this imaginary line, and to do that we need to know the closest point on the line to the thumb.
+![An AI-generated image of a ghostly figure standing in the doorway of a plain room lit blue by abstract mathematical shapes and figures on the walls, with a vaguely astral feeling. The viewer's hands are visible at the bottom of the image, the same color as the astral math symbols.](./linear_algebra_haunt.jpeg#center)
+{{% img-subtitle %}}
+*DALL-E 3 - OpenAI*
+
+*Forgive me for using AI-generated artwork.  
+Hopefully it's okay when it's dumb?*
+{{% /img-subtitle %}}
+
+Given a point and a line, as we have above, **projection** provides us with the point on the line which is closest to our provided point.
+
+This is a concept that's going to be very useful for our problem. We need to know if the thumb is touching this imaginary line, and to do that we need to know the closest point on the line to the thumb.
 
 As part of this, the projection formula will also provide us with a way we can track the thumb's movement up and down the middle finger over time. Useful for a drag gesture!
 
@@ -259,6 +269,7 @@ Where:
 Both u and v are n-dimensional vectors, but in our case we're going to be working in 3D space.
 
 ### Background Math - Dot Products
+<!--
 * What is a dot product?
   * A dot product is a way of multiplying two vectors together to get a scalar value.
     * (A scalar value is just a single number, not a vector.)
@@ -268,8 +279,33 @@ Both u and v are n-dimensional vectors, but in our case we're going to be workin
   * Or, in code: `(u.x * v.x) + (u.y * v.y) + (u.z * v.z)`
 * Dot products have many, many uses and are well worth familiarizing yourself with, if you haven't already.
 * This post won't dive into how to use dot products (remember them if you need to know the angle between two vectors!), but they'll be a part of our implementation.
+-->
+
+In case you're completely unfamiliar with dot products (the dots between the letters in the formula), they're just a way of multiplying two vectors together to get a scalar value (or, in other words, just a regular number, not a vector).
+
+Dot products have many, many uses and are well worth familiarizing yourself with, if you haven't already.
+
+This post won't dive into how to mathematically use dot products (remember them if you need to know the angle between two vectors!), but here's what you should know at the very least:
+
+The dot product of two 3D vectors is the sum of the products of their corresponding components. So, for example, the dot product of two 3D vectors is:
+
+\[ \mathbf{u} \cdot \mathbf{v} = u_1 v_1 + u_2 v_2 + u_3 v_3 \]
+
+Or, in code: `(u.x * v.x) + (u.y * v.y) + (u.z * v.z)`
+
+But in actual practice, it's actually more often like:
+
+```swift
+dot(u, v)
+
+ // Or sometimes,
+u.dot(v)
+```
+
+...and similar.
 
 ### Background Math - How to Implement Tap Gesture?
+<!--
 * Okay, so we have the thumb's position projected onto the line. What now?
 * Now we need to know whether the thumb is touching the line.
 * That sounds like a distance calculation to me.
@@ -277,7 +313,25 @@ Both u and v are n-dimensional vectors, but in our case we're going to be workin
   * We don't know how thick the user's middle finger is, so we need to pick a reasonable threshold. Likely through testing out the gesture to see what feels best.
   * Keep in mind that since we're only using a single line segment that goes from finger tip directly to the knuckle, and most people are naturally going to bend their fingers a little bit, the imaginary line is likely going to mostly go through the air in front of the user's middle finger.
   * So the threshold should be large enough so that the thumb can't accidentally go 'through' this line too far and exit out the back.
-  * ![](./handmissed.png)
+  * ![](./handmissed.png#center)
+-->
+
+At this point, you hopefully have a good idea of how you might implement the projection formula in code. This gives us the thumb's projected position on the line. But what now?
+
+Now we need to check whether the thumb is touching the line. To do that, it sounds like we need to calculate the distance between the thumb and the projected position on the line.
+
+In order to consider the thumb 'touching' the middle finger, the thumb has to be within some radius of the projected point on the line.
+
+What radius? Well, we don't know how thick the user's middle finger is. So we'll need to discover a reasonable threshold through testing out the gesture to see what feels best.
+
+Keep in mind that since we're only using a single line segment that goes from the finger tip directly to the knuckle, and most people are naturally going to bend their fingers a little bit, the imaginary line is likely going to mostly go through the air in front of the user's middle finger.
+
+![An illustration showing a hand with the thumb missing the imaginary line. The thumb tip projected onto the line is too far away, despite the thumb physically going through the line.](./handmissed.png#center)
+{{% img-subtitle %}}
+*What you don't want to have happen.*
+{{% /img-subtitle %}}
+
+So the threshold should be large enough so that the thumb can't accidentally go 'through' this line too far and exit out the back.
 
 ### Background Math - How to Implement Drag Gesture?
 * Let's take a closer look at the projection formula and try to break it down a little bit:
