@@ -226,7 +226,7 @@ For simplicity, we'll just be using this single line. Further refinements of thi
 
 For overkill, you could even have three different line segments, one between each tracked joint!
 
-However, for now we'll just stick to the single line segment. This post is already long enough as it is.
+However, for now we'll just stick to the single line segment. This post is already long enough as it is. We can always refine the implementation after we've got the basics down.
 
 ----
 
@@ -334,6 +334,8 @@ Keep in mind that since we're only using a single line segment that goes from th
 So the threshold should be large enough so that the thumb can't accidentally go 'through' this line too far and exit out the back.
 
 ### Background Math - How to Implement Drag Gesture?
+
+<!--
 * Let's take a closer look at the projection formula and try to break it down a little bit:
 * This is the formula we derived earlier:
 * \( P_A(\mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \)
@@ -348,8 +350,29 @@ So the threshold should be large enough so that the thumb can't accidentally go 
 * If we track this over time, we can tell if the thumb is moving up or down the line.
   * In other words, tracking t over time is how we'll implement the 'drag' gesture.
 * We've found our drag implementation!
+-->
+
+Let's take a closer look at the projection formula and try to break it down a little bit:
+
+\[ P_A(\mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \]
+
+To me, this looks like *"something"* (\( \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \)) multiplied by the line we're interested in (\( u \)). What is this *"something"*?
+
+Well, we can tell that it's a dot product divided by another dot product. And thanks to the section on dot products, we also know that using them results in scalar values, which means this whole *"something"* is itself a scalar (again, that it's just a number and not a vector).
+
+If we know that this *"something"* is a scalar, and we're multiplying it by the line (a vector), then the result has to be a point somewhere along that line.
+
+So then, this *"something"* must be the component that tells us how far along the line the projected point is. Let's call it \( \mathbf{t} \):
+
+\[ t = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \]
+
+**`t` is the component that tells us how far along the line `u` the projected point `v` is.**
+
+If we track this over time, we can tell if the thumb is moving up or down the line. In other words, tracking `t` over time is how we'll implement the 'drag' gesture.
 
 ### Combining Tap and Drag Gesture Recognition
+
+<!--
 * At this point you might think we're ready to dive into implementing things, but hold on.
 * We need to consider what happens when we combine the availability of both gestures.
 * We know when the user has begun to touch their thumb to their middle finger, but we don't exactly know which gesture they're about to perform.
@@ -360,6 +383,21 @@ So the threshold should be large enough so that the thumb can't accidentally go 
   * If the touch time is longer than a second, it's unlikely the user is attempting a tap gesture.
   * Likewise, if we detect a large drag in less than a quarter of a second, it's unlikely the user meant to perform a drag gesture.
 * We'll need to consider these factors when implementing the gesture recognition system.
+-->
+
+At this point, you might think we're ready to dive into implementing things, but hold on. We need to consider what happens when we combine the availability of both gestures.
+
+We know when the user has begun to touch their thumb to their middle finger, but we don't exactly know which gesture they're about to perform. People aren't machines, and the hand tracking isn't perfect, so our code is always going to see some slight up and down movement as the user moves their fingers, even as they're attempting to perform a tap gesture.
+
+There needs to be some minimum threshold for movement up and down the line before we consider the action a drag gesture. Again, this threshold will need to be discovered through testing. There's no way to mathematically figure out the "best" threshold without trying it out for yourself.
+
+It may also help to consider how long the user has been touching their thumb to their middle finger when determining the gesture
+
+If the touch time is longer than a second, it's unlikely the user is attempting a tap gesture. Likewise, if we detect a large drag in less than a quarter of a second, it's unlikely the user meant to perform a drag gesture.
+
+---
+
+I think that's enough planning for now, don't you? How about we dive into some code?
 
 ## Implementation
 
@@ -379,11 +417,19 @@ Hopefully Apple hasn't changed the link by the time you're reading this, but if 
 
 ### App Setup
 
+<!--
 * Apps on Apple Vision work the same as apps for other Apple platforms.
 * But to get to the interesting data, there's some limitations that we'll have to work around.
 * For example, certain data can only be obtained under certain circumstances.
   * Specifically, certain data providers (like the hand tracking provider) can only be run inside immersive spaces (where your app is the only one visible to the user).
 * Inside your app's `body`, you'll have to create an `ImmersiveSpace`, and a `View` to put inside it.
+-->
+
+Apps on Apple Vision work the same as apps for other Apple platforms. But to get to the interesting data, there's some limitations that we'll have to work around.
+
+For example, certain data can only be obtained under certain circumstances. Specifically, certain data providers (like the hand tracking provider) can only be run inside immersive spaces (where your app is the only one visible to the user).
+
+Inside your app's `body`, create an `ImmersiveSpace`, and a `View` to put inside it.
 
 ```swift
 @main
@@ -400,6 +446,9 @@ struct MyCoolApp : App {
     ImmersiveSpace {
       ImmersiveView()
         .environment(handTrackingModel)
+        // If you want to render objects over the user's hands,
+        // then this is useful (but optional):
+        .upperLimbVisibility(.hidden)
     }
   }
 }
@@ -407,8 +456,9 @@ struct MyCoolApp : App {
 
 ### Hand Tracking Provider Setup
 
-* Let's set up the data provider, which provides us data...about the transforms of the user's hand joints.
-* Inside your immersive view, or perhaps inside a `HandTrackingModel` struct, create an `ARKitSession` and `HandTrackingProvider`
+Let's set up the data provider, which provides us data...about the transforms of the user's hand joints.
+
+Inside your immersive view, or perhaps inside a `HandTrackingModel` struct, create an `ARKitSession` and `HandTrackingProvider`
 
 ```swift
 @Observable
@@ -418,7 +468,7 @@ class HandTrackingModel {
 }
 ```
 
-* When the user enters the immersive view, request authorization for hand tracking and start the hand tracking provider.
+When the user enters the immersive view, request authorization for hand tracking and start the hand tracking provider.
 
 ```swift
 struct ImmersiveView : View {
@@ -453,23 +503,25 @@ class HandTrackingModel {
     func handTrackingIsAuthorized() async -> Bool{
       // You may want to call this function *before* the ImmersiveView is shown,
       // if you'd like to control when the user is asked for permissions.
-      return await arSession.requestAuthorization(for: HandTrackingProvider.requiredAuthorizations).allSatisfy{ authorization in authorization.value == .allowed }
+      return await arSession.requestAuthorization(for: HandTrackingProvider.requiredAuthorizations)
+        .allSatisfy{ authorization in authorization.value == .allowed }
     }
 /// ...
 }
 ```
 
-* Remember to add `NSHandsTrackingUsageDescription` to your app's `Info.plist` file. Otherwise, your app will crash when you call `requestAuthorization`.
+Remember to add `NSHandsTrackingUsageDescription` to your app's `Info.plist` file. Otherwise, your app will crash when you call `requestAuthorization`.
 
 ```xml
+<!-- ... -->
 <key>NSHandsTrackingUsageDescription</key>
 <string>A short description explaining why your app needs this permission.</string>
+<!-- ... -->
 ```
 
 ### Handling Updates and Storing State
 
-* Let's store the latest state of the user's hands in some variables.
-* First, let's define a struct to store this state.
+Let's store the latest state of the user's hands in some variables. First, let's define a struct to store this state.
 
 ```swift
 struct HandsStatus {
@@ -486,19 +538,22 @@ struct HandsStatus {
     }
 }
 ```
+{{% img-subtitle %}}
+*(Yes, this could probably just be a Dictionary instead of a struct, but this is what it was in my app.)*
+{{% /img-subtitle %}}
 
-* Let's store the latest hand state in a global that can be accessed by the System we'll define later.
+And let's store the latest hand state in a global that can be accessed by the System that we're going to implement later.
 
 ```swift
-// In global scope
+// In global scope, possibly inside a Globals.swift or similar.
 var latestHandTracking = HandsStatus()
 ```
 
-* I dislike using global variables, but it's what I did in Spatial Physics Playground (which was based off some Apple documentation sample code).
-  * I haven't yet found a way to avoid it, either, as there doesn't seem to be any mechanism to transfer external data into a System.
-  * Refactoring out the global is left as an exercise for the reader.
-    * And my future self 😊.
-* Now let's update the `HandTrackingModel` to store the latest hand state.
+I dislike using global variables, but it's what I did in Spatial Physics Playground (which was based off some Apple documentation sample code).
+
+I haven't yet found a way to avoid it, either, as there doesn't seem to be any mechanism to transfer external data into a System. Refactoring out the global is left as an exercise for the reader...and my future self 😊.
+
+Now let's update the `HandTrackingModel` to store the latest hand state.
 
 ```swift
 class HandTrackingModel {
@@ -534,8 +589,9 @@ class HandTrackingModel {
 }
 ```
 
-### Setting up a System
+### Setting up a ThrusterSystem
 
+<!--
 * Remember to read [Apple's documentation](https://developer.apple.com/documentation/realitykit/implementing-systems-for-entities-in-a-scene) about implementing RealityKit Systems, if you haven't already.
 * We'll need a System that's responsible for doing things based on the user's current hand state.
 * The system will need to determine (and store) 
@@ -546,6 +602,15 @@ class HandTrackingModel {
   * Updates the thruster strength based on the t value.
   * Toggles the thruster on and off based on the tap gesture.
 * Let's define a stub System for now to get us started.
+-->
+
+Remember to read [Apple's documentation](https://developer.apple.com/documentation/realitykit/implementing-systems-for-entities-in-a-scene) about implementing RealityKit Systems, if you haven't already.
+
+We're going to need a System that's responsible for doing things based on the user's current hand state. The system will need to determine (and store) the current/previous t values, whether the thumb is/was touching the imaginary line, etc.
+
+Then, the System will use the stored information to affect the simulation. For example, it will update the thruster strength based on the t value, and toggle the thruster on and off based on the tap gesture, and so on.
+
+Let's define a stub System for now to get us started.
 
 ```swift
 class ThrusterSystem : System {
@@ -557,7 +622,7 @@ class ThrusterSystem : System {
 }
 ```
 
-* Systems search through entities within a scene by using Components primarily (well, my Systems do), so let's make a Thruster Component.
+Systems search through entities within a scene by using Components primarily (well, my Systems do), so let's make a Thruster Component.
 
 ```swift
 struct ThrusterComponent : Component {
@@ -566,15 +631,14 @@ struct ThrusterComponent : Component {
 }
 ```
 
-* This is enough to let us toggle the thruster and adjust its strength at runtime.
-* We'll need to remember to add this component to the Entity when the user creates a Thruster in the app.
-  * But that's for me to worry about, not you.
-* We're also going to need a structure to hold the thumb's state inside the `ThrusterSystem`.
+This is enough to let us toggle the thruster and adjust its strength at runtime. We'll need to remember to add this component to the Entity when the user creates a Thruster in the app (but that's for me to worry about, not you 😊).
+
+We're also going to need a structure to hold the thumb's state inside the `ThrusterSystem`.
   
 ```swift
 
 class ThrusterSystem : System {
-  // ...
+
   struct ThumbStatus {
     // t-value tracking
     var currentT: Float = 0.0
@@ -584,34 +648,39 @@ class ThrusterSystem : System {
     var contactTime: Float = -1.0
     var justReleased: Bool = false
 
-    // BLOG POST TODO: Remove references to thumbMoved
-    //var thumbMoved: Bool { totalTChange > 0.1 } // If true: User is performing a drag gesture
-
     var isDrag: Bool { totalTChange > 0.1 } // If true: User is performing a drag gesture
     var isTap: Bool { !isDrag && contactTime > 0.05 && contactTime < 0.5 } // If true: User is performing a tap gesture
 
     mutating func reset() {
       currentT = 0.0
-      // etc.
+      // ...
     }
   }
 
-  // BLOG POST TODO: Rename to handStatus after all the code is in the post.
-  private var thumbStatus: [HandAnchor.Chirality: ThumbStatus] = [
+  private var handStatus: [HandAnchor.Chirality: ThumbStatus] = [
     .left: ThumbStatus(),
     .right: ThumbStatus()
   ]
+
+  required init(scene: Scene) { }
+
+  func update(context: SceneUpdateContext) {
+    // Still TODO...☹️
+  }
 }
 ```
 
-* Let's work on implementing that `update` function!
+Let's work on implementing that `update` function!
 
 ### Implementing the System Update Function
 
-* The update function will need to be broken up into two sections.
-  * First, for each hand, we need to process the joint data and determine the thumb's position on the imaginary line, and if it's moved up or down.
-  * Second, we need to update `ThrusterComponent` state based on the thumb state, then apply thruster forces to the entity.
-* Let's write that out.
+The update function will need to be broken up into two sections.
+
+First, for each hand, we need to process the joint data and determine the thumb's position on the imaginary line, and if it's moved up or down.
+
+Second, we need to update `ThrusterComponent` state based on the thumb state, then apply thruster forces to the entity.
+
+So let's implement it.
 
 ```swift
 
@@ -663,7 +732,7 @@ class ThrusterSystem : System {
       HandAnchor.Chirality.right
     ] {
       // If just released and isTap, then the user is tapping.
-      if self.thumbStatus[chirality]!.justReleased && self.thumbStatus[chirality]!.isTap {
+      if self.handStatus[chirality]!.justReleased && self.handStatus[chirality]!.isTap {
         return true
       }
     }
@@ -679,9 +748,9 @@ class ThrusterSystem : System {
       HandAnchor.Chirality.left,
       HandAnchor.Chirality.right
     ] {
-      if self.thumbStatus[chirality]!.isDrag {
-        guard let previousT = self.thumbStatus[chirality]?.previousT,
-              let currentT = self.thumbStatus[chirality]?.currentT else { continue }
+      if self.handStatus[chirality]!.isDrag {
+        guard let previousT = self.handStatus[chirality]?.previousT,
+              let currentT = self.handStatus[chirality]?.currentT else { continue }
         
         return currentT - previousT
       }
@@ -691,6 +760,7 @@ class ThrusterSystem : System {
   }
 }
 ```
+<!--
 * This should be mostly self-explanitory except for `resetThumbContact` and `updateThumbContacts`.
 * `updateThumbContacts` is going to be a big function with its own dedicated section, so let's skip that for now.
 * Let's explain `resetThumbContact`:
@@ -701,28 +771,46 @@ class ThrusterSystem : System {
   * Further calls to `resetThumbContact` will be made every frame afterward, but do nothing until the user touches their middle finger again.
   * Hand tracking being lost will be handled by simply going through this same process (calling `resetThumbContact` every frame there's no hand tracking available).
 * Here's the implementation:
+-->
+
+Despite being long, this code should be mostly self-explanatory. The only functions we haven't discussed are `resetThumbContact` and `updateThumbContacts`.
+
+### Resetting Thumb Contact
+
+The way this works is that as long as the user isn't touching their middle finger with their thumb, then `resetThumbContact` will be called every frame.
+
+The first frame after the user lets go of their middle finger, this function will only set the `justReleased` flag to true and do nothing else.
+
+The frame afterward, we will be able to check this flag in the System to do our logic (toggle the thruster on or off). After that update is complete, `resetThumbContact` will be called again to actually clear the thumb state.
+
+Further calls to `resetThumbContact` will be made every frame afterward, but do nothing until the user touches their middle finger again.
+
+This provides us an easy way to hand hand tracking being lost: simply go through this same process (calling `resetThumbContact` every frame there's no hand tracking available).
+
+Here's the implementation:
 
 ```swift
 class ThrusterSystem : System {
   // ...
   func resetThumbContact(_ chirality: HandAnchor.Chirality) {
     // If justReleased is true, then we need to actually clear the state.
-    if self.thumbStatus[chirality]?.justReleased ?? false {
+    if self.handStatus[chirality]?.justReleased ?? false {
       // Clear state
-      self.thumbStatus[chirality]?.reset()
-    } else if self.thumbStatus[chirality]!.contactTime > 0.0 {
+      self.handStatus[chirality]?.reset()
+    } else if self.handStatus[chirality]!.contactTime > 0.0 {
       // Only set justReleased if the user has made contact for at least one frame.
 
       // justReleased hasn't been set yet, so set it.
-      self.thumbStatus[chirality]!.justReleased = true
+      self.handStatus[chirality]!.justReleased = true
       // Preserve state so that other functions can use it until next frame.
     }
   }
 }
 ```
 
-### Implement updateThumbContacts
+### Updating Thumb Contacts
 
+<!--
 * We've got the framework in place, now we just have to implement `updateThumbContacts`.
 * Before we begin, let's take a look at what data we have available to us from the hand tracking provider.
 * We're passing the data to our System via the global variable `latestHandTracking`, which is is a structure we made earlier that contains two optional `HandAnchor` objects, one for each hand.
@@ -734,6 +822,29 @@ class ThrusterSystem : System {
   * The math is the same, no matter what basis you're using for your coordinate system, so long as all your data uses that same basis.
   * No need to waste time calculating the world transform matrix for each joint if we don't have to.
 * Plan in place, let's write just a little bit of `updateThumbContacts`.
+-->
+
+We've got the rest of the framework in place, now it's time to implement `updateThumbContacts`. Before we begin, let's take a look at what data we have available to us from the hand tracking provider.
+
+We're passing the data to our System via the global variable `latestHandTracking`, which is a structure we made earlier that contains two optional `HandAnchor` objects, one for each hand.
+
+Looking at the [Apple Documentation](https://developer.apple.com/documentation/arkit/handanchor), we can see that we'll need to use the `handSkeleton` property to get to the joint data.
+
+The [HandSkeleton](https://developer.apple.com/documentation/arkit/handskeleton) object contains a function `joint(_ named: HandSkeleton.JointName)` we can use to get data about a specific joint.
+
+The [HandSkeleton.Joint](https://developer.apple.com/documentation/arkit/handskeleton/joint) object contains a `anchorFromJointTransform` property that we can use to get the position of the joint relative to its hand anchor.
+
+> **💬 Note**
+>
+> You may have a desire to also use the `originFromAnchorTransform` property on the `HandAnchor` object to convert the joints to world space.
+>
+> However, we don't need to do this. After all, we're not interested in the *world* position of these joints. Only their relative positions to each other, all of which are under the same `HandAnchor`.
+>
+> The math is the same, no matter what basis you're using for your coordinate system, so long as all your data uses that same basis. There's no need to waste time calculating the world transform matrix for each joint if we don't have to.
+
+Plan in place, let's write just a little bit of `updateThumbContacts`.
+
+We're going to loop through each hand, updating the thumb's status for each hand. If tracking data isn't available for a hand, we'll go through the `resetThumbContact` process to ensure the state is reset.
 
 ```swift
 class ThrusterSystem : System {
@@ -759,16 +870,13 @@ class ThrusterSystem : System {
 }
 ```
 
-* We're going to loop through each hand, updating the thumb's status for each hand.
-* If tracking data isn't available for a hand, we'll go through the `resetThumbContact` process to ensure the state is reset.
-* Now let's extract the joint positions.
+Now let's extract the joint positions.
 
 #### Obtaining Joint Positions
 
-* At this point, we have the transformation matrix of each joint, which tells us the position and orientation of the joint relative to the hand anchor.
-* A transformation matrix is a 4x4 matrix, of which the last column is the position of the joint.
-* However, positions are 3D vectors, so we only need the first three elements of the final column.
-* Implementation:
+At this point, we have the transformation matrix of each joint, which tells us the position and orientation of the joint relative to the hand anchor.
+
+A transformation matrix is a 4x4 matrix, of which the last column is the position of the joint. However, all we need is a 3D vector, so we take the first three elements of the final column.
 
 ```swift
 class ThrusterSystem : System {
@@ -791,6 +899,7 @@ class ThrusterSystem : System {
 
 #### Calculating U and V of the Projection Formula
 
+<!--
 * Remember our formula from earlier?
   * From way back when?
   * ...It's been a while, hasn't it?
@@ -803,6 +912,25 @@ class ThrusterSystem : System {
 * For the projection formula to work, we have to provide `pointP` in the same basis as `lineAB`.
   * So we'll need to calculate the thumb tip's position relative to the origin of `lineAB`, or in other words, the middle finger tip.
 * Implementation:
+-->
+
+Remember our formula from earlier?
+
+From way back when?
+
+...
+
+It's been a while, hasn't it? It's time to implement it.
+
+\[ P_A(\mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u} \]
+
+In our case, `u` is the line from the middle finger tip to the middle finger knuckle, and `v` is the thumb tip.
+
+But `u` and `v` don't make good programming variable names, so let's rename them to something more descriptive.
+
+Let's use `lineAB` for the line we're projecting onto (middle finger tip to knuckle), and use `pointP` for the point we're projecting.
+
+For the projection formula to work, we have to provide `pointP` in the same basis as `lineAB`. So we'll also need to calculate the thumb tip's position relative to the origin of `lineAB` (in our case, the origin is the middle finger tip).
 
 ```swift
 class ThrusterSystem : System {
@@ -830,10 +958,18 @@ class ThrusterSystem : System {
 
 #### Calculating T - Thumb Position on Line
 
+<!--
 * Now that we have `lineAB` and `pointP`, we can calculate `t` as explained earlier.
   * \( t = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \)
 * Lines in math extend infinitely, but we're only interested in the line segment we've discussed.
 * So we'll clamp `t` to be between 0 and 1.
+-->
+
+Now that we have `lineAB` and `pointP`, we can calculate `t` as explained earlier.
+
+\[ t = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \]
+
+Lines in math extend infinitely, but we're only interested in the line segment we've discussed. So we'll clamp `t` to be between 0 and 1.
 
 ```swift
 class ThrusterSystem : System {
@@ -854,12 +990,21 @@ class ThrusterSystem : System {
 }
 ```
 
+<!--
 * (Isn't it nice how easy math is to implement?)
   * (I mean...once you've correctly figured out what math *to* do.)
   * (...You know, the hard part.)
+-->
+
+Isn't it nice how easy math is to implement?
+
+I mean...once you've correctly figured out what math *to* do.
+
+...you know, the hard part.
 
 #### Calculating Thumb Distance to Line
 
+<!--
 * Now we've got `t` (`Clamped`), we can now calculate the point on the line segment which is closest to the thumb tip.
   * We'll do that by multiplying `tClamped` by `lineAB`, or in other words by completing the projection formula.
   * This will give us the closest point on the line to the thumb tip, in the basis of `lineAB`.
@@ -873,6 +1018,17 @@ class ThrusterSystem : System {
     * It's the basis!
     * `thumbPosition` is in the position of the thumb tip **in the basis of the hand anchor**.
     * `pointP` is in the position of the thumb tip **in the basis of the middle finger tip**.
+-->
+
+Now we've got `t` (`Clamped`), we can now calculate the point on the line segment which is closest to the thumb tip.
+
+We'll do that by multiplying `tClamped` by `lineAB`, or in other words by completing the projection formula. This will give us the closest point on the line to the thumb tip, in the basis of `lineAB`.
+
+When you're doing math you really have to make sure to remember the basis of your vectors. You'll see why in just a second.
+
+We can take that position, then figure out its distance to the thumb tip. We do this by getting the length of the line from the thumb tip to the closest point on the line.
+
+In other words (remembering destination - source) `closestPointOnLineToThumb - pointP`!
 
 ```swift
 class ThrusterSystem : System {
@@ -895,11 +1051,21 @@ class ThrusterSystem : System {
 
 #### Updating Thumb Status
 
+<!--
 * Phew, we've done a lot of math.
 * Now we're back into the realm of good ol' programming.
 * Now that we know how far the thumb is from the line, we can update the thumb's status with whether it's touching the line or not.
 * If it's touching, we update the properties of the thumb status.
 * If not, we reset the thumb status.
+-->
+
+Phew, we've done a lot of math. Now we're back into the realm of good ol' programming.
+
+Now that we know how far the thumb is from the line, we can update the thumb's status with whether it's touching the line or not.
+
+If it's touching, we update the properties of the thumb status.
+
+If not, we reset the thumb status.
 
 ```swift
 class ThrusterSystem : System {
@@ -913,16 +1079,16 @@ class ThrusterSystem : System {
 
     if distanceBetweenThumbAndLine < Self.contactDistanceThreshold {
       // Thumb is touching the line
-      let newTimeTouching = max(0.0, self.thumbStatus[chirality]!.contactTime) + deltaTime
-      self.thumbStatus[chirality]!.contactTime = newTimeTouching
+      let newTimeTouching = max(0.0, self.handStatus[chirality]!.contactTime) + deltaTime
+      self.handStatus[chirality]!.contactTime = newTimeTouching
 
       // Update T
-      let previousT = self.thumbStatus[chirality]!.currentT ?? tClamped
+      let previousT = self.handStatus[chirality]!.currentT ?? tClamped
       let currentT = tClamped
 
-      self.thumbStatus[chirality]!.previousT = previousT
-      self.thumbStatus[chirality]!.currentT = currentT
-      self.thumbStatus[chirality]!.totalTChange += abs(currentT - previousT)
+      self.handStatus[chirality]!.previousT = previousT
+      self.handStatus[chirality]!.currentT = currentT
+      self.handStatus[chirality]!.totalTChange += abs(currentT - previousT)
     } else {
       // Thumb is not touching the line
       resetThumbContact(chirality)
@@ -931,15 +1097,24 @@ class ThrusterSystem : System {
 }
 ```
 
+<!--
 * And that's pretty much it for the `updateThumbContacts` function.
 * And that's also pretty much it for the implementation of the `ThrusterSystem` class!
 * Let's take a look at what it looks like in action.
   * With some debug visualizations!
+-->
+
+And that's pretty much it for the `updateThumbContacts` function.
+
+And that's also pretty much it for the implementation of the `ThrusterSystem` class!
+
+Let's take a look at what it looks like in action. With some debug visualizations!
 
 ## Final Result
 
 <!-- TODO: Video of the debug gesture in action -->
 
+<!--
 * (Explanation of what's happening in the video and what the various colors of the cylinder and sphere represent.)
 * Sphere is the user's thumb position
 * Cylinder is the line from the middle finger tip to the middle finger knuckle
@@ -947,9 +1122,14 @@ class ThrusterSystem : System {
 * Cylinder is green when the thumb is touching the line.
 * Sphere is yellow when the user hasn't yet moved enough to perform a drag gesture.
 * Sphere is blue when the user is detected to be dragging.
+-->
+
+<!-- TODO: Write this section once video is recorded -->
+
 
 ### Conclusion
 
+<!--
 * We've implemented a simple hand gesture system for Apple Vision.
 * The system allows for a tap and drag gesture to control a thruster in the Spatial Physics Playground app.
 * The system is based on projecting the thumb tip onto an imaginary line between the middle finger tip and knuckle.
@@ -957,3 +1137,15 @@ class ThrusterSystem : System {
 * The system is simple, but effective, and could be expanded upon in the future.
 * For example, adding more fingers or more complex gestures such as detecting taps on individual phalanxes (bones) of the fingers by checking the t value when the tap is completed
 * Hope you enjoyed this post, and I hope you learned something new about math and/or hand tracking on Apple Vision!
+-->
+
+So, in conclusion, this is how I implemented a simple hand gesture system for Apple Vision.
+
+The system allows for a tap and drag gesture to control a thruster in the Spatial Physics Playground app, using some fancy linear algebra.
+
+Simple, but effective, and also open to expansion in the future.
+
+I hope you enjoyed this post, and I hope you learned something new about math and/or hand tracking on Apple Vision!
+
+
+{{< contact-me box="avp" is-mid-article=true >}}
