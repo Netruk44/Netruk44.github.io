@@ -7,13 +7,9 @@ params:
   math: true
 ---
 
-
-<!-- Image / Video header image -->
-<!-- Idea: Image of debug visualization of finger drag -->
-<!-- Idea: Video of finger drag in action -->
-{{< video source="https://storage.danieltperry.me/share/physics-playground-videos/TODO.mp4" id="introvideo" >}}
+{{< video source="https://storage.danieltperry.me/share/website-videos/hand-gesture-tutorial/title.mp4" id="introvideo" >}}
 {{% img-subtitle %}}
-*Debug view of the finger drag implementation*
+*Debug view of the hand gesture implementation*
 {{% /img-subtitle %}}
 
 >**visionOS Version**: 2.2  
@@ -1112,11 +1108,16 @@ Let's take a look at what it looks like in action. With some debug visualization
 
 ## Final Result
 
-<!-- TODO: Video of the debug gesture in action -->
+The final result is the same as the video at the top of this post. I've included it here for your convenience:
+
+{{< video source="https://storage.danieltperry.me/share/website-videos/hand-gesture-tutorial/title.mp4" id="resultvideo" >}}
+{{% img-subtitle %}}
+*A debug visualization of the hand gesture system.*
+{{% /img-subtitle %}}
 
 <!--
 * (Explanation of what's happening in the video and what the various colors of the cylinder and sphere represent.)
-* Sphere is the user's thumb position
+* Sphere is the user's projected thumb position
 * Cylinder is the line from the middle finger tip to the middle finger knuckle
 * Cylinder is gray when the thumb is not touching the line at all.
 * Cylinder is green when the thumb is touching the line.
@@ -1124,7 +1125,31 @@ Let's take a look at what it looks like in action. With some debug visualization
 * Sphere is blue when the user is detected to be dragging.
 -->
 
-<!-- TODO: Write this section once video is recorded -->
+In this video, you can see a cylinder has been attached to the user's middle finger, which represents the line segment we've been talking about this whole blog post.
+
+On the cylinder, sliding up and down it, is a sphere that represents the projected position of the user's thumb.
+
+You can see that as I move my thumb to touch my middle finger, things start to change color.
+
+Let's break down what's happening. First with the cylinder, which has two colors, gray and green:
+
+- The cylinder starts out gray, and remains gray when the thumb is not touching the line at all.
+- The cylinder turns green when the thumb is detected to be touching the line.
+
+In addition to the cylinder, the sphere also has two colors, yellow and blue:
+
+- As long as the sphere is yellow, the current gesture is assumed to be a 'tap'.
+- When the sphere turns blue, the user is detected to be dragging their thumb up or down the line.
+
+The video makes it a little bit difficult to tell how well the gesture works because my finger and thumb are obscured by the visualization, but let me assure you that I've fiddled with the numbers to get things working pretty well (for my hands, at least).
+
+<!-- NOTE: My implementation differs slightly from what I've written here. I've refined the code for this blog post, so there are minor differences between this post and my app. For example: The totalTChange is not absolute in my app, so you'll see it go positive and negative in the video. -->
+
+> **💬 Note**
+>
+> My implementation differs slightly from what I've written in this blog post. I've refined my code as I wrote this post, so there are minor differences between the video and tutorial.
+> 
+> For example: The `totalTChange` is not absolute in my app, so you'll see it go positive and negative in the video.
 
 
 ### Conclusion
