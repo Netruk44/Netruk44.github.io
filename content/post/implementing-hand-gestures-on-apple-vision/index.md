@@ -639,17 +639,30 @@ class ThrusterSystem : System {
     // t-value tracking
     var currentT: Float = 0.0
     var previousT: Float = 0.0
-    var totalTChange: Float = 0.0 // Increases as the user moves their thumb either up or down the line
+
+    // totalTChange:
+    // Increases as the user moves their thumb either up or down the line
+    // NOT meters, this is % of length of user's middle finger
+    var totalTChange: Float = 0.0 
 
     var contactTime: Float = -1.0
     var justReleased: Bool = false
 
-    var isDrag: Bool { totalTChange > 0.1 } // If true: User is performing a drag gesture
-    var isTap: Bool { !isDrag && contactTime > 0.05 && contactTime < 0.5 } // If true: User is performing a tap gesture
+    // When justReleased is true, the variables below will help us determine what the user is doing.
+
+    // isDrag: User is performing a drag gesture
+    // Threshold of 0.01 was arbitrarily chosen, and seems to work well enough.
+    // Increase for more 'deadzone' before a drag is detected.
+    var isDrag: Bool { totalTChange > 0.01 } // i.e. 1% of the length of the user's middle finger
+
+    // isTap: User is performing a tap gesture
+    // Again, thresholds were chosen arbitrarily and work okay. Adjust as needed.
+    var isTap: Bool { !isDrag && contactTime > 0.05 && contactTime < 0.5 }
 
     mutating func reset() {
       currentT = 0.0
-      // ...
+      // and all the other variables...
+      // (removed for brevity)
     }
   }
 
@@ -695,7 +708,7 @@ class ThrusterSystem : System {
 
       // These two are implemented below:
       isTapping = self.determineTap()
-      strengthChange = self.determineDrag() * 10.0 // Scale by 10 to make the drag more sensitive
+      strengthChange = self.determineDrag()
     } else {
       // Explanation and implementation coming next:
       resetThumbContact(.left)
@@ -707,15 +720,17 @@ class ThrusterSystem : System {
     // Part 2 - Update thruster components
     let query = EntityQuery(where: .has(ThrusterComponent.self))
     for thruster in context.entities(matching: query, updatingSystemWhen: .rendering) {
-      if isTapping {
-        let isNowEnabled = !thruster.components[ThrusterComponent.self]?.enabled ?? false
-        thruster.components[ThrusterComponent.self]?.enabled = isNowEnabled
-      }
+      if let thrusterComponent = thruster.components[ThrusterComponent.self] {
+        if isTapping {
+          thrusterComponent.enabled.toggle()
+        }
 
-      if abs(strengthChange) > 0.0 {
-        let currentStrength = thruster.components[ThrusterComponent.self]?.strength ?? 0.0
-        let finalStrength = max(0.0, currentStrength + strengthChange)
-        thruster.components[ThrusterComponent.self]?.strength = finalStrength
+        if abs(strengthChange) > 0.0 {
+          let finalStrength = max(0.0, thrusterComponent.strength + strengthChange)
+          thrusterComponent.strength = finalStrength
+        }
+
+        thruster.components[ThrusterComponent.self] = thrusterComponent
       }
 
       // Apply forces, etc.
@@ -926,7 +941,21 @@ But `u` and `v` don't make good programming variable names, so let's rename them
 
 Let's use `lineAB` for the line we're projecting onto (middle finger tip to knuckle), and use `pointP` for the point we're projecting.
 
+<!--
+    Coordinate Space Consistency:
+
+    All vectors (lineAB and pointP) are calculated relative to the middleFingerTipPosition. This consistent origin ensures that projections and distance calculations are accurate within the context of the user's hand, independent of their position in the world space.
+-->
+
+<!--
 For the projection formula to work, we have to provide `pointP` in the same basis as `lineAB`. So we'll also need to calculate the thumb tip's position relative to the origin of `lineAB` (in our case, the origin is the middle finger tip).
+-->
+
+We have to be careful about our coordinate spaces now. In order for the formula to work, everything has to be in the same coordinate space. Our end result projected position will end up using the basis of `lineAB`, so we'll have to pick which of the two points that define it (middle finger knuckle and middle finger tip) will be the 'origin' for our coordinate system.
+
+In development, I arbitrarily decided to have its origin be the middle finger tip, but could you could also equally use the middle finger knuckle as the origin for the line instead.
+
+So to get `pointP` in the same basis, we need to calculate the thumb tip's position relative to the middle finger tip.
 
 ```swift
 class ThrusterSystem : System {
@@ -942,7 +971,7 @@ class ThrusterSystem : System {
     // lineAB (U) - Line from middle finger tip to knuckle (destination - source)
     let lineAB = middleKnucklePosition - middleFingerTipPosition
 
-    // pointP (V) - Position of the thumb tip relative to middle finger tip
+    // pointP (V) - Position of the thumb tip relative to lineAB's origin
     //             (This is the point we're going to project onto lineAB)
     let pointP = thumbPosition - middleFingerTipPosition
 
@@ -965,7 +994,9 @@ Now that we have `lineAB` and `pointP`, we can calculate `t` as explained earlie
 
 \[ t = \frac{\mathbf{u} \cdot \mathbf{v}}{\mathbf{u} \cdot \mathbf{u}} \]
 
-Lines in math extend infinitely, but we're only interested in the line segment we've discussed. So we'll clamp `t` to be between 0 and 1.
+Lines in math extend infinitely, but we're only interested in the line segment we've discussed.
+
+We'll do that by clamping `t` to be between 0 and 1 to ensure that the projected point lies within the line segment defined by the middle finger tip (t=0) and knuckle (t=1). This prevents the thumb's projected position from extending beyond the physical length of the user's finger.
 
 ```swift
 class ThrusterSystem : System {
@@ -1008,7 +1039,7 @@ I mean...once you've correctly figured out what math *to* do.
   * You'll see why in just a second.
 * We can take that position, then figure out its distance to the thumb tip.
   * We do this by getting the length of the line from the thumb tip to the closest point on the line.
-  * In other words (remembering destination - source) `closestPointOnLineToThumb - `...?
+  * In other words (remembering destination - source) `projectedThumbPosition - `...?
   * `pointP`!
   * "But why not `thumbPosition`?"
     * It's the basis!
@@ -1018,13 +1049,15 @@ I mean...once you've correctly figured out what math *to* do.
 
 Now we've got `t` (`Clamped`), we can now calculate the point on the line segment which is closest to the thumb tip.
 
-We'll do that by multiplying `tClamped` by `lineAB`, or in other words by completing the projection formula. This will give us the closest point on the line to the thumb tip, in the basis of `lineAB`.
+We'll do that by multiplying `tClamped` by `lineAB`, or in other words by completing the projection formula. This will give us the closest point on the line to the thumb tip, or the projected thumb position.
 
-When you're doing math you really have to make sure to remember the basis of your vectors. You'll see why in just a second.
+We can take that projected position, then figure out its distance to the actual thumb tip's position. We do this by getting the length of the line from the thumb position to the projected thumb position.
 
-We can take that position, then figure out its distance to the thumb tip. We do this by getting the length of the line from the thumb tip to the closest point on the line.
+It's important to remember the basis of your vectors when doing math like this. We need the thumb position and the thumb's projected position in the same basis in order to calculate the distance between them.
 
-In other words (remembering destination - source) `closestPointOnLineToThumb - pointP`!
+The result of completing the projection will be in the basis of `lineAB`. So in order to calculate the distance, we'll have to the use the thumb tip's position relative to the middle finger tip. We calculated that already, that's `pointP`.
+
+So, we want the length of the vector `projectedThumbPosition - pointP`.
 
 ```swift
 class ThrusterSystem : System {
@@ -1034,10 +1067,10 @@ class ThrusterSystem : System {
     // -- Mark 4 --
 
     // Calculate the closest point on the line to the thumb tip
-    let closestPointOnLineToThumb = tClamped * lineAB
+    let projectedThumbPosition = tClamped * lineAB
 
     // Calculate the distance between the thumb and the line
-    let distanceBetweenThumbAndLine = simd_length(closestPointOnLineToThumb - pointP)
+    let distanceBetweenThumbAndLine = simd_length(projectedThumbPosition - pointP)
 
     // -- Mark 5 --
     // ...
