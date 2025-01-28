@@ -37,7 +37,9 @@ Hello!
 
 I've spent a bunch of time in 2024 working on my [Spatial Physics Playground](/project/2024-physics-playground) app for Apple Vision. I've been treating it as a way to keep learning new things. So much so that I've forgotten to write anything on my blog for the whole year. Whoops.
 
-I wanted to write up a few how-to posts on some of the things I've learned, just to help solidify it in my own mind. There's also not a whole lot of tutorials like this written for Apple Vision development yet, and I wanted to try writing out a longer-form tutorial than what I've done in the past.
+To help rectify that, I wanted to write up a few how-to posts on some of the things I've learned, just to help solidify it in my own mind. This post in particular will guide you through implementing custom hand gestures for Apple Vision. We'll be using these gestures to control a Thruster toy in the Spatial Physics Playground app, by adjusting its strength and toggling it on and off without the user needing to use UI buttons.
+
+There's also not a whole lot of tutorials like this written for Apple Vision development yet, and I wanted to try writing out a longer-form tutorial than what I've done in the past.
 
 To be honest, this post might be a little **too** long, but I didn't want to break it up into parts.
 
@@ -47,7 +49,7 @@ Hopefully you can find some use from it! If you have questions or feedback about
 
 ### Goals
 
-The goal of this post is to use ARKit hand tracking data to implement custom hand gestures inside an app for Apple Vision.
+The goal of this tutorial is to use ARKit hand tracking data to implement custom hand gestures inside an app for Apple Vision.
 
 This post will require quite a bit of math, so if you aren't familiar with linear algebra you may have a little trouble following along. Hopefully I've been able to simplify it enough for anyone to understand, but I lack the perspective to know for sure.
 
@@ -186,7 +188,7 @@ Phew, I'm tired of looking at documentation. Thankfully, this sounds like all we
 
 For our implementation, we'll be taking a look at the thumb and middle finger joints. Specifically, we'll be looking at the `.handThumbTip` (number `4`), `.handMiddleFingerTip` (number `14`), and `.handMiddleFingerKnuckle` (number `11`) joints. Using these joints, I think we'll be able to implement our tap and drag gestures.
 
-### The Idea - Mathematically
+### The Idea, Mathematically
 ![An illustration showing a hand with the thumb touching the middle finger. There's a line overlaid on top of the middle finger and a notch in the line where the thumb has been projected onto the line.](./handok.png#center)
 {{% img-subtitle %}}
 *A visualization of the math behind the gesture recognition*
@@ -232,7 +234,7 @@ Those of you who fear math, now's the time you might start worrying a little bit
 {{% img-subtitle %}}
 *DALL-E 3 - OpenAI*
 
-*Forgive me for using AI-generated artwork.  
+*Forgive me for using AI-generated images.  
 Hopefully it's okay when it's dumb?*
 {{% /img-subtitle %}}
 
@@ -246,8 +248,9 @@ As part of this, the projection formula will also provide us with a way we can t
 
 Well, we can't put it off any longer. It's time to talk about math.
 
+### Background Math: Linear Algebra
 
-### Background Math - The Line Projection Formula
+#### The Line Projection Formula
 
 This part used to have a whole giant explanation of how to derive the projection formula for projecting a point onto a 1D line. (I know, right? This post used to be *way* longer.)
 
@@ -264,7 +267,7 @@ Where:
 
 Both u and v are n-dimensional vectors, but in our case we're going to be working in 3D space.
 
-### Background Math - Dot Products
+#### Dot Products
 <!--
 * What is a dot product?
   * A dot product is a way of multiplying two vectors together to get a scalar value.
@@ -300,7 +303,7 @@ u.dot(v)
 
 ...and similar.
 
-### Background Math - How to Implement Tap Gesture?
+### How to Implement Tap Gesture?
 <!--
 * Okay, so we have the thumb's position projected onto the line. What now?
 * Now we need to know whether the thumb is touching the line.
@@ -329,7 +332,7 @@ Keep in mind that since we're only using a single line segment that goes from th
 
 So the threshold should be large enough so that the thumb can't accidentally go 'through' this line too far and exit out the back.
 
-### Background Math - How to Implement Drag Gesture?
+### How to Implement Drag Gesture?
 
 <!--
 * Let's take a closer look at the projection formula and try to break it down a little bit:
@@ -442,13 +445,16 @@ struct MyCoolApp : App {
     ImmersiveSpace {
       ImmersiveView()
         .environment(handTrackingModel)
-        // If you want to render objects over the user's hands,
-        // then this is useful (but optional):
+        // Allows you to render things over the user's hands.
+        // Useful for debug visualizations
         .upperLimbVisibility(.hidden)
     }
   }
 }
 ```
+{{% img-subtitle %}}
+*This code sets up the main application structure, initializing the view models and configuring the immersive space with the necessary environment models.*
+{{% /img-subtitle %}}
 
 ### Hand Tracking Provider Setup
 
@@ -772,7 +778,7 @@ class ThrusterSystem : System {
 }
 ```
 <!--
-* This should be mostly self-explanitory except for `resetThumbContact` and `updateThumbContacts`.
+* This should be mostly self-explanatory except for `resetThumbContact` and `updateThumbContacts`.
 * `updateThumbContacts` is going to be a big function with its own dedicated section, so let's skip that for now.
 * Let's explain `resetThumbContact`:
   * The way this will work is, as long as the user isn't touching their middle finger with their thumb, `resetThumbContact` will be called every frame.
@@ -1137,11 +1143,15 @@ And that's pretty much it for the `updateThumbContacts` function.
 
 And that's also pretty much it for the implementation of the `ThrusterSystem` class!
 
-Let's take a look at what it looks like in action. With some debug visualizations!
+Let's take a look at what it looks like in action.
 
 ## Final Result
 
-The final result is the same as the video at the top of this post. I've included it here for your convenience:
+### Debug Visualization
+
+To better illustrate the system in action, I've created a debug visualization that shows the thumb's projected position on the line, and the line itself. That'll help us see what the system's thinking without needing to also stare at a thruster in the scene.
+
+The final result is showcased in the video at the top of this post. I've also included it here for your convenience:
 
 {{< video source="https://storage.danieltperry.me/share/website-videos/hand-gesture-tutorial/title.mp4" id="resultvideo" >}}
 {{% img-subtitle %}}
@@ -1197,11 +1207,22 @@ The video makes it a little bit difficult to tell how well the gesture works bec
 * Hope you enjoyed this post, and I hope you learned something new about math and/or hand tracking on Apple Vision!
 -->
 
-So, in conclusion, this is how I implemented a simple hand gesture system for Apple Vision.
+> **💡 Key Takeaways**
+> - **Hand Tracking Integration:** We leveraged ARKit's hand tracking to capture complex gesture data.
+> - **Mathematical Application:** We applied linear algebra concepts such as projections and dot products to interpret hand movements.
+> - **System Implementation:** Finally, we implemented a responsive system that reacts to user gestures to manipulate in-app objects.
+
+In conclusion, this is how I implemented a simple hand gesture system for Apple Vision.
 
 The system allows for a tap and drag gesture to control a thruster in the Spatial Physics Playground app, using some fancy linear algebra.
 
 Simple, but effective, and also open to expansion in the future.
+
+For example, I intend on adding these controls onto each finger independently, and allowing the user to link up thrusters to different fingers.
+
+You could also implement more complex taps, such as detecting taps on individual phalanxes (bones) of the fingers by checking the `t` value when the tap is completed.
+
+There's a lot of different directions you could go!
 
 I hope you enjoyed this post, and I hope you learned something new about math and/or hand tracking on Apple Vision!
 
