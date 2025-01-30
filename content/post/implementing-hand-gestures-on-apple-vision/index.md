@@ -3,6 +3,7 @@ title: "Implementing Custom Hand Gestures on Apple Vision"
 date: 2025-01-30T13:16:30-05:00
 draft: false
 tags: ["Vision Pro", "Swift", "Apple Vision", "XR", "Video Game", "Apple"]
+summary: "A guide on implementing custom hand gestures for Apple Vision. We'll be using these gestures to control a Thruster toy in the Spatial Physics Playground app, by adjusting its strength and toggling it on and off without the user needing to use UI buttons."hugo
 params:
   math: true
 ---
