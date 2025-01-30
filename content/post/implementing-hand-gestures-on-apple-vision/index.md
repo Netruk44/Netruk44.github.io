@@ -41,11 +41,11 @@ To help rectify that, I wanted to write up a few how-to posts on some of the thi
 
 This post in particular will guide you through implementing custom hand gestures for Apple Vision. We'll be using these gestures to control a Thruster toy in the Spatial Physics Playground app, by adjusting its strength and toggling it on and off without the user needing to use UI buttons.
 
-There's also not a whole lot of tutorials like this written for Apple Vision development yet, and I wanted to try writing out a longer-form tutorial than what I've done in the past.
+There's also not a whole lot of tutorials like this written for Apple Vision development yet, and I wanted to try writing out more longer-form guides like this.
 
-To be honest, this post might be a little **too** long, but I didn't want to break it up into parts.
+To be honest, this guide might be a little **too** long, but I didn't want to break it up into parts.
 
-Hopefully you can find some use from it! If you have questions or feedback about issues in my post (I'm sure there's at least a few), feel free to reach out to me:
+Hopefully you can find some use from it! If you have questions or feedback about issues in here (I'm sure there's at least a few), feel free to reach out to me:
 
 {{< contact-me box="avp" is-mid-article=true >}}
 
@@ -53,9 +53,9 @@ Hopefully you can find some use from it! If you have questions or feedback about
 
 The goal of this tutorial is to use ARKit hand tracking data to implement custom hand gestures inside an app for Apple Vision.
 
-This post will require quite a bit of math, so if you aren't familiar with linear algebra you may have a little trouble following along. Hopefully I've been able to simplify it enough for anyone to understand, but I lack the perspective to know for sure.
+This guide will require quite a bit of math, so if you aren't familiar with linear algebra you may have a little trouble following along. Hopefully I've been able to simplify it enough for anyone to understand, but I lack the perspective to know for sure.
 
-In addition, the code in this post is written to be read and understood, not copy/pasted. If you paste code from this guide into your own project, you **will** need to make changes to get it working.
+In addition, the code in this guide is written to be read and understood, not copy/pasted. If you paste code from this guide into your own project, you **will** need to make changes to get it working.
 
 With the goal in mind our question then becomes "How can you implement meaningful custom hand gestures for Apple Vision?"
 
@@ -114,7 +114,7 @@ Let's make a toy that uses actual hand gestures for some type of control. And Ga
 
 The idea for the toy is simple. The hoverball tool works by applying a constant upward force to the object it's attached to. Let's just change which direction the force is being applied (and maybe even vary the strength), and we have a thruster!
 
-The specifics of the thruster implementation (such as actually applying forces to objects or how to integrate particles into the thruster) aren't important for this post, though.
+The specifics of the thruster implementation (such as actually applying forces to objects or how to integrate particles into the thruster) aren't important for this guide, though.
 
 In fact, I'm going to try as hard as possible to gloss over a lot of how the thruster works internally.
 
@@ -278,7 +278,7 @@ In case you're completely unfamiliar with dot products (the dots between the let
 
 Dot products have many, many uses and are well worth familiarizing yourself with, if you haven't already.
 
-This post won't dive into how to mathematically use dot products, so here's the bare minimum you should know:
+This guide won't dive into how to mathematically use dot products, so here's the bare minimum you should know:
 
 The dot product of two 3D vectors is the sum of the products of their corresponding components. So, for example, the dot product of two 3D vectors is:
 
@@ -1271,7 +1271,7 @@ The final result looks like this:
 * Sphere is blue when the user is detected to be dragging.
 -->
 
-In this video, you can see a cylinder has been attached to my middle finger, which represents the line segment we've been talking about this whole blog post.
+In this video, you can see a cylinder has been attached to my middle finger, which represents the line segment we've been talking about this whole time.
 
 On the cylinder, sliding up and down it, is a sphere that represents the projected position of the user's thumb.
 
@@ -1293,7 +1293,7 @@ The video makes it a little bit difficult to tell how well the gesture works bec
 
 > **💬 Note**
 >
-> My implementation differs slightly from what I've written in this blog post. I've refined my code as I wrote this post, so there are minor differences between the video and tutorial.
+> My implementation differs slightly from what I've written in this guide. I've refined my code a lot as I wrote it, so there are minor differences between the video and tutorial.
 > 
 > For example: The `totalTChange` is not absolute in my app, so you'll see it go positive and negative in the video.
 
