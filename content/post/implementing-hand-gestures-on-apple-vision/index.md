@@ -1,6 +1,6 @@
 ---
 title: "Implementing Custom Hand Gestures on Apple Vision"
-date: 2024-12-25T16:47:49-05:00
+date: 2025-01-30T13:16:30-05:00
 draft: false
 tags: ["Vision Pro", "Swift", "Apple Vision", "XR", "Video Game", "Apple"]
 params:
