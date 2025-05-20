@@ -9,7 +9,7 @@ summary: "A web application for searching Steam games using embeddings generated
 [![](project_preview.png)](./project_preview.png)
 
 {{% img-subtitle %}}
-**Steam Embedding Search**
+**[Steam Embedding Search](https://storage.danieltperry.me/share/steamvibes/build/)**
 {{% /img-subtitle %}}
 
 {{< contact-me box="steam_search" is-mid-article=true >}}
