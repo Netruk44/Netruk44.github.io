@@ -17,7 +17,7 @@ summary: "A web application for searching Steam games using embeddings generated
 # Info
 * **Status**: Released
 * **Source**: [GitHub](https://github.com/Netruk44/steam-embedding-search)
-* **View**: [Website](https://azstatic.danieltperry.me/steamvibes/build)
+* **View**: [Website](https://storage.danieltperry.me/share/steamvibes/build/)
 * **Technologies & Languages**: Python, Docker, React, Sqlite3
 * **Machine Learning Models and Libraries**: [Instructor-XL](https://huggingface.co/hkunlp/instructor-xl), [Hnswlib](https://github.com/nmslib/hnswlib)
 
