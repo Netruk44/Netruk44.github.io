@@ -24,6 +24,6 @@ Kubashi is a simple puzzle game for the Vision Pro. It involves matching cubes.
 # Info
 * **Status**: Released
 * **State**: Full release. Post-release content may be added.
-* **Download**: Available in the app store soon.
+* **Download**: Available in the [App Store](https://apps.apple.com/us/app/kubashi/id6743453845).
 * **Privacy Policy**: [View Privacy Policy](./privacy)
 * **Technologies & Languages**: Swift, SwiftUI, RealityKit, ARKit
