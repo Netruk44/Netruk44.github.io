@@ -3,6 +3,7 @@ title: "Kopia Transfer Warning"
 date: 2025-09-09T20:23:21-04:00
 draft: false
 tags: ["Kopia", "Backup", "Application"]
+summary: "A quick warning if you're using Kopia to manage backups for multiple machines with a single repository."
 ---
 
 ![](./bb_dashboard.png#center)
