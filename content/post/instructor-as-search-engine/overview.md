@@ -18,7 +18,7 @@ This post contains definitions, background information, and a broad overview of 
 
 ## Overview
 
-{{< storage-img src="../steam-embeddings-overview.png" alt="Overview" />}}
+{{< storage-img src="steam-embeddings-overview.png" alt="Overview" />}}
 
 The project was broken down into multiple steps, each of which is covered in its own post. A brief summary of each step is below. Each piece was implemented with Python.
 

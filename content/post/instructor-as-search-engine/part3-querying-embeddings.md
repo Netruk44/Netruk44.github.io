@@ -115,7 +115,7 @@ With the implementation finally complete, I was able to check the results for th
 
 ### Query 1 - "An incremental / idle game with a medieval fantasy theme"
 
-{{< storage-img src="../vibe_search_1.png" alt="Example results 1" center=true />}}
+{{< storage-img src="vibe_search_1.png" alt="Example results 1" center=true />}}
 
 Here are the links to the games in the above image so you can evaluate the results for yourself.
 
@@ -165,7 +165,7 @@ At this point, it's clear there's at least some promise here. But it's hard to t
 
 ### Query 2 - "A calming first-person, 3D exploration based game with a relaxing, cozy atmosphere in the outdoors"
 
-{{< storage-img src="../vibe_search_2.png" alt="Example results 2" center=true />}}
+{{< storage-img src="vibe_search_2.png" alt="Example results 2" center=true />}}
 
 {{<collapse summary="**Results Table (click to expand)**" >}}
 
@@ -211,7 +211,7 @@ The results could be better here, too. There's lots of issues with the results. 
 
 ### Query 3 - "A fast-paced, action-packed, multiplayer, first-person shooter with a focus on team-based tactics and unique abilities."
 
-{{< storage-img src="../vibe_search_3.png" alt="Example results 3" center=true />}}
+{{< storage-img src="vibe_search_3.png" alt="Example results 3" center=true />}}
 
 {{<collapse summary="**Results Table (click to expand)**">}}
 
