@@ -55,7 +55,7 @@ Creating the application was mostly a matter of deciding what I needed to change
 
 In the cases where lots of HTML or Javascript would need to be written, I asked Copilot to generate the first template for me.
 
-[![Copilot generating the first draft for the result table](../react-dev2.png)](../react-dev2.png)
+{{< storage-figure src="../react-dev2.png" alt="Copilot generating the first draft for the result table" link=self />}}
 
 I would take this, then either make changes to it myself (if they were simple enough) or ask Copilot to make the changes for me. For example, after having it generate the table layout for me, I could then ask it to `add an 'icon' column to the table, and populate it with 'https://cdn.akamai.steamstatic.com/steam/apps/{appid}/header.jpg'`.
 
@@ -65,7 +65,7 @@ This is how development proceeded for most of the app. I would ask Copilot to ge
 
 Larger revisions to the code were done the same way. I asked the GPT-vision model how I might make my app look less like a prototype, and it suggested I use result cards instead of a table. So I went back and asked Copilot to convert my table into cards.
 
-[![Making revisions to the app](../react-dev1.png)](../react-dev1.png)
+{{< storage-figure src="../react-dev1.png" alt="Making revisions to the app" link=self />}}
 
 Eventually I got to a point where I was happy with the app, and I was ready to deploy it. I wouldn't really say that I "know" React now, but I do have at least a little bit of understanding of how to use it.
 
@@ -75,7 +75,7 @@ Azure Blob Storage has a built-in feature for hosting static websites. You can e
 
 If I was being fancy, I could set up a GitHub action to automatically deploy the app to Azure whenever I push a new commit to the repository. However, I didn't want to spend the time to set that up right off the bat, so instead I used [Azure Storage Explorer](https://github.com/microsoft/AzureStorageExplorer/releases) to manually upload the files to the `$web` container.
 
-[![File listing in Azure Storage Explorer](../storage_explorer.png)](../storage_explorer.png)
+{{< storage-figure src="../storage_explorer.png" alt="File listing in Azure Storage Explorer" link=self />}}
 
 After running `npm run build` to generate the static site, I uploaded the contents of the `build` folder to a `steamvibes` subdirectory in the `$web` container ("steamvibes" being kind of like a codename for the project).
 
@@ -91,7 +91,7 @@ After running `npm run build` to generate the static site, I uploaded the conten
 
 After that, I was able to navigate to the URL of the storage account and see my app running.
 
-[![The deployed app](../project_preview.png)](../project_preview.png)
+{{< storage-figure src="../project_preview.png" alt="The deployed app" link=self />}}
 
 ## Conclusion
 

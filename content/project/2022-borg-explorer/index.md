@@ -10,12 +10,12 @@ tags: ["Electron", "Javascript", "Borg", "CSS", "HTML", "Application", "Backup"]
 {{< contact-me box="borg-explorer" is-mid-article=true >}}
 
 # Info
-![](./icon.png#center)
+{{< storage-img src="./icon.png" center=true />}}
 {{% img-subtitle %}}
 **Icon**  
 {{% /img-subtitle %}}
 
-![](./ss1.png#center)
+{{< storage-img src="./ss1.png" center=true />}}
 {{% img-subtitle %}}
 **Screenshot**
 {{% /img-subtitle %}}
@@ -38,37 +38,37 @@ Eventually, I got tired of trying to form my code queries in the form of a chat 
 
 {{<collapse summary="**Version 0.0.4**">}}
 
-![](./ss1.png#center)
+{{< storage-img src="./ss1.png" center=true />}}
 {{% img-subtitle %}}
 *The initial screen of the application.*
 {{% /img-subtitle %}}
 
-![](./ss2.png#center)
+{{< storage-img src="./ss2.png" center=true />}}
 {{% img-subtitle %}}
 *Browsing a Borg archive.*
 {{% /img-subtitle %}}
 
-![](./ss4.png#center)
+{{< storage-img src="./ss4.png" center=true />}}
 {{% img-subtitle %}}
 *Loading an archive from the repository.*
 {{% /img-subtitle %}}
 
-![](./ss3.png#center)
+{{< storage-img src="./ss3.png" center=true />}}
 {{% img-subtitle %}}
 *Browsing an individual backup.*
 {{% /img-subtitle %}}
 
-![](./ss5.png#center)
+{{< storage-img src="./ss5.png" center=true />}}
 {{% img-subtitle %}}
 *Previewing an image from the backup.*
 {{% /img-subtitle %}}
 
-![](./ss7.png#center)
+{{< storage-img src="./ss7.png" center=true />}}
 {{% img-subtitle %}}
 *Previewing a text file from the backup.*
 {{% /img-subtitle %}}
 
-![](./ss6.png#center)
+{{< storage-img src="./ss6.png" center=true />}}
 {{% img-subtitle %}}
 *Extract dialogue.*
 {{% /img-subtitle %}}

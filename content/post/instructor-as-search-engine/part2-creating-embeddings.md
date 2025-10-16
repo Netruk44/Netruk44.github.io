@@ -36,7 +36,7 @@ I've used these embeddings before in the project I mentioned earlier, and they w
 
 ### Google's T5 Model
 
-![Diagram showing uses for T5](../t5.png#center)
+{{< storage-img src="../t5.png" alt="Diagram showing uses for T5" center=true />}}
 
 {{% img-subtitle %}}
 *Diagram showing some uses for T5. Image from [Google's T5 paper](https://arxiv.org/pdf/1910.10683.pdf) (Figure 1).*
@@ -69,7 +69,7 @@ The drawback of T5 is its smaller maximum sequence length of 512 tokens. But dep
 
 ### University of Hong Kong's Instructor
 
-![Diagram showing uses for Instructor](../instructor.png#center)
+{{< storage-img src="../instructor.png" alt="Diagram showing uses for Instructor" center=true />}}
 
 {{% img-subtitle %}}
 *Diagram showing some uses for Instructor. Image from [Instructor's homepage](https://instructor-embedding.github.io/).*

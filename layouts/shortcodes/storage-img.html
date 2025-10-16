@@ -1,0 +1,64 @@
+{{- $src := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $src = .Get "src" -}}
+{{- else if ge (len .Params) 1 -}}
+  {{- $src = index .Params 0 -}}
+{{- end -}}
+{{- if not $src -}}
+  {{- errorf "storage-img: src parameter is required" -}}
+{{- end -}}
+{{- $url := partial "storage-url.html" (dict "page" .Page "src" $src) -}}
+{{- $alt := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $alt = or (.Get "alt") (.Get "text") (.Get "title") -}}
+{{- end -}}
+{{- if not $alt -}}
+  {{- $alt = .Inner | plainify -}}
+{{- end -}}
+{{- $title := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $title = .Get "title" -}}
+{{- end -}}
+{{- $class := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $class = .Get "class" -}}
+{{- end -}}
+{{- $width := "" -}}
+{{- $height := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $width = .Get "width" -}}
+  {{- $height = .Get "height" -}}
+{{- end -}}
+{{- $loading := "lazy" -}}
+{{- if .IsNamedParams -}}
+  {{- with .Get "loading" -}}
+    {{- $loading = . -}}
+  {{- end -}}
+{{- end -}}
+{{- $decoded := false -}}
+{{- $center := false -}}
+{{- if .IsNamedParams -}}
+  {{- with .Get "decode" -}}
+    {{- $lower := strings.ToLower (printf "%v" .) -}}
+    {{- if in (slice "true" "yes" "1") $lower -}}
+      {{- $decoded = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with .Get "center" -}}
+    {{- $lower := strings.ToLower (printf "%v" .) -}}
+    {{- if in (slice "true" "yes" "1") $lower -}}
+      {{- $center = true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $center (not (strings.Contains $url "#center")) -}}
+  {{- $url = printf "%s#center" $url -}}
+{{- end -}}
+<img src="{{ $url }}"
+  {{- if $alt }} alt="{{ $alt | plainify }}"{{ else }} alt=""{{ end }}
+  {{- if $title }} title="{{ $title | plainify }}"{{ end }}
+  loading="{{ $loading }}"
+  {{- if $decoded }} decoding="async"{{ end }}
+  {{- if $class }} class="{{ $class }}"{{ end }}
+  {{- if $width }} width="{{ $width }}"{{ end }}
+  {{- if $height }} height="{{ $height }}"{{ end }} />

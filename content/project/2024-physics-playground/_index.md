@@ -8,7 +8,7 @@ params:
   hideList: true
 ---
 
-{{< video source="https://storage.danieltperry.me/share/physics-playground-videos/PromoVideov1.4.mp4" id="introvideo" mute=false >}}
+{{< storage-video source="https://storage.danieltperry.me/share/physics-playground-videos/PromoVideov1.4.mp4" id="introvideo" mute=false />}}
 {{% img-subtitle %}}
 *Video of the app*
 {{% /img-subtitle %}}
@@ -22,7 +22,7 @@ Spatial Physics Playground is a simple app for the Vision Pro. It's a physics sa
 > If you have any suggestions or feedback, feel free to send me an e-mail at the same address.
 
 # Info
-![](./icon.png#center)
+{{< storage-img src="./icon.png" center=true />}}
 {{% img-subtitle %}}
 App Icon
 {{% /img-subtitle %}}
@@ -44,27 +44,27 @@ The app was intended as a way for me to learn more about developing for Apple pl
 
 ## Screenshots
 
-![](./intro_window.jpg#center)
+{{< storage-img src="./intro_window.jpg" center=true />}}
 {{% img-subtitle %}}
 The startup window
 {{% /img-subtitle %}}
 
-![](./tool_menu.jpg#center)
+{{< storage-img src="./tool_menu.jpg" center=true />}}
 {{% img-subtitle %}}
 The tool window
 {{% /img-subtitle %}}
 
-![](./screenshot2.jpg#center)
+{{< storage-img src="./screenshot2.jpg" center=true />}}
 {{% img-subtitle %}}
 Creating a sphere
 {{% /img-subtitle %}}
 
-![](./fling_tool2.jpg#center)
+{{< storage-img src="./fling_tool2.jpg" center=true />}}
 {{% img-subtitle %}}
 The fling tool
 {{% /img-subtitle %}}
 
-{{< video source="./marbles.mp4" id="marbles" autoplay=true loop=true >}}
+{{< storage-video source="./marbles.mp4" id="marbles" autoplay=true loop=true />}}
 {{% img-subtitle %}}
 The marbles tool
 {{% /img-subtitle %}}

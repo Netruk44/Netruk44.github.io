@@ -1,0 +1,85 @@
+{{- $source := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $source = .Get "source" -}}
+{{- else if ge (len .Params) 1 -}}
+  {{- $source = index .Params 0 -}}
+{{- end -}}
+{{- if not $source -}}
+  {{- errorf "storage-video: source parameter is required" -}}
+{{- end -}}
+{{- $id := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $id = .Get "id" -}}
+{{- else if ge (len .Params) 2 -}}
+  {{- $id = index .Params 1 -}}
+{{- end -}}
+{{- if not $id -}}
+  {{- errorf "storage-video: id parameter is required" -}}
+{{- end -}}
+{{- $poster := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $poster = .Get "poster" -}}
+{{- end -}}
+{{- $mute := true -}}
+{{- $autoplay := false -}}
+{{- $loop := false -}}
+{{- $preload := "" -}}
+{{- if .IsNamedParams -}}
+  {{- with .Get "mute" -}}
+    {{- $lower := strings.ToLower (printf "%v" .) -}}
+    {{- if in (slice "false" "no" "0") $lower -}}
+      {{- $mute = false -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with .Get "autoplay" -}}
+    {{- $lower := strings.ToLower (printf "%v" .) -}}
+    {{- if in (slice "true" "yes" "1") $lower -}}
+      {{- $autoplay = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with .Get "loop" -}}
+    {{- $lower := strings.ToLower (printf "%v" .) -}}
+    {{- if in (slice "true" "yes" "1") $lower -}}
+      {{- $loop = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with .Get "preload" -}}
+    {{- $preload = . -}}
+  {{- end -}}
+{{- end -}}
+{{- $videoSrc := partial "storage-url.html" (dict "page" .Page "src" $source) -}}
+{{- $posterSrc := "" -}}
+{{- if $poster -}}
+  {{- $posterSrc = partial "storage-url.html" (dict "page" .Page "src" $poster) -}}
+{{- end -}}
+{{- /* read .Inner so closing shortcode usage doesn't error, but ignore content */ -}}
+{{- $ := .Inner -}}
+<div class="container">
+  <div id="player-wrapper-{{ $id }}" class="player"></div>
+</div>
+
+<script type="text/javascript" src="/extern/clappr/clappr.min.js"></script>
+<script>
+  (function() {
+    var playerElement = document.getElementById("player-wrapper-{{ $id }}");
+    if (!playerElement) {
+      return;
+    }
+    var options = {
+      source: "{{ $videoSrc }}",
+      mute: {{ if $mute }}true{{ else }}false{{ end }},
+      height: 360,
+      width: 640,
+      autoPlay: {{ if $autoplay }}true{{ else }}false{{ end }},
+      loop: {{ if $loop }}true{{ else }}false{{ end }}
+    };
+    {{- if $posterSrc }}
+    options.poster = "{{ $posterSrc }}";
+    {{- end }}
+    {{- if $preload }}
+    options.preload = "{{ $preload }}";
+    {{- end }}
+    var player = new Clappr.Player(options);
+    player.attachTo(playerElement);
+  })();
+</script>

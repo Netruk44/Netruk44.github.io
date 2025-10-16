@@ -5,7 +5,7 @@ draft: false
 tags: ["Godot", "gamedev", "C#"]
 ---
 
-![Statue Concept Title Screen](/project/2023-statue/title.png#center)
+{{< storage-img src="/project/2023-statue/title.png" alt="Statue Concept Title Screen" center=true />}}
 {{% img-subtitle %}}
 *The title screen for my game prototype, Statue Concept.*
 {{% /img-subtitle %}}
@@ -22,7 +22,7 @@ I intend to write more of these, if/when I publish more of these projects. So ma
 
 ## Context - Statue Concept
 
-![Statue from Statue Concept](/project/2023-statue/screenshot01.png#center)
+{{< storage-img src="/project/2023-statue/screenshot01.png" alt="Statue from Statue Concept" center=true />}}
 {{% img-subtitle %}}
 *The statue from *Statue Concept*.*
 {{% /img-subtitle %}}
@@ -33,7 +33,7 @@ It's a simple first person horror game based on the Weeping Angels from *Doctor 
 
 Functionally, there's not much to the game. The player can move around, look around, and interact with little monitors that act as locks and keys. The statue can move around and damage the player when it gets too close, resulting in the player needing to restart the level if they get hurt too much.
 
-![A dark room in Statue Concept](/project/2023-statue/screenshot06.png#center)
+{{< storage-img src="/project/2023-statue/screenshot06.png" alt="A dark room in Statue Concept" center=true />}}
 {{% img-subtitle %}}
 *The statue can also move around in the dark.*
 {{% /img-subtitle %}}
@@ -49,7 +49,7 @@ One issue I faced while using Godot with C# was a mild difficulty with referenci
 
 By itself, that's not much of a problem. But when attempting to use the returned null value, the resulting `NullReferenceException` only shows up on the "Debugger" tab, not the "Output" tab (which is the tab that is visible by default).
 
-![Error count in the Debugger tab](./errorCount.png)
+{{< storage-img src="./errorCount.png" alt="Error count in the Debugger tab" />}}
 {{% img-subtitle %}}
 *Nothing shows up in the "Output" tab, at a first glance it looks like everything is running as expected.*
 {{% /img-subtitle %}}
@@ -58,7 +58,7 @@ If you don't notice the number on the `Debugger (540)` tab going up, you're left
 
 For contrast, in GDScript if you reference a node that doesn't exist in code (e.g. `$Does/Not/Exist`), you get a nice error in the output:
 
-![GDScript error](./gdscript_error.png)
+{{< storage-img src="./gdscript_error.png" alt="GDScript error" />}}
 {{% img-subtitle %}}
 *This is much easier to notice than the C# issue.*
 {{% /img-subtitle %}}
@@ -83,7 +83,7 @@ public partial class example_object : Node3D
 
 And the resulting warning in the console:
 
-![Warning in the console](./pathcheck.png)
+{{< storage-img src="./pathcheck.png" alt="Warning in the console" />}}
 {{% img-subtitle %}}
 *Now C# can have the same helpful error message as GDScript.*
 {{% /img-subtitle %}}
@@ -102,7 +102,7 @@ CSG is a way to make simple 3D models (like rooms and corridors) by combining an
 
 When generating the navmesh, Godot can either use mesh data, which is very slow, or physics data from static colliders. CSG provides a toggle to enable static body collision:
 
-![CSG collision toggle](./csg_collision.png)
+{{< storage-img src="./csg_collision.png" alt="CSG collision toggle" />}}
 
 But this collision doesn't appear to be recognized by the NavigationMesh baking process when configured to use the physics data. The navmesh will not include surfaces from CSG objects.
 
@@ -171,7 +171,7 @@ Overall, I'm pretty happy with the state of Godot. As far as implementation goes
 
 I do occasionally encounter unexplainable errors and issues when modifying scenes, but that's nothing a quick project reload doesn't fix.
 
-![Project reload button](./project_reload.png#center)
+{{< storage-img src="./project_reload.png" alt="Project reload button" center=true />}}
 {{% img-subtitle %}}
 *When in doubt...*
 {{% /img-subtitle %}}

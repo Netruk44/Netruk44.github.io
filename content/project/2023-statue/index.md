@@ -9,7 +9,7 @@ tags: ["Godot", "gamedev", "3D", "Video Game", "C#", "Horror"]
 
 A horror video game concept made in the Godot engine. Try to navigate rooms and solve puzzles while being pursued by a statue that can only move when you aren't looking at it.
 
-[![](title.png)](./title.png)
+{{< storage-figure src="title.png" link=self />}}
 
 {{% img-subtitle %}}
 **Title Screen**
@@ -40,11 +40,11 @@ I figured I might as well release what I've made so far as a small game concept 
 
 {{< collapse summary="**Pre-release Version**" openByDefault=true >}}
 
-[![](screenshot01.png)](./screenshot01.png)
-[![](screenshot02.png)](./screenshot02.png)
-[![](screenshot03.png)](./screenshot03.png)
-[![](screenshot04.png)](./screenshot04.png)
-[![](screenshot05.png)](./screenshot05.png)
-[![](screenshot06.png)](./screenshot06.png)
+{{< storage-figure src="screenshot01.png" link=self />}}
+{{< storage-figure src="screenshot02.png" link=self />}}
+{{< storage-figure src="screenshot03.png" link=self />}}
+{{< storage-figure src="screenshot04.png" link=self />}}
+{{< storage-figure src="screenshot05.png" link=self />}}
+{{< storage-figure src="screenshot06.png" link=self />}}
 
 {{< /collapse >}}

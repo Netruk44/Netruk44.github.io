@@ -1,0 +1,92 @@
+{{- $src := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $src = .Get "src" -}}
+{{- else if ge (len .Params) 1 -}}
+  {{- $src = index .Params 0 -}}
+{{- end -}}
+{{- if not $src -}}
+  {{- errorf "storage-figure: src parameter is required" -}}
+{{- end -}}
+{{- $url := partial "storage-url.html" (dict "page" .Page "src" $src) -}}
+{{- $alt := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $alt = or (.Get "alt") (.Get "text") (.Get "title") -}}
+{{- end -}}
+{{- if not $alt -}}
+  {{- $alt = .Inner | plainify -}}
+{{- end -}}
+{{- $caption := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $caption = .Get "caption" -}}
+{{- end -}}
+{{- if and (not $caption) (.Inner) -}}
+  {{- $caption = .Inner | markdownify -}}
+{{- else if $caption -}}
+  {{- $caption = $caption | markdownify -}}
+{{- end -}}
+{{- $class := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $class = .Get "class" -}}
+{{- end -}}
+{{- $center := false -}}
+{{- if .IsNamedParams -}}
+  {{- with .Get "center" -}}
+    {{- $lower := strings.ToLower (printf "%v" .) -}}
+    {{- if in (slice "true" "yes" "1") $lower -}}
+      {{- $center = true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $figureClass := $class -}}
+{{- if $center -}}
+  {{- if $figureClass -}}
+    {{- $figureClass = printf "%s %s" $figureClass "align-center" -}}
+  {{- else -}}
+    {{- $figureClass = "align-center" -}}
+  {{- end -}}
+{{- end -}}
+{{- $imgTitle := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $imgTitle = .Get "title" -}}
+{{- end -}}
+{{- $linkHref := "" -}}
+{{- $linkTarget := "" -}}
+{{- $linkRel := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $linkHref = .Get "href" -}}
+  {{- $linkTarget = .Get "target" -}}
+  {{- $linkRel = .Get "rel" -}}
+{{- end -}}
+{{- $linkTitle := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $linkTitle = .Get "linkTitle" -}}
+{{- end -}}
+{{- $linkParam := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $linkParam = .Get "link" -}}
+{{- end -}}
+{{- if not $linkHref -}}
+  {{- if $linkParam -}}
+    {{- $lower := strings.ToLower (printf "%v" $linkParam) -}}
+    {{- if or (eq $lower "true") (eq $lower "yes") (eq $lower "1") (eq $lower "self") -}}
+      {{- $linkHref = $url -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $imgUrl := $url -}}
+{{- if and $center (not (strings.Contains $imgUrl "#center")) -}}
+  {{- $imgUrl = printf "%s#center" $imgUrl -}}
+{{- end -}}
+<figure{{ if $figureClass }} class="{{ $figureClass }}"{{ end }}>
+  {{- if $linkHref }}
+    <a href="{{ $linkHref }}"
+       {{- if $linkTarget }} target="{{ $linkTarget }}"{{ end }}
+       {{- if $linkRel }} rel="{{ $linkRel }}"{{ else if and (strings.HasPrefix $linkHref "http") (not $linkTarget) }} rel="noopener"{{ end }}
+       {{- if $linkTitle }} title="{{ $linkTitle | plainify }}"{{ end }}>
+  {{- end }}
+  <img src="{{ $imgUrl }}"{{ if $alt }} alt="{{ $alt | plainify }}"{{ else }} alt=""{{ end }}{{ if $imgTitle }} title="{{ $imgTitle | plainify }}"{{ end }} />
+  {{- if $linkHref }}</a>{{ end }}
+  {{- if $caption }}
+    <figcaption>{{ $caption }}</figcaption>
+  {{- end }}
+</figure>

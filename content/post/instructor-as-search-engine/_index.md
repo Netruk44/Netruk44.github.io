@@ -6,7 +6,7 @@ tags: []
 summary: "A complete implementation overview using embeddings to create a custom search engine for Steam games."
 ---
 
-![](./project_preview.png)
+{{< storage-img src="./project_preview.png" />}}
 
 > **Published Project URL:** [https://azstatic.danieltperry.me/steamvibes/build](https://azstatic.danieltperry.me/steamvibes/build)
 >

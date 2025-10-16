@@ -6,7 +6,7 @@ tags: ["Kopia", "Backup", "Application"]
 summary: "A quick warning if you're using Kopia to manage backups for multiple machines with a single repository."
 ---
 
-![](./bb_dashboard.png#center)
+{{< storage-img src="./bb_dashboard.png" center=true />}}
 
 > **💬 Note:**  
 > This post is accurate as of Kopia version **0.21.1**, and as of the date of this post. Future versions of Kopia may change the behavior described below.

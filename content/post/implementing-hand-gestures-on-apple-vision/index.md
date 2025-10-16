@@ -8,7 +8,7 @@ params:
   math: true
 ---
 
-{{< video source="https://storage.danieltperry.me/share/website-videos/hand-gesture-tutorial/thrusteradjust.mp4" id="introvideo" >}}
+{{< storage-video source="thrusteradjust.mp4" id="introvideo" />}}
 {{% img-subtitle %}}
 *Tapping to toggle thruster on and off. Dragging on my middle finger to adjust strength.*
 {{% /img-subtitle %}}
@@ -68,7 +68,7 @@ Don't worry, it'll be quick.
 
 ### What is Spatial Physics Playground?
 
-![An image of a stack of various objects like cubes, cylinders and cones resting on top of a long cuboid that bridges the gap between real-world objects, a bed and dresser. In the background is a grid-like material overlaid on top of the real-world walls.](./recon2.jpg)
+{{< storage-img src="./recon2.jpg" alt="An image of a stack of various objects like cubes, cylinders and cones resting on top of a long cuboid that bridges the gap between real-world objects, a bed and dresser. In the background is a grid-like material overlaid on top of the real-world walls." />}}
 {{% img-subtitle %}}
 *An image of Spatial Physics Playground*
 {{% /img-subtitle %}}
@@ -86,7 +86,7 @@ You place physics objects into your room and interact with them by poking them w
 
 The elements like ropes and hoverballs are in a category of tools that I call "toys" which are really just excuses for me to implement things.
 
-![Some cylinders sitting on top of a platform suspended by hoverballs](./hoverball.jpg)
+{{< storage-img src="./hoverball.jpg" alt="Some cylinders sitting on top of a platform suspended by hoverballs" />}}
 {{% img-subtitle %}}
 *Hoverballs, the idea pretty much ripped out of Garry's Mod*
 {{% /img-subtitle %}}
@@ -99,7 +99,7 @@ Let's make a toy that uses actual hand gestures for some type of control. And Ga
 
 ### The Thruster Toy
 
-![A spherical thruster with nozzle that has fire and smoke coming out of it, viewed inside Reality Composer Pro](./thruster_editor.jpg)
+{{< storage-img src="./thruster_editor.jpg" alt="A spherical thruster with nozzle that has fire and smoke coming out of it, viewed inside Reality Composer Pro" />}}
 {{% img-subtitle %}}
 *An early version of the thruster in Reality Composer Pro*
 {{% /img-subtitle %}}
@@ -139,7 +139,7 @@ As a first attempt at implementing hand gestures, I wanted something very simple
 
 The "tap" gesture will be the user touching anywhere along their finger with their thumb. The "drag" gesture will be the user dragging their thumb up and down their finger.
 
-![An illustration split into three sections. At the top, a hand with thumb away from middle finger. On the bottom left, a section labeled 'tap' with two hands with motion arrows depicting the thumb moving toward and away from the middle finger. On the bottom right, a section labeled 'drag' with two hands with motion arrows depicting the thumb moving up and down the middle finger.](./idea.png#center)
+{{< storage-img src="./idea.png" alt="An illustration split into three sections. At the top, a hand with thumb away from middle finger. On the bottom left, a section labeled &#x27;tap&#x27; with two hands with motion arrows depicting the thumb moving toward and away from the middle finger. On the bottom right, a section labeled &#x27;drag&#x27; with two hands with motion arrows depicting the thumb moving up and down the middle finger." center=true />}}
 {{% img-subtitle %}}
 *The tap and drag gestures*
 {{% /img-subtitle %}}
@@ -159,7 +159,7 @@ Sounds good to me! Let's get started.
 
 I always like to start by taking a quick look at the documentation before I begin writing code.
 
-![A diagram depicting the hand joints provided by ARKit. A hand is visible on the left with circles marking each joint in the hand, such as the wrist, knuckle, metacarpal, and finger tip, among others. Inside the circles are numbers that correspond to the joint's name listed in a table on the right.](./avp_joints.jpg)
+{{< storage-img src="./avp_joints.jpg" alt="A diagram depicting the hand joints provided by ARKit. A hand is visible on the left with circles marking each joint in the hand, such as the wrist, knuckle, metacarpal, and finger tip, among others. Inside the circles are numbers that correspond to the joint&#x27;s name listed in a table on the right." />}}
 {{% img-subtitle %}}
 Image courtesy of [Substack - Stuart Varrall](https://varrall.substack.com/p/hand-tracking-in-visionos)  
 Original source [Apple - Meet ARKit for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10082/?time=933)
@@ -188,7 +188,7 @@ Specifically, we'll be looking at the `.handThumbTip` (number `4`), `.handMiddle
 Using these joints, I think we'll be able to implement our tap and drag gestures.
 
 ### The Idea, Mathematically
-![An illustration showing a hand with the thumb touching the middle finger. There's a line overlaid on top of the middle finger and a notch in the line where the thumb has been projected onto the line.](./handok.png#center)
+{{< storage-img src="./handok.png" alt="An illustration showing a hand with the thumb touching the middle finger. There&#x27;s a line overlaid on top of the middle finger and a notch in the line where the thumb has been projected onto the line." center=true />}}
 {{% img-subtitle %}}
 *A visualization of the math behind the gesture recognition*
 {{% /img-subtitle %}}
@@ -216,7 +216,7 @@ If the thumb is close enough to the line, we can consider it to be 'touching' th
 
 For simplicity, we'll just be using this single line. Further refinements of this implementation could break this down into multiple line segments. Probably at least two, one from the middle finger tip to the "Intermediate Base" joint (number `12` in the diagram above), then one from there to the knuckle.
 
-![An illustration showing a hand with the thumb touching a bent middle finger. The line from fingertip to knuckle bends with the finger.](./handok_bend.png#center)
+{{< storage-img src="./handok_bend.png" alt="An illustration showing a hand with the thumb touching a bent middle finger. The line from fingertip to knuckle bends with the finger." center=true />}}
 {{% img-subtitle %}}
 *Using two line segments better tracks bends in the user's middle finger*
 {{% /img-subtitle %}}
@@ -229,7 +229,7 @@ However, for now we'll just stick to the single line segment. This post is alrea
 
 Those of you who fear math, now's the time you might start worrying a little bit. As we're about to enter the realm of...*linear algebra*.
 
-![An AI-generated image of a ghostly figure standing in the doorway of a plain room lit blue by abstract mathematical shapes and figures on the walls, with a vaguely astral feeling. The viewer's hands are visible at the bottom of the image, the same color as the astral math symbols.](./linear_algebra_haunt.jpeg#center)
+{{< storage-img src="./linear_algebra_haunt.jpeg" alt="An AI-generated image of a ghostly figure standing in the doorway of a plain room lit blue by abstract mathematical shapes and figures on the walls, with a vaguely astral feeling. The viewer&#x27;s hands are visible at the bottom of the image, the same color as the astral math symbols." center=true />}}
 {{% img-subtitle %}}
 *DALL-E 3 - OpenAI*
 
@@ -311,7 +311,7 @@ The big takeaway here is that a dot product results in a scalar value. In other 
   * We don't know how thick the user's middle finger is, so we need to pick a reasonable threshold. Likely through testing out the gesture to see what feels best.
   * Keep in mind that since we're only using a single line segment that goes from finger tip directly to the knuckle, and most people are naturally going to bend their fingers a little bit, the imaginary line is likely going to mostly go through the air in front of the user's middle finger.
   * So the threshold should be large enough so that the thumb can't accidentally go 'through' this line too far and exit out the back.
-  * ![](./handmissed.png#center)
+  * {{< storage-img src="./handmissed.png" center=true />}}
 -->
 
 At this point, you hopefully have a good idea of how you might implement the projection formula in code. This gives us the thumb's projected position on the line.
@@ -334,7 +334,7 @@ Some people naturally bend their fingers more than others. If a user has a stron
 
 So the threshold should be large enough so that the thumb can't accidentally go 'through' this line too far and exit out the back.
 
-![An illustration showing a hand with the thumb missing the imaginary line. The thumb tip projected onto the line is too far away, despite the thumb physically going through the line.](./handmissed.png#center)
+{{< storage-img src="./handmissed.png" alt="An illustration showing a hand with the thumb missing the imaginary line. The thumb tip projected onto the line is too far away, despite the thumb physically going through the line." center=true />}}
 {{% img-subtitle %}}
 *A failed detection because the radius is too small.*  
 *What you don't want to have happen.*
@@ -1257,7 +1257,7 @@ To better illustrate the system in action, I've created a debug visualization th
 
 The final result looks like this:
 
-{{< video source="https://storage.danieltperry.me/share/website-videos/hand-gesture-tutorial/title.mp4" id="resultvideo" >}}
+{{< storage-video source="debug.mp4" id="resultvideo" />}}
 {{% img-subtitle %}}
 *A debug visualization of the hand gesture system.*
 {{% /img-subtitle %}}

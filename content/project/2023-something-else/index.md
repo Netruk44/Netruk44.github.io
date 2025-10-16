@@ -9,7 +9,7 @@ Something Else is a source-level mod that adds machine-generated text to [OpenMW
 
 The name comes from a new button added to the dialogue window that allows you to enter a custom line of dialogue to speak to an NPC.
 
-![](./logo.png#center)
+{{< storage-img src="./logo.png" center=true />}}
 {{% img-subtitle %}}
 The button
 {{% /img-subtitle %}}
@@ -17,7 +17,7 @@ The button
 {{< contact-me box="somethingelse" is-mid-article=true >}}
 
 # Info
-[![](./04_03_dialogue_history_3.png)](./04_03_dialogue_history_3.png)
+{{< storage-figure src="./04_03_dialogue_history_3.png" link=self />}}
 {{% img-subtitle %}}
 Screenshot of generated dialogue  
 *(using OpenAI's GPT Chat Completion API)*
@@ -71,11 +71,11 @@ With that in mind, the end goal for the mod is to (eventually) be a little bit m
 
 Here's a diagram that gives a high-level abstracted overview of how the mod works:
 
-[![](./project_overview.png)](./project_overview.png)
+{{< storage-figure src="./project_overview.png" link=self />}}
 
 
 # Screenshots
-[![](./03_27_t5_small.png)](./03_27_t5_small.png)
+{{< storage-figure src="./03_27_t5_small.png" link=self />}}
 {{% img-subtitle %}}
 **2023-03-27**  
 Screenshot of first ever generated dialogue using t5-small.  
@@ -83,39 +83,39 @@ Screenshot of first ever generated dialogue using t5-small.
 *The model mostly just regurgitates the input json.)*
 {{% /img-subtitle %}}
 
-[![](./03_28_openai.png)](./03_28_openai.png)
+{{< storage-figure src="./03_28_openai.png" link=self />}}
 {{% img-subtitle %}}
 **2023-03-28**  
 Screenshot of first generated dialogue using OpenAI's GPT Chat Completion API.  
 *(With the expected vastly improved results compared to un-finetuned T5-small)*
 {{% /img-subtitle %}}
 
-[![](./04_03_dialogue_history_1.png)](./04_03_dialogue_history_1.png)
+{{< storage-figure src="./04_03_dialogue_history_1.png" link=self />}}
 {{% img-subtitle %}}
 Screenshot of first generated dialogue with the model aware of dialogue history, notice how the model matches the length of the message that comes before it.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
-[![](./04_03_dialogue_history_2.png)](./04_03_dialogue_history_2.png)
+{{< storage-figure src="./04_03_dialogue_history_2.png" link=self />}}
 {{% img-subtitle %}}
 Screenshot of generated dialogue with the model aware of dialogue history, referencing the contents of a message that came before.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
-[![](./04_03_custom_topic.png)](./04_03_custom_topic.png)
+{{< storage-figure src="./04_03_custom_topic.png" link=self />}}
 {{% img-subtitle %}}
 Come up with your own custom topics if the list doesn't cover what you're looking for.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
-[![](./04_23_disposition.png)](./04_23_disposition.png)
+{{< storage-figure src="./04_23_disposition.png" link=self />}}
 {{% img-subtitle %}}
 **2023-04-23**  
 Giving some additional context to the model, such as disposition, what faction the NPC is in, what race the player is, their name, etc.  
 *(Using OpenAI's GPT Chat Completion API)*
 {{% /img-subtitle %}}
 
-[![](./05_19_using_status.png)](./05_19_using_status.png)
+{{< storage-figure src="./05_19_using_status.png" link=self />}}
 {{% img-subtitle %}}
 **2023-05-19**  
 Additional context has been added to the prompt given to the model.  

@@ -19,13 +19,13 @@ As a stretch goal, the program will encourage re-exploration of an area by gradu
 {{< contact-me box="walkingapp" is-mid-article=true >}}
 
 # Info
-![](./app_icon.png#center)
+{{< storage-img src="./app_icon.png" center=true />}}
 {{% img-subtitle %}}
 **Icon**  
 *Generated with [Stable Diffusion](https://github.com/CompVis/stable-diffusion) using [InvokeAI](https://github.com/invoke-ai/InvokeAI)*'s web UI.
 {{% /img-subtitle %}}
 
-![](./2022-10-03-22-19-55.png#center)
+{{< storage-img src="./2022-10-03-22-19-55.png" center=true />}}
 {{% img-subtitle %}}
 **Screenshot**
 {{% /img-subtitle %}}
@@ -43,7 +43,7 @@ I think it could be useful to have a tool I could use to see where I've been in 
 # Inspiration
 I took inspiration from how the map works in open world driving video games like: *Forza Horizon*, *The Crew*, and *Test Drive Unlimited*.
 
-![](./reference.jpg#center)
+{{< storage-img src="./reference.jpg" center=true />}}
 
 {{% img-subtitle %}}
 *Notice how the road varies in color between 'discovered' and 'undiscovered' roads in* Forza Motorsport.
@@ -67,33 +67,33 @@ I took inspiration from how the map works in open world driving video games like
 *10/02/22*
 * Map implementation overhaul (for per-segment color control)
 * GPX-Map intersection (Using Godot builtin 2D Physics library)
-![](./2022-10-03-21-30-34.png)
+{{< storage-img src="./2022-10-03-21-30-34.png" />}}
 
 #### v0.5
 *10/01/22*
 * Reading GPX file implemented (Using Godot builtin [XML Parser](https://docs.godotengine.org/en/3.6/classes/class_xmlparser.html))
-![](./2022-10-03-21-30-16.png)
+{{< storage-img src="./2022-10-03-21-30-16.png" />}}
 
 #### v0.4
 *9/27/22*
 * UI overhaul
-![](./2022-10-03-21-29-44.png)
+{{< storage-img src="./2022-10-03-21-29-44.png" />}}
 
 #### v0.3
 *9/26/22*
 * Camera zoom and scrolling implementation (Godot builtin 2D Camera)
-![](./2022-10-03-21-28-57.png)
+{{< storage-img src="./2022-10-03-21-28-57.png" />}}
 
 #### v0.2
 *9/25/22*
 * Better line drawing (using [antialiased line2d](https://github.com/godot-extended-libraries/godot-antialiased-line2d) from the Godot Asset library.)
-![](./2022-10-03-21-27-45.png)
+{{< storage-img src="./2022-10-03-21-27-45.png" />}}
 
 #### v0.1
 *9/25/22*
 * OSM Overpass API implementation (using Godot builtin [Http Request](https://docs.godotengine.org/en/3.6/tutorials/networking/http_request_class.html))
 
-![](./2022-10-03-21-26-29.png)
+{{< storage-img src="./2022-10-03-21-26-29.png" />}}
 
 {{< /collapse >}}
 

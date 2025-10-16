@@ -37,7 +37,7 @@ When reviewing the output of the model, I'm going to break it up into sections a
 
 This is a screenshot of [*TrackMania*](https://store.steampowered.com/app/2225070/Trackmania/) taken directly from my Steam Deck.
 
-[![TrackMania](trackmania.jpg)](trackmania.jpg)
+{{< storage-figure src="trackmania.jpg" alt="TrackMania" link=self />}}
 {{% img-subtitle %}}
 *The full-resolution image (1280x800), click to enlarge*
 {{% /img-subtitle %}}
@@ -49,7 +49,7 @@ I'm looking to see how well the model can 'read' the text off a screenshot like 
 For a human, this screenshot is quite a lot to take in if you aren't used to looking at and reading video game interfaces. There's text and numbers *everywhere* on the screen, what does it all mean? Let's see if GPT-4V can help us out here.
 
 ### Low Fidelity
-![TrackMania at 500 pixels](trackmania_500.jpg#center)
+{{< storage-img src="trackmania_500.jpg" alt="TrackMania at 500 pixels" center=true />}}
 {{% img-subtitle %}}
 *What the model receives with low fidelity*
 {{% /img-subtitle %}}
@@ -77,11 +77,11 @@ The leaderboard isn't in the top right, it's in the bottom right. But the word "
 
 I believe that the term 'respawn' may be something the model has memorized about TrackMania. Because while it's not visible in the screenshot I gave to GPT-4V, if you get stuck and stop moving for a while then you get this text on screen:
 
-![Launched Respawn and Give Up options](trackmania_extra_ui.jpg#center)
+{{< storage-img src="trackmania_extra_ui.jpg" alt="Launched Respawn and Give Up options" center=true />}}
 
 I think the model may have been trained on images of TrackMania with these options visible on screen, and it's just something GPT-4V has memorized about the game.
 
-![TrackMania at 500 pixels](trackmania_500.jpg#center)
+{{< storage-img src="trackmania_500.jpg" alt="TrackMania at 500 pixels" center=true />}}
 {{% img-subtitle %}}
 *Just so you don't have to keep scrolling up for reference*
 {{% /img-subtitle %}}
@@ -103,7 +103,7 @@ The "additional numeric value" I believe is referring to the number labeled "Bes
 
 In addition, the model never remarks on the number labeled "Previous", possibly because the label is hard to read against the background, or because the number is the same as the "Best" number.
 
-![TrackMania at 500 pixels](trackmania_500.jpg#center)
+{{< storage-img src="trackmania_500.jpg" alt="TrackMania at 500 pixels" center=true />}}
 {{% img-subtitle %}}
 *For Reference*
 {{% /img-subtitle %}}

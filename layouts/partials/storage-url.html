@@ -1,0 +1,47 @@
+{{- $src := .src -}}
+{{- $page := .page -}}
+{{- if not $src -}}
+  {{- errorf "storage-url: src is required" -}}
+{{- end -}}
+{{- $base := site.Params.storageBaseURL -}}
+{{- if not $base -}}
+  {{- errorf "storage-url: params.storageBaseURL is not configured" -}}
+{{- end -}}
+{{- $trimmedBase := $base | strings.TrimRight "/" -}}
+{{- $raw := $src | strings.TrimSpace -}}
+{{- $isAbsolute := or (strings.HasPrefix $raw "http://") (strings.HasPrefix $raw "https://") (strings.HasPrefix $raw "//") (strings.HasPrefix $raw "data:") -}}
+{{- if $isAbsolute -}}
+  {{- $raw -}}
+{{- else -}}
+  {{- $startedWithSlash := strings.HasPrefix $raw "/" -}}
+  {{- $cleanSrc := $raw | strings.TrimPrefix "./" -}}
+  {{- if $startedWithSlash -}}
+    {{- $cleanSrc = $cleanSrc | strings.TrimPrefix "/" -}}
+  {{- end -}}
+{{- $pageDir := "" -}}
+{{- with $page -}}
+  {{- with .File -}}
+    {{- $dir := .Dir | strings.TrimSuffix "/" -}}
+    {{- $dir = $dir | strings.TrimPrefix "./" -}}
+    {{- $pageDir = $dir -}}
+  {{- end -}}
+  {{- if not $pageDir -}}
+    {{- with .RelPermalink -}}
+      {{- $rel := . | strings.TrimPrefix "/" | strings.TrimSuffix "/" -}}
+      {{- if $rel -}}
+        {{- $pageDir = $rel -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $pageDir (strings.HasPrefix $pageDir "content") -}}
+  {{- $pageDir = $pageDir | strings.TrimPrefix "content/" -}}
+{{- end -}}
+{{- $path := "" -}}
+{{- if or (not $pageDir) $startedWithSlash -}}
+  {{- $path = $cleanSrc -}}
+{{- else -}}
+  {{- $path = path.Join $pageDir $cleanSrc -}}
+{{- end -}}
+  {{- printf "%s/%s" $trimmedBase $path -}}
+{{- end -}}

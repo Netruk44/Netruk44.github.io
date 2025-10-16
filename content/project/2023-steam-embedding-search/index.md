@@ -6,7 +6,7 @@ tags: ["Python", "Instructor", "Application", "Docker", "CSS", "React", "Sqlite"
 summary: "A web application for searching Steam games using embeddings generated from game descriptions and reviews."
 ---
 
-[![](project_preview.png)](./project_preview.png)
+{{< storage-figure src="project_preview.png" link=self />}}
 
 {{% img-subtitle %}}
 **[Steam Embedding Search](https://storage.danieltperry.me/share/steamvibes/build/)**

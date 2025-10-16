@@ -5,7 +5,7 @@ draft: false
 tags: ["godot", "gamedev", "tutorial", "C#"]
 ---
 
-![A screenshot of the completed tutorial](./finished.png)
+{{< storage-img src="./finished.png" alt="A screenshot of the completed tutorial" />}}
 
 >**Godot Version**: 4.1.1 .NET  
 >**Difficulty**: Intermediate  
@@ -42,7 +42,7 @@ When making your scene, place all your scenery objects underneath a single Node3
 
 For this tutorial, I'll be using the scene I made in my previous tutorial, [Weeping Angel Effect in Godot Engine](../godot-weeping-angel-effect/). You don't need to follow the tutorial, I'm only using the scene.
 
-![A simple scene with blue floor and white walls and pillars with white spheres placed throughout](./scene.jpg)
+{{< storage-img src="./scene.jpg" alt="A simple scene with blue floor and white walls and pillars with white spheres placed throughout" />}}
 {{% img-subtitle %}}
 *If you want to use my scene, you can find that in the `playground.tscn` file located in [this Github Repository](https://github.com/Netruk44/godot-tutorials/tree/weeping-angel).*
 {{% /img-subtitle %}}
@@ -59,12 +59,12 @@ The FPSControllerMono isn't very difficult to make yourself by hand if you're ex
 
 Once you have a scene ready, it's time to create the NavMesh. Start by adding a NavigationRegion3D node to the scene, and move the parent node of the scenery objects underneath it.
 
-![Creating a new node in Godot](./add_navigation.jpg)
-[![The node tree with the environment under the newly created NavigationRegion3D](./navigation_in_scene.png)](./navigation_in_scene.png)
+{{< storage-img src="./add_navigation.jpg" alt="Creating a new node in Godot" />}}
+{{< storage-figure src="./navigation_in_scene.png" alt="The node tree with the environment under the newly created NavigationRegion3D" link=self />}}
 
 Then, with the NavigationRegion3D selected, in the right-hand sidebar under the `Inspector` tab, create a new NavigationMesh.
 
-![The options for a newly created NavMesh](./new_navmesh.png#center)
+{{< storage-img src="./new_navmesh.png" alt="The options for a newly created NavMesh" center=true />}}
 
 For the most part, the default settings are okay. The only thing you really need to make sure is correct is the setting under `Agents/Radius`. This is what tells Godot how large the agents navigating your scene are.
 
@@ -80,7 +80,7 @@ Another important setting to know about is under `Geometry/Parsed Geometry Type`
 
 Once you've set the radius, click the `Bake NavMesh` button at the top of your viewport. This will create the NavMesh, and you should see it appear in your scene as a bunch of cyan triangles floating above the ground.
 
-[![The NavMesh in the scene](./navmesh_in_scene.png#center)](./navmesh_in_scene.png)
+{{< storage-figure src="./navmesh_in_scene.png" alt="The NavMesh in the scene" center=true link=self />}}
 
 We've got our NavMesh, now let's add some agents to navigate it.
 
@@ -96,21 +96,21 @@ Before we can pathfind anywhere we need to have a destination in mind. For this 
 
 In the right hand sidebar, click `Node`, then `Groups`, then finally `Manage Groups`.
 
-![Navigating to the group menu](./node_groups.png#center)
+{{< storage-img src="./node_groups.png" alt="Navigating to the group menu" center=true />}}
 
 In the `Manage Groups` menu, enter in a name for the group ("player" works fine) and click "Add". Then find the root node of the player in the middle column, then "> Add" to add the player node to the group.
 
-![The node group editor](./group_editor.png#center)
+{{< storage-img src="./group_editor.png" alt="The node group editor" center=true />}}
 
 Click "OK" to close the menu. You can verify that it worked if you see a new symbol on your player node in the scene tree.
 
-![The player node with a new symbol](./player_group.png#center)
+{{< storage-img src="./player_group.png" alt="The player node with a new symbol" center=true />}}
 
 ### Preparing the Agent
 
 Now we need to make a scene for the objects that will be moving around. Create a new scene with a `CharacterBody3D` as the root node. Give it a `CollisionShape3D` a `MeshInstance3D`, a `NavigationAgent3D`, and add a script to the root node.
 
-![The agent scene](./agent_tree.png#center)
+{{< storage-img src="./agent_tree.png" alt="The agent scene" center=true />}}
 
 Clear out any unnecessary code from the default script. Yours should look something like this:
 
@@ -232,7 +232,7 @@ And if you *just* want pathfinding, you're done! You can now add as many agents 
 
 Let's see it in action:
 
-{{< video source="./following1.mp4" id="following1" >}}
+{{< storage-video source="./following1.mp4" id="following1" />}}
 
 But notice how the agents kind of clump together when they all have the same target? That's not very interesting to look at. How can we make them spread out?
 
@@ -246,7 +246,7 @@ Avoidance works by giving the `NavigationAgent3D` a little more control over the
 
 Go back to your agent scene and select the `NavigationAgent3D` node. In the right-hand sidebar, back under the `Inspector` tab, unfold the `Avoidance` section and check `Avoidance Enabled`.
 
-![The Avoidance section of the NavigationAgent3D](./avoidance_menu.png#center)
+{{< storage-img src="./avoidance_menu.png" alt="The Avoidance section of the NavigationAgent3D" center=true />}}
 
 The `Radius` setting here is separate from the one we set on the `NavigationMesh` earlier. This radius doesn't affect pathfinding in any way whatsoever. This is only used to figure out at what distance other agents should move away *from us*. If you increase this, the agents will spread out more. Keep in mind that they'll also generally traverse a scene slower too, as they have to move around each other in addition to the scene.
 
@@ -293,7 +293,7 @@ public void OnVelocityComputed(Vector3 safeVelocity)
 
 And that's it! Now the agents will avoid each other while they're moving towards the player. For this video I've increased the agent's radius to be larger than the mesh just to make the avoidance more obvious.
 
-{{< video source="./following2.mp4" id="avoidance" >}}
+{{< storage-video source="./following2.mp4" id="avoidance" />}}
 
 ### Avoiding obstacles
 
@@ -307,7 +307,7 @@ Avoiding obstacles is very similar to avoiding other agents. To add an obstacle,
 
 To your scene add a `NavigationObstacle3D` node, and move it wherever you like.
 
-![The obstacle in the scene](./obstacle_in_scene.png#center)
+{{< storage-img src="./obstacle_in_scene.png" alt="The obstacle in the scene" center=true />}}
 
 > **Note**: Currently, as of Godot version 4.1.1, you can't actually use the transform gizmo to move the obstacle around the XZ plane. If you try, it'll start creating points for a static obstacle instead.
 >
@@ -315,7 +315,7 @@ To your scene add a `NavigationObstacle3D` node, and move it wherever you like.
 
 Then, look at the settings in the right-hand sidebar.
 
-![The Settings for NavigationObstacle3D](./obstacle_settings.png#center)
+{{< storage-img src="./obstacle_settings.png" alt="The Settings for NavigationObstacle3D" center=true />}}
 
 The settings for `NavigationObstacle3D` are a little bit convoluted. There are actually two different kinds of obstacles that are both configured here. Dynamic obstacles and static obstacles.
 
@@ -327,20 +327,20 @@ For this tutorial, to keep things easy we're just going to set a radius, even th
 
 Now if you run the scene, you should see the agents avoid the obstacle as well as each other.
 
-{{< video source="./following3.mp4" id="obstacle" >}}
+{{< storage-video source="./following3.mp4" id="obstacle" />}}
 
 ## Debugging
 
 If you're having trouble getting your agents to navigate the way you'd like them to, Godot provides a way for you to see the navmesh, obstacles, and collision shapes while running the game. In the topbar menu, under "Debug" there are options for visualizations:
 
-![The Debug menu in Godot](./debug_menu.png#center)
+{{< storage-img src="./debug_menu.png" alt="The Debug menu in Godot" center=true />}}
 {{% img-subtitle %}}
 *There's also an option for visible paths, but I haven't gotten that to work yet.*
 {{% /img-subtitle %}}
 
 Enable these options, and now you can see them while the game is running:
 
-![The navmesh, obstacles, and collision shapes visible in the scene](./debug.png#center)
+{{< storage-img src="./debug.png" alt="The navmesh, obstacles, and collision shapes visible in the scene" center=true />}}
 
 ## Conclusion
 
