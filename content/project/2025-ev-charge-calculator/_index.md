@@ -1,5 +1,5 @@
 ---
-title: "EV Charge Calculator"
+title: "EV Charging Calculator"
 date: 2025-11-20T16:21:24-05:00
 draft: false
 tags: ["iOS", "Swift", "Apple"]
