@@ -3,7 +3,7 @@ title: "EV Charging Calculator"
 date: 2025-11-20T16:21:24-05:00
 draft: false
 tags: ["iOS", "Swift", "Apple"]
-summary: "An app to easily calculate EV charging time."
+summary: "EV Charging Calculator is the simplest way to estimate how long it will take to charge your electric vehicle."
 params:
   hideList: true
 ---
