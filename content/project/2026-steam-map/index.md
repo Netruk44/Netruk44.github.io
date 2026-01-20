@@ -10,14 +10,14 @@ summary: "An interactive 2D map of games on the Steam Store using embeddings fro
 
 {{< contact-me box="steam-map" is-mid-article=true >}}
 
-{{% toc %}}
-
 # Info
 * **Status**: Released
 * **Source**: [GitHub](https://github.com/Netruk44/steam-embedding-search)
 * **View**: [Website](https://storage.danieltperry.me/share/steam-map/)
 * **Technologies & Languages**: Python, Sqlite3
 * **Machine Learning Models and Libraries**: [Qwen3-Embedding-4B](https://huggingface.co/Qwen/Qwen3-Embedding-4B), [Huggingface Transformers](https://huggingface.co/docs/transformers/en/index)
+
+{{% toc %}}
 
 ## Related Posts and Projects
 * **Previous Project**: [Embedding-Based Steam Search](/project/2023-steam-embedding-search/)
