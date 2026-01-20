@@ -2,7 +2,7 @@
 title: "Steam Embedding Search"
 date: 2023-12-28T14:37:37-05:00
 draft: false
-tags: ["Python", "Instructor", "Application", "Docker", "CSS", "React", "Sqlite", "Machine Learning", "Embeddings"]
+tags: ["Python", "Instructor", "Application", "Docker", "CSS", "React", "Sqlite", "Machine Learning", "Embeddings", "Open Source"]
 summary: "A web application for searching Steam games using embeddings generated from game descriptions and reviews."
 ---
 
