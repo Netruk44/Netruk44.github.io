@@ -37,12 +37,28 @@
     {{- end -}}
   {{- end -}}
 {{- end -}}
+{{- $border := false -}}
+{{- if .IsNamedParams -}}
+  {{- with .Get "border" -}}
+    {{- $lower := strings.ToLower (printf "%v" .) -}}
+    {{- if in (slice "true" "yes" "1") $lower -}}
+      {{- $border = true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
 {{- $figureClass := $class -}}
 {{- if $center -}}
   {{- if $figureClass -}}
     {{- $figureClass = printf "%s %s" $figureClass "align-center" -}}
   {{- else -}}
     {{- $figureClass = "align-center" -}}
+  {{- end -}}
+{{- end -}}
+{{- if $border -}}
+  {{- if $figureClass -}}
+    {{- $figureClass = printf "%s %s" $figureClass "storage-figure--border" -}}
+  {{- else -}}
+    {{- $figureClass = "storage-figure--border" -}}
   {{- end -}}
 {{- end -}}
 {{- $imgTitle := "" -}}

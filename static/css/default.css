@@ -17,3 +17,15 @@
 .banner-early h1, .banner-early h2, .banner-early h3, .banner-early h4, .banner-early h5, .banner-early h6 {
   margin-top: 0;
 }
+
+.storage-figure--border img,
+.post-content .storage-figure--border img {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.storage-img--border,
+.post-content img.storage-img--border {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}

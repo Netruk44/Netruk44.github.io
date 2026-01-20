@@ -37,6 +37,7 @@
 {{- end -}}
 {{- $decoded := false -}}
 {{- $center := false -}}
+{{- $border := false -}}
 {{- if .IsNamedParams -}}
   {{- with .Get "decode" -}}
     {{- $lower := strings.ToLower (printf "%v" .) -}}
@@ -50,9 +51,22 @@
       {{- $center = true -}}
     {{- end -}}
   {{- end -}}
+  {{- with .Get "border" -}}
+    {{- $lower := strings.ToLower (printf "%v" .) -}}
+    {{- if in (slice "true" "yes" "1") $lower -}}
+      {{- $border = true -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
 {{- if and $center (not (strings.Contains $url "#center")) -}}
   {{- $url = printf "%s#center" $url -}}
+{{- end -}}
+{{- if $border -}}
+  {{- if $class -}}
+    {{- $class = printf "%s %s" $class "storage-img--border" -}}
+  {{- else -}}
+    {{- $class = "storage-img--border" -}}
+  {{- end -}}
 {{- end -}}
 <img src="{{ $url }}"
   {{- if $alt }} alt="{{ $alt | plainify }}"{{ else }} alt=""{{ end }}

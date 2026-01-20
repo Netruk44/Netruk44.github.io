@@ -8,7 +8,7 @@ params:
   hideList: true
 ---
 
-{{< storage-img src="./app_icon.png" center=true />}}
+{{< storage-img src="./app_icon.png" center=true  border="true" />}}
 {{% img-subtitle %}}
 *App icon*
 {{% /img-subtitle %}}
