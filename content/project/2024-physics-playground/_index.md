@@ -36,8 +36,8 @@ App Icon
 ## Description
 The app is a simple physics sandbox where you can create simple geometric objects and move/fling them around your local environment.
 
-<!--## Related Posts and Projects
-*No content yet*-->
+## Related Posts and Projects
+- **Blog Post**: [How I Made My Todo List Voting Feature](/post/how-i-made-my-todo-list-voting-feature/)
 
 ## Why?
 The app was intended as a way for me to learn more about developing for Apple platforms. I decided to release it to the public since there was some user interest and no other similar apps on the Vision Pro App Store yet.

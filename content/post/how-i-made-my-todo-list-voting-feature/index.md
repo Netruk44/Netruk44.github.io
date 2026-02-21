@@ -3,6 +3,7 @@ title: "How I Made My Todo List Voting Feature"
 date: 2026-02-16T10:25:09-05:00
 draft: false
 tags: ["tutorial", "Sqlite", "Python", "Flask"]
+summary: "A look at how I implemented a voting mechanism for my todo list items, allowing users to vote on which features they want to see implemented next."
 ---
 
 Many of my projects eventually reach a point where I have a large list of things I'd like to add or implement, but not much of an idea how to prioritize the list, or if users will even find what I'm thinking of useful.

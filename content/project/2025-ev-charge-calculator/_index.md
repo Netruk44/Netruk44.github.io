@@ -35,3 +35,7 @@ EV Charging Calculator is the simplest way to estimate how long it will take to 
 * **Download**: Available in the [App Store](https://apps.apple.com/us/app/ev-charging-calculator/id6755452503).
 * **Privacy Policy**: [View Privacy Policy](./privacy)
 * **Technologies & Languages**: Swift, SwiftUI
+
+## Related Posts and Projects
+- **Blog Post**: [How I Made My Todo List Voting Feature](/post/how-i-made-my-todo-list-voting-feature/)
+- 
