@@ -13,6 +13,10 @@ params:
 *App icon*
 {{% /img-subtitle %}}
 
+<center><h3 class="toc" style="font-size:18px">
+View the app's web page <a href="http://ev-charging-calculator.com">here</a>
+</h3></center>
+
 EV Charging Calculator is the simplest way to estimate how long it will take to charge your electric vehicle. Whether you're plugging into a standard wall outlet, a Level 2 home charger, or a DC Fast Charger, get instant answers on when you can get back on the road.
 
 ### Key Features
@@ -33,7 +37,6 @@ EV Charging Calculator is the simplest way to estimate how long it will take to 
 * **Status**: Released
 * **State**: Full release.
 * **Download**: Available in the [App Store](https://apps.apple.com/us/app/ev-charging-calculator/id6755452503).
-* **Privacy Policy**: [View Privacy Policy](./privacy)
 * **Technologies & Languages**: Swift, SwiftUI
 
 ## Related Posts and Projects
