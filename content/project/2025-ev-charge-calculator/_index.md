@@ -41,4 +41,3 @@ EV Charging Calculator is the simplest way to estimate how long it will take to 
 
 ## Related Posts and Projects
 - **Blog Post**: [How I Made My Todo List Voting Feature](/post/how-i-made-my-todo-list-voting-feature/)
-- 
