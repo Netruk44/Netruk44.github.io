@@ -5,7 +5,7 @@ draft: false
 tags: ["Linux", "Steam", "SteamOS", "C++", "Driver"]
 ---
 
-This Linux driver for Razer Wolverine V3 Pro enables usage of the back four paddles (M3-M6 buttons) as independent bindable controls in Steam.
+This Linux driver for Razer's Wolverine V3 Pro enables usage of the back four paddles (M3-M6 buttons) as independent bindable controls in Steam.
 
 {{< storage-figure src="binding.png" link=self border="true" />}}
 
