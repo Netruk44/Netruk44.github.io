@@ -14,6 +14,13 @@ This Linux driver for Razer's Wolverine V3 Pro enables usage of the back four pa
 * **State**: Initial experimental release, SteamOS support only
 * **Source**: [GitHub](https://www.github.com/Netruk44/wolverine-v3-pro-linux)
 
+## Download
+For security, no direct download is available for this driver. Users must build the driver themselves from source.
+
+The GitHub repository contains a script which completely handles building and management (install/enable/disable/uninstall) of the driver.
+
+Follow the instructions in the "Quick Start" section of the repository's README for further instructions.
+
 ## Known Limitations
 
 - Wired USB connection to the controller only. Wireless is not supported yet.
